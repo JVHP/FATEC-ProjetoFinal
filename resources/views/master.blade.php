@@ -40,12 +40,12 @@
     </style>
 </head>
 
-<body class="antialiased">
+<body class="">
     <!-- NAVBAR-CIMA -->
 
     <div class=" p-3">
         <div class="mx-auto container-xxl">
-            <div class="row col-12">
+            <div class="row col-12 m-0">
                 <div class="col-lg-1 col-md-1 col-sm-1 col-1 y-auto ps-4 my-auto ">
                     <button class="btn" type="button" data-bs-toggle="offcanvas"
                         data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
