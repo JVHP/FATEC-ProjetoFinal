@@ -1,2 +1,2 @@
-# JVHP-FATEC-ProjetoFinal
-Repositório criado com proposito de obter versionamento para o Projeto Final da faculdade FATEC PG
+# Projeto Final para FATEC PG
+Projeto criado para encerramento da Faculdade de Tecnologia da Praia Grande (FATEC PG)
