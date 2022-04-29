@@ -1,0 +1,161 @@
+@import url(https://fonts.googleapis.com/css?family=Nunito);
+
+/*!
+ * Bootstrap v4.6.1 (https://getbootstrap.com/)
+ * Copyright 2011-2021 The Bootstrap Authors
+ * Copyright 2011-2021 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ */
+
+::-webkit-scrollbar {
+  width: 10px; /* width of the entire scrollbar */
+  height: 10px; /* width of the entire scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  height: 8px;
+  background: #082032; /* color of the tracking area */
+}
+
+::-webkit-scrollbar-thumb {
+  height: 8px;
+  background-color: #334756;  /* color of the scroll thumb */
+  border-radius: 20px;       /* roundness of the scroll thumb */
+  border: 1.3px solid  #082032; /* creates padding around scroll thumb */
+}
+
+.background{
+  
+}
+
+.bg-primary-dark-opaque {
+  /* From https://css.glass */
+  background: rgb(8, 32, 50, 0.76);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3.9px);
+  -webkit-backdrop-filter: blur(3.9px);
+}
+
+.card {
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.76);
+  border-radius: 4px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3.9px);
+  -webkit-backdrop-filter: blur(3.9px);
+  border: 1px solid rgba(255, 255, 255, 1);
+}
+
+.card-login {
+  /* From https://css.glass */
+  background: rgb(51 71 86);
+  border-radius: 4px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3.9px);
+  -webkit-backdrop-filter: blur(3.9px);
+  border: 1px solid rgb(255 76 41);
+  transition: all ease 0.5s;
+}
+
+.card-login:hover {
+  /* background: rgb(252, 103, 74); */
+  border: 1px solid rgb(255, 76, 41);
+  box-shadow: 0 -1px 9px rgb(255 76 41);
+
+}
+
+
+@media (min-width: 1000px) {
+  .col-xxl-2-custom {
+      flex: 0 0 auto;
+      width: 22.8%;
+  }
+}
+
+@media (min-width: 1500px) {
+  .col-xxl-2-custom {
+      flex: 0 0 auto;
+      width: 18.666667%;
+  }
+}
+
+.card-display {
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.76);
+  border-radius: 4px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3.9px);
+  -webkit-backdrop-filter: blur(3.9px);
+  border: 1px solid rgba(255, 255, 255, 1);
+}
+
+.image-circle {
+  width: 50px;
+  height: 50px; 
+  background-position: center;
+  background-repeat: no-repeat; 
+  background-size: cover;
+  background-image: url('/images/default-user.png');
+  border: solid white 5px;
+  transition: all ease 0.5s;
+}
+
+.image-circle.not-logged {
+  border: solid white 5px;
+}
+
+.card-login:hover .image-circle.not-logged {
+  border: solid rgb(164, 255, 128) 5px;
+}
+
+.image-circle.logged {
+  border: solid rgb(30, 255, 0) 5px;  
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  
+  background-color: #082032;
+  background-attachment: fixed;
+}
+
+.accordion-item:last-of-type .accordion-button.collapsed {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border: 0;
+}
+
+.accordion-button:not(.collapsed) {
+  color: #082032;
+}
+
+.accordion-button:not(.collapsed)::after {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212529'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+  transform: rotate(-180deg);
+}
+
+.accordion-button-remove-i.accordion-button::after {
+  flex-shrink: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-left: auto;
+  content: "";
+  background-image: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+.bg-primary-dark{
+  background-color: #082032 !important;
+}
+.bg-orange{
+  background-color: #FF4C29 !important;
+}
+
+.border-bottom-orange {
+  border-bottom: 8px solid #FF4C29;
+}
