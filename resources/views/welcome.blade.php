@@ -28,7 +28,7 @@
                 @if($x->qt_estoque > 0)
                 @if($x->foto)
                 <div class="col-12 text-center">
-                    <img class="mx-auto" loading="lazy" src="data:image/png;base64, {{$x->foto}}" style="object-fit: cover;" width="200px" height="200px" alt="">
+                    <img class="mx-auto" loading="lazy" src="data:image/png;base64, {{stream_get_contents($x->foto)}}" style="object-fit: cover;" width="200px" height="200px" alt=""> 
                 </div>
                 @else
                     <img class="rounded" src="{{URL('images/default.png')}}" width="200px" height="200px" style="object-fit: cover;" alt="">
@@ -60,7 +60,7 @@
                 <!-- Cards para estoque indisponível -->
                 @if($x->foto)
                 <div class="col-12 text-center">
-                    <img class="mx-auto" loading="lazy" src="data:image/png;base64, {{$x->foto}}" style="object-fit: cover; filter: grayscale(100%); opacity: 50%;" width="200px" height="200px" alt="">
+                    <img class="mx-auto" loading="lazy" src="data:image/png;base64, {{stream_get_contents($x->foto)}}" style="object-fit: cover; filter: grayscale(100%); opacity: 50%;" width="200px" height="200px" alt="">
                 </div>
                 @else
                     <img class="rounded" src="{{URL('images/default.png')}}"  width="200px" height="200px" style="object-fit: cover;" alt="">
