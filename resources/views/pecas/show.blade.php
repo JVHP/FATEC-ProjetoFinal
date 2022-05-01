@@ -5,7 +5,7 @@
     <div class="row col-lg-12 col-md-12 col-sm-12 col-12 p-5 mx-auto">
         <div class="col-lg-3 col-md-5 col-sm-6 col-12 text-center pb-2 mx-md-auto mx-sm-auto mx-auto">
             @if($peca->foto)
-            <img class="rounded" src="data:image/png;base64, {{$peca->foto}}" width="300px" style="object-fit: cover;" alt="">
+            <img class="rounded" src="data:image/png;base64, {{stream_get_contents($peca->foto)}}" width="300px" style="object-fit: cover;" alt="">
             @else
             <?php
             /*<img class="mx-auto" loading="lazy" src="{{Storage::disk('local')->url('/fotos/pecas/'.$fotos[0]->nm_armazenamento)}}" style="object-fit: cover; filter: grayscale(100%); opacity: 50%;" width="200px" alt="">*/

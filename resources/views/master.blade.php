@@ -85,7 +85,7 @@
                                             </div>
                                         </div>
                                         <div class="col-8 my-auto text-start">
-                                            <a class="text-light" href="/cadastrar">Faça seu {{ __('login') }} ou {{ __('cadastre-se') }}</a>
+                                            <a class="text-light" href="/login">Faça seu {{ __('login') }} ou {{ __('cadastre-se') }}</a>
                                         </div>
                                     @endif
 
