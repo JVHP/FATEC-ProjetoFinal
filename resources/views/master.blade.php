@@ -83,7 +83,7 @@
                                             <div class="rounded-circle image-circle not-logged">
                                             </div>
                                         </div>
-                                        <div class="col-8 my-auto text-start">
+                                        <div class="col-8 my-auto text-start ps-0">
                                             <a class="text-light" href="/login">Faça seu {{ __('login') }} ou
                                                 {{ __('cadastre-se') }}</a>
                                         </div>
