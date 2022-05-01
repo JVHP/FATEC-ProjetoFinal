@@ -28,8 +28,8 @@ Route::get('/', function () {
     return view('welcome')->with('varPeca', $pecas);
 });
 
-Route::get('pecas/nome/{nm_peca}', function ($nm_peca) {
-    $peca = DB::table('pecas')->where('nm_peca', 'like', $nm_peca.'%')->get();
+Route::get('pecas/nome/{nm_peca}', function ($nm_peca) {    
+    $peca = DB::table('pecas')->whereRaw(' UPPER(nm_peca) LIKE ? ', [strtoupper($nm_peca).'%'])->get();
     return $peca;
 });
 

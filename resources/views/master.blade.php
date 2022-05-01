@@ -135,7 +135,7 @@
     <div class="offcanvas offcanvas-start bg-primary-dark-opaque" data-bs-scroll="true" tabindex="-1"
         id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
         <div class="offcanvas-header pt-3">
-            <h5 class="offcanvas-title text-white" id="offcanvasWithBothOptionsLabel">Menu de Gerenciamento</h5>
+            <h5 class="offcanvas-title text-white" id="offcanvasWithBothOptionsLabel">Menu</h5>
             <button type="button" class="btn-close  btn-close-white text-reset" data-bs-dismiss="offcanvas"
                 aria-label="Close"></button>
         </div>
