@@ -12,6 +12,11 @@ class TipoCarroController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct() {
+        $this->middleware(['auth', 'admin.user']);
+    }
+
     public function index()
     {
         $tipos = TipoCarro::paginate(10);

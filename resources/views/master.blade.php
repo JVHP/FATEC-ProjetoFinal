@@ -145,6 +145,7 @@
             <div class="accordion accordion-flush" id="accordionFlushExample">
                 @guest
                 @else
+                @if(Auth::user()->isAdministrator())                
                     <div class="accordion-item" style="border-radius: none; border: none">
                         <h2 class="accordion-header" id="flush-headingThree">
                             <button class="accordion-button collapsed bg-orange" type="button" data-bs-toggle="collapse"
@@ -165,6 +166,7 @@
                             </div>
                         </div>
                     </div>
+                @endif
                 @endguest
                 <div class="accordion-item" style="border-radius: none; border: none">
                     <h2 class="accordion-header" id="flush-headingOne">
@@ -175,17 +177,6 @@
                     </h2>
                     <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
                         data-bs-parent="#accordionFlushExample">
-                        @guest
-                            <div class="accordion-body p-0">
-                                <a href="/pecas/todos">
-                                    <button
-                                        class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
-                                        Todas Peças
-                                    </button>
-                                </a>
-                            </div>
-                        </div>
-                    @else
                         <div class="accordion-body p-0">
                             <a href="/pecas/todos">
                                 <button
@@ -193,18 +184,25 @@
                                     Todas Peças
                                 </button>
                             </a>
+                            @guest
+                        </div>
+                    </div>
+                    @else
+                        @if(Auth::user()->isAdministrator())
                             <a href="/pecas">
                                 <button
                                     class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
                                     Gerenciar Peças
                                 </button>
                             </a>
+                        @endif
                         </div>
                     </div>
                 @endguest
             </div>
             @guest
             @else
+            @if(Auth::user()->isAdministrator())
                 <div class="accordion-item" style="border-radius: 0; border: none">
                     <h2 class="accordion-header" id="flush-headingTwo">
                         <button class="accordion-button collapsed bg-orange " type="button" data-bs-toggle="collapse"
@@ -230,6 +228,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
             @endguest
         </div>
     </div>

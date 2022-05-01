@@ -36,7 +36,7 @@
                     <input class="btn btn-success col-3" type="submit" value="Finalizar">
                     
                     <a href="/pedido/cancelar/{{$pedido->id}}">
-                        <button class="btn btn-warning" disabled>Cancelar</button>
+                        <button class="btn btn-danger" disabled>Cancelar</button>
                     </a>
                     
                 @elseif($pedido->ck_finalizado == 'S' && $pedido->dt_pagamento == null )

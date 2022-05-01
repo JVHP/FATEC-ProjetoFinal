@@ -18,6 +18,7 @@ class UsuarioController extends Controller
     public function __construct()
     {
         $this->middleware('auth', ['except' => ['store']]);
+        $this->middleware('admin.user', ['except' => ['store']]);
     }
     public function index()
     {

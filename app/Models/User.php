@@ -50,4 +50,8 @@ class User extends Authenticatable
     public function pedidos() {
         return $this->hasMany(Pedido::class, 'id_usuario');
     }
+
+    public function isAdministrator() {
+        return $this->is_admin;
+    }
 }
