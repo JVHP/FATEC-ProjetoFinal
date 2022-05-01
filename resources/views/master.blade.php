@@ -20,7 +20,6 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-        
         import "bootstrap-icons/font/bootstrap-icons.css"
 
         var offcanvasElementList = [].slice.call(document.querySelectorAll('.offcanvas'))
@@ -54,7 +53,8 @@
                 </div>
 
 
-                <div class="col-lg-auto col-md-3 col-sm-4 col-6 pb-3 my-auto text-md-start text-center me-md-auto mx-md-0 mx-auto">
+                <div
+                    class="col-lg-auto col-md-3 col-sm-4 col-6 pb-3 my-auto text-md-start text-center me-md-auto mx-md-0 mx-auto">
                     <h3 style="cursor: pointer" class="pt-4 fw-bold text-light onhov" onclick="window.location='/'">
                         iTURBO
                     </h3>
@@ -73,7 +73,7 @@
 
 
 
-                <div class="text-end col-xxl-2-custom col-lg-3 col-md-4 col-auto pt-md-0 pt-3 my-auto mx-md-0 mx-auto ">
+                <div class="text-end col-xxl-2-custom col-lg-3 col-md-4 col-12 pt-md-0 pt-3 my-auto mx-md-0 mx-auto ">
                     <div>
                         <div class="card-login rounded-pill">
                             @guest
@@ -84,7 +84,8 @@
                                             </div>
                                         </div>
                                         <div class="col-8 my-auto text-start">
-                                            <a class="text-light" href="/login">Faça seu {{ __('login') }} ou {{ __('cadastre-se') }}</a>
+                                            <a class="text-light" href="/login">Faça seu {{ __('login') }} ou
+                                                {{ __('cadastre-se') }}</a>
                                         </div>
                                     @endif
 
@@ -96,18 +97,18 @@
                                 </div>
                             @else
                                 <div class="row ">
-                                    <div class="col-4 ">
-                                        <div class="rounded-circle image-circle logged">
-                                        </div>
+                                    <div class="col-md-3 col-sm-1 col-2 me-md-2 me-3 ">
+                                        <a href="/dashboard">
+                                            <div class="rounded-circle image-circle logged">
+                                            </div>
+                                        </a>
                                     </div>
                                     <div class="col-8 text-start ps-0 text-truncate">
                                         <div class="col-12">
-                                            <a class="text-light py-1 my-2" href="/dashboard" v-pre>
-                                                @foreach (explode(' ', Auth::user()->nm_usuario) as $info)
-                                                    @if ($loop->index == 0)
-                                                        Bem vindo {{ $info }}!
-                                                    @endif
-                                                @endforeach
+                                            <a class="text-light py-1 my-2" href="/dashboard">
+                                                <label for="" class="text-light">
+                                                    Bem vindo {{ Auth::user()->firstName() }}!
+                                                </label>
                                             </a>
                                         </div>
                                         <div class="col-12 text-start">
@@ -144,28 +145,28 @@
             <div class="accordion accordion-flush" id="accordionFlushExample">
                 @guest
                 @else
-                @if(Auth::user()->isAdministrator())                
-                    <div class="accordion-item" style="border-radius: none; border: none">
-                        <h2 class="accordion-header" id="flush-headingThree">
-                            <button class="accordion-button collapsed bg-orange" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#flush-collapseThree" aria-expanded="false"
-                                aria-controls="flush-collapseThree">
-                                Usuários
-                            </button>
-                        </h2>
-                        <div id="flush-collapseThree" class="accordion-collapse collapse"
-                            aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-                            <div class="accordion-body p-0">
-                                <a href="/usuarios">
-                                    <button
-                                        class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
-                                        Gerenciar Usuários
-                                    </button>
-                                </a>
+                    @if (Auth::user()->isAdministrator())
+                        <div class="accordion-item" style="border-radius: none; border: none">
+                            <h2 class="accordion-header" id="flush-headingThree">
+                                <button class="accordion-button collapsed bg-orange" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapseThree" aria-expanded="false"
+                                    aria-controls="flush-collapseThree">
+                                    Usuários
+                                </button>
+                            </h2>
+                            <div id="flush-collapseThree" class="accordion-collapse collapse"
+                                aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body p-0">
+                                    <a href="/usuarios">
+                                        <button
+                                            class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
+                                            Gerenciar Usuários
+                                        </button>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                @endif
+                    @endif
                 @endguest
                 <div class="accordion-item" style="border-radius: none; border: none">
                     <h2 class="accordion-header" id="flush-headingOne">
@@ -184,10 +185,10 @@
                                 </button>
                             </a>
                             @guest
+                            </div>
                         </div>
-                    </div>
                     @else
-                        @if(Auth::user()->isAdministrator())
+                        @if (Auth::user()->isAdministrator())
                             <a href="/pecas">
                                 <button
                                     class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
@@ -195,13 +196,13 @@
                                 </button>
                             </a>
                         @endif
-                        </div>
                     </div>
-                @endguest
-            </div>
-            @guest
-            @else
-            @if(Auth::user()->isAdministrator())
+                </div>
+            @endguest
+        </div>
+        @guest
+        @else
+            @if (Auth::user()->isAdministrator())
                 <div class="accordion-item" style="border-radius: 0; border: none">
                     <h2 class="accordion-header" id="flush-headingTwo">
                         <button class="accordion-button collapsed bg-orange " type="button" data-bs-toggle="collapse"
@@ -227,9 +228,9 @@
                         </div>
                     </div>
                 </div>
-                @endif
-            @endguest
-        </div>
+            @endif
+        @endguest
+    </div>
     </div>
     </div>
 

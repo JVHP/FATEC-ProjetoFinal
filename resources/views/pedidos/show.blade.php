@@ -1,12 +1,12 @@
 @extends('master')
 
 @section("body")
-<div class="mx-auto col-4 pt-5 pb-5">
+<div class="mx-auto col-lg-5 col-md-7 col-sm-8 col-12 pt-5 pb-5">
     <div class="card">
         <form action="/pedido/{{$pedido->id}}" method="POST">
             @csrf
             @METHOD('PUT')
-            <div class="card-title ps-2 pt-2 mb-0">
+            <div class="card-title px-2 pt-2 mb-0">
                 <h2 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-lg-8 col-md-8 col-sm-12 col-12" >Visualizar Pedido</h2>
                 <!-- <hr class="p-1 m-0 bg-primary col-xl-7 col-lg-9 col-md-11 col-sm-11" style="opacity: 100%; padding-top: 0"> -->
             </div>

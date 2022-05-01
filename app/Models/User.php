@@ -54,4 +54,17 @@ class User extends Authenticatable
     public function isAdministrator() {
         return $this->is_admin;
     }
+
+    public function firstName() {
+        $fs_name  = $this->nm_usuario;
+        ;
+
+        foreach  (explode(' ', $fs_name) as $index => $val) {
+            if ($index == 0) {
+                $fs_name = $val;
+            }
+        }
+
+        return $fs_name;
+    }
 }

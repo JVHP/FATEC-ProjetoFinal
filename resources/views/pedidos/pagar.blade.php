@@ -1,7 +1,7 @@
 @extends('master')
 
 @section("body")
-<div class="col-5 mx-auto pt-5 pb-5">
+<div class="col-lg-5 col-md-7 col-sm-8 col-12 mx-auto pt-5 pb-5">
     <div class="card">
         <div class="card-title">
             <h1 class="text-center">Parabéns! Seu Pedido foi Finalizado</h1>
