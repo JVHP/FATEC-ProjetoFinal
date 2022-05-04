@@ -8,6 +8,9 @@ use App\Http\Requests\UsuarioEditRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+
 class UsuarioController extends Controller
 {
     /**
@@ -29,7 +32,7 @@ class UsuarioController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request  $request
      */
     public function create()
     {
@@ -90,6 +93,14 @@ class UsuarioController extends Controller
      */
     public function update(UsuarioEditRequest $request, User $usuario)
     {
+        
+        Validator::make($request->rules(), [
+            'email' => [
+                'required',
+                Rule::unique('users')->ignore($usuario->id),
+            ],
+        ]);
+
         $usuario->update($request->all());
         return redirect('/usuarios');
     }

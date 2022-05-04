@@ -13,9 +13,9 @@
             <tr>
                 <th class="m-0 text-center">Id</th>
                 <th>Nome</th>
-                <th class="m-0 text-center">Idade</th>
+                <th class="m-0 text-center">Data de nascimento</th>
                 <th class="m-0 text-center">E-Mail</th>
-                <th class="m-0 text-center">Endereço</th>
+                <th class="m-0 text-center">CEP</th>
                 <th class="m-0 text-center">Comandos</th>
             </tr>
         </thead>
@@ -24,9 +24,9 @@
             <tr>
                 <td class="m-0 text-center">{{$x->id}}</td>
                 <td class="m-0">{{$x->nm_usuario}}</td>
-                <td class="m-0 text-center">{{$x->cd_idade}}</td>
+                <td class="m-0 text-center">{{$x->dt_nasc}}</td>
                 <td class="m-0 text-center">{{$x->email}}</td>
-                <td class="m-0 text-center">{{$x->ds_endereco}}</td>
+                <td class="m-0 text-center">{{$x->cep}}</td>
                 <td class="m-0 text-center">
                     <a href="usuarios/{{$x->id}}/edit">
                         <button class="btn btn-outline-info">Editar</button>
