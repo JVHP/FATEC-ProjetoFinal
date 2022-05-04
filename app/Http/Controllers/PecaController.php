@@ -24,7 +24,7 @@ class PecaController extends Controller
 
     public function index()
     {   
-        $pecas = Peca::paginate(10);
+        $pecas = Peca::orderBy('id', 'ASC')->paginate(10);
         return view('pecas.indexAdm')->with('pecas', $pecas);
     }
 

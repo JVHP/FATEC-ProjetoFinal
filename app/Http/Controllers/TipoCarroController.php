@@ -19,7 +19,7 @@ class TipoCarroController extends Controller
 
     public function index()
     {
-        $tipos = TipoCarro::paginate(10);
+        $tipos = TipoCarro::orderBy('id', 'ASC')->paginate(10);
         return view('tiposcarro.indexAdm')->with('tipos', $tipos);
     }
 

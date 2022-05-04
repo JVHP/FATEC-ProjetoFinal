@@ -8,12 +8,12 @@
     </div>
         <div class="row mx-auto col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 pb-5">
             @foreach($varPeca as $x)
-            <div class="mx-auto pt-3 col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12" style="width: 40vh;">
+            <div class=" pt-3 col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12" style="width: 20.19rem;">
                 <div class="card rounded">
                     @if($x->qt_estoque > 0)
                     @if($x->foto)
                     <div class="col-12 text-center">
-                        <img class="mx-auto " loading="lazy" src="data:image/png;base64, {{stream_get_contents($x->foto)}}" style="object-fit: cover;" width="200px" height="200px" alt="">
+                        <img class=" " loading="lazy" src="data:image/png;base64, {{stream_get_contents($x->foto)}}" style="object-fit: cover;" width="200px" height="200px" alt="">
                     </div>
                     @else
                     <div class="col-12 text-center" style=" background: #f3f4f6">

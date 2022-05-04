@@ -25,12 +25,10 @@ class UsuarioRequest extends FormRequest
     {
         return [
             'nm_usuario'=>'required',
-            'email'=>'required',
-            'email'=>'unique:users',
-            'emailC'=>'required',
-            'emailC'=>'unique:users,email',
-            'cd_idade'=>'required',
-            'ds_endereco'=>'required',
+            'email'=>['required', 'email'],
+            /* 'emailC'=>['required','unique:users,email', 'email' ], */
+            'dt_nasc'=>'required',
+            'cep'=>['required', 'max:8'],
             'cd_password'=>'required',
         ];
     }
@@ -41,10 +39,13 @@ class UsuarioRequest extends FormRequest
             'nm_usuario.required'=>'Nome é obrigatório',
             'email.required'=>'E-Mail é obrigatório',
             'email.unique'=>'E-Mail já cadastrado',
-            'emailC.required'=>'E-Mail é obrigatório',
-            'emailC.unique'=>'E-Mail já cadastrado',
-            'cd_idade.required'=>'Idade é obrigatória',
-            'ds_endereco.required'=>'Endereço é obrigatório',
+            'email.email'=>'Insira um e-mail com formato válido',
+            /* 'emailC.required'=>'E-Mail é obrigatório',
+            'emailC.unique'=>'E-Mail já cadastrado', */
+            /* 'emailC.email'=>'Insira um e-mail com formato válido', */
+            'dt_nasc.required'=>'Data de nascimento é obrigatória',
+            'cep.required'=>'CEP é obrigatório',
+            'cep.max'=>'Limite de 8 caracteres',
             'cd_password.required'=>'Senha é obrigatória',
         ];
     }

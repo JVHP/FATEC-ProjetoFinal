@@ -15,7 +15,7 @@
                     <th class="m-0 text-center">Id</th>
                     <th class="m-0 text-center">Data do Pedido</th>
                     <th class="m-0 text-center">Total</th>
-                    <th class="m-0 text-center">Finalizado</th>
+                    <th class="m-0 text-center">Status</th>
                     <th class="m-0 text-center">Data do Pagamento</th>
                     <th class="m-0 text-center">Ações</th>
                 </tr>

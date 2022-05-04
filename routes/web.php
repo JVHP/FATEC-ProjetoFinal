@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Peca;
+use App\Models\User;
 use App\Models\Pedido;
 use App\Http\Controllers\PecaController;
 use App\Http\Controllers\PedidoController;
@@ -29,7 +30,7 @@ Route::get('/', function () {
 });
 
 Route::get('pecas/nome/{nm_peca}', function ($nm_peca) {    
-    $peca = DB::table('pecas')->whereRaw(' UPPER(nm_peca) LIKE ? ', [strtoupper($nm_peca).'%'])->get();
+    $peca = DB::table('pecas')->select(DB::raw('nm_peca, id'))->whereRaw(' UPPER(nm_peca) LIKE ? ', [strtoupper($nm_peca).'%'])->get();
     return $peca;
 });
 
@@ -48,12 +49,8 @@ Route::get('/pecas/todos/{nome?}', function($nome = null){
     return view('pecas.lista')->with('varPeca', $pecas);
 });
 
-Route::get('/cadastrar', function(){
-    return view('usuarios.create');
-})->name('cadastro')->middleware('guest');;
-
 Route::get('/dashboard', function(){
-    $pedidos = Pedido::where('id_usuario', Auth::user()->id)->get();
+    $pedidos = Pedido::where('id_usuario', Auth::user()->id)->orderBy('dt_pedido', 'DESC')->get();
     return view('pedidos.dashboard')->with('pedidos', $pedidos);
 })->middleware('auth');
 

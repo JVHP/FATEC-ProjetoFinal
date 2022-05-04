@@ -17,12 +17,12 @@ class UsuarioController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['store']]);
-        $this->middleware('admin.user', ['except' => ['store']]);
+        $this->middleware('auth', ['except' => ['store', 'create']]);
+        $this->middleware('admin.user', ['except' => ['store', 'create']]);
     }
     public function index()
     {
-        $usuarios = User::paginate(20);
+        $usuarios = User::orderBy('id', 'ASC')->paginate(20);
         return view('usuarios.index')->with('usuarios', $usuarios);
     }
 
@@ -33,8 +33,7 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-        //Substituido pelo endpoint que ja existe no web.php
-        //return view('usuarios.create');
+        return view('auth.register-user');
     }
 
     /**
@@ -45,15 +44,15 @@ class UsuarioController extends Controller
      */
     public function store(UsuarioRequest $request)
     {
-        $senha = Hash::make($request->cd_password);
 
+        /* echo "Hallo";
         if ($request->has('emailC')) {
             $email = $request->emailC;
 
             $request->request->add(['email' => $email]);
-        }
+        } */
 
-
+        $senha = Hash::make($request->cd_password);
 
         $request->request->add(['password'=>$senha]);
         User::create($request->all());

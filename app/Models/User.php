@@ -21,8 +21,8 @@ class User extends Authenticatable
         'nm_usuario',
         'email',
         'password',
-        'cd_idade', 
-        'ds_endereco', 
+        'dt_nasc', 
+        'cep', 
         'cd_cartao',
         'nm_login', 
         'is_admin'];

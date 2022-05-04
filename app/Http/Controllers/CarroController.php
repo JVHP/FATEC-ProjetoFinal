@@ -21,7 +21,7 @@ class CarroController extends Controller
 
     public function index()
     {
-        $carros = Carro::paginate(10);
+        $carros = Carro::orderBy('id', 'ASC')->paginate(10);
         return view('carros.indexAdm')->with('carros', $carros);
     }
 
