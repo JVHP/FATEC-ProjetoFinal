@@ -2,7 +2,7 @@
 
 @section('body')
     <div class="col-12 pt-5" style="height: 100vh;">
-        <div class="card">
+        <div class="card border-bottom-orange">
             <div class="row col-12 mx-auto">
                 <div class="card-body col-lg-5 col-md-5 col-sm-12 col-12">
                     <div class=" col-lg-6 col-md-6 col-sm-12 col-12 card-title mb-0">
@@ -78,7 +78,7 @@
                         </h1>
                         <!-- <hr class="p-1 m-0 bg-primary col-lg-3 col-md-3 col-sm-12 col-md-6" style="opacity: 100%; padding-top: 0"> -->
                     </div>
-                    <form action="{{route('usuarios.create')}}" name="usuarios.create" method="GET">
+                    <form action="{{route('usuarios.create')}}" name="usuarios.create">
                         <div class="col-12">
                             <div class="col-lg-9 col-md-9 col-sm-12 col-12">
                                 <div class="form-floating p-1">
@@ -147,4 +147,7 @@
             </div>
         </div>
     </div>
+    <script>
+        console.log("hello")
+    </script>
 @endsection

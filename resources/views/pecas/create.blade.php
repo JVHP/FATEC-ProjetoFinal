@@ -2,7 +2,7 @@
 
 @section('body')
 <div class="pt-5">
-    <div class="card col-lg-5 col-md-7 col-sm-8 col-12 mx-auto">
+    <div class="card border-bottom-orange col-lg-5 col-md-7 col-sm-8 col-12 mx-auto">
         <div class="p-2 card-title mb-0">
             <h2 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-lg-6 col-md-6 col-sm-12 col-12" >Adicionar Peça</h2>
             <!-- <hr class="p-1 m-0 bg-primary col-lg-6 col-md-5 col-sm-12 col-md-6" style="opacity: 100%; padding-top: 0"> -->
@@ -12,7 +12,7 @@
                 @csrf
                 <div class="p-2">
                     <div class="text-center">
-                        <img id="blah" src="{{URL::asset('images/default.png')}}" alt="Imagem" width="100" height="100" />
+                        <img id="blah" src="{{URL::asset('images/default.webp')}}" alt="Imagem" width="100" height="100" />
                     </div>
                     <label for="fotoTemp">Foto da peça</label>
                     <input  onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])" class="form-control" type="file" name="fotoTemp" id="fotoTemp" placeholder="Foto da peça">

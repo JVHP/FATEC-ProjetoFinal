@@ -2,7 +2,7 @@
 
 @section("body")
 <div class="mx-auto col-4 pt-5">
-    <div class="card">
+    <div class="card border-bottom-orange">
         <form action="/usuarios/{{$usuario->id}}" method="POST">
             @csrf
             @method('DELETE')

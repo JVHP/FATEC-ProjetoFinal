@@ -20,8 +20,7 @@ class UsuarioController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['store', 'create']]);
-        $this->middleware('admin.user', ['except' => ['store', 'create']]);
+        $this->middleware('user.manipulation', ['except' => ['store', 'create']]);
     }
     public function index()
     {

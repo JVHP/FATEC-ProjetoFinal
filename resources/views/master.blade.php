@@ -9,7 +9,7 @@
 
     <script src="https://kit.fontawesome.com/dce65dbbad.js" crossorigin="anonymous"></script>
 
-    <link rel="icon" type="image/png" href="{{ URL::asset('images/turbo (2).png') }}">
+    <link rel="icon" type="image/png" href="{{ URL::asset('images/turbo1.webp') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css">
 
     <!-- Fonts -->
@@ -21,6 +21,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
         import "bootstrap-icons/font/bootstrap-icons.css"
+        import * as $ from 'igorescobar/jquery-mask-plugin'
 
         var offcanvasElementList = [].slice.call(document.querySelectorAll('.offcanvas'))
         var offcanvasList = offcanvasElementList.map(function(offcanvasEl) {
@@ -42,7 +43,7 @@
 <body class="">
     <!-- NAVBAR-CIMA -->
 
-    <div class=" p-3">
+    <div class="p-3">
         <div class="mx-auto container-xxl">
             <div class="row col-12 m-0">
                 <div class="col-lg-1 col-md-1 col-sm-1 col-1 y-auto ps-4 my-auto ">
@@ -112,9 +113,15 @@
                                             </a>
                                         </div>
                                         <div class="col-12 text-start">
+                                            <a href="{{ route('informacoes') }}" class="text-light py-1 me-2 my-2">
+                                                <img src="{{ URL::asset('icons/settings.svg') }}" alt="">
+                                            </a>
+                                            <a href="{{ route('dashboard') }}" class="text-light py-1 me-2 my-2">
+                                                <img src="{{ URL::asset('icons/shopping-cart.svg') }}" alt="">
+                                            </a>
                                             <a href="{{ route('logout') }}" class="text-light py-1 my-2"
                                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                                {{ __('Sair') }}
+                                                <img src="{{ URL::asset('icons/log-out.svg') }}" alt="">
                                             </a>
                                             <form id="logout-form" action="{{ route('logout') }}" method="POST"
                                                 class="d-none">

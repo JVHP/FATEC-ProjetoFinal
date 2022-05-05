@@ -2,7 +2,7 @@
 
 @section("body")
 <div class="pt-5">
-    <div class="pt-4 card col-lg-5 col-md-7 col-sm-8 col-12 mx-auto">
+    <div class="pt-4 card border-bottom-orange col-lg-5 col-md-7 col-sm-8 col-12 mx-auto">
         <div class="ps-4 card-title mb-0">
             <h2 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-lg-6 col-md-6 col-sm-12 col-12" >Editar Carro</h2>
             <!-- <hr class="p-1 m-0 bg-primary col-lg-5 col-md-3 col-sm-12 col-md-6" style="opacity: 100%; padding-top: 0"> -->

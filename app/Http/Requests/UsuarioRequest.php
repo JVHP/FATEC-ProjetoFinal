@@ -25,7 +25,7 @@ class UsuarioRequest extends FormRequest
     {
         return [
             'nm_usuario'=>['required', 'max:255'],
-            'email'=>['required', 'email', 'max:255'],
+            'email'=>['required', 'email', 'max:255', 'unique:users'],
             /* 'emailC'=>['required','unique:users,email', 'email' ], */
             'dt_nasc'=>'required',
             'cep'=>['required', 'max:8', 'min:8'],
@@ -42,9 +42,6 @@ class UsuarioRequest extends FormRequest
             'email.unique'=>'E-Mail já cadastrado',
             'email.email'=>'Insira um e-mail com formato válido',
             'email.max'=>'Email deve ter no máximo 255 caracteres ',
-            /* 'emailC.required'=>'E-Mail é obrigatório',
-            'emailC.unique'=>'E-Mail já cadastrado', */
-            /* 'emailC.email'=>'Insira um e-mail com formato válido', */
             'dt_nasc.required'=>'Data de nascimento é obrigatória',
             'cep.required'=>'CEP é obrigatório',
             'cep.max'=>'Limite de 8 caracteres',

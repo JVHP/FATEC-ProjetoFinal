@@ -2,22 +2,22 @@
 @section('body')
 
 <div class="pt-5">
-    <div class="card">
+    <div class="card border-bottom-orange">
     <div class="p-2">
         <h1 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-lg-2 col-md-2 col-sm-12 col-12" >Peças</h1>
     </div>
         <div class="row mx-auto col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 pb-5">
             @foreach($varPeca as $x)
-            <div class=" pt-3 col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12" style="width: 20.19rem;">
+            <div class=" pt-3 col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 mx-auto" style="width: 20.19rem;">
                 <div class="card rounded">
                     @if($x->qt_estoque > 0)
                     @if($x->foto)
-                    <div class="col-12 text-center">
-                        <img class=" " loading="lazy" src="data:image/png;base64, {{stream_get_contents($x->foto)}}" style="object-fit: cover;" width="200px" height="200px" alt="">
+                    <div class="col-12 text-center bg-white">
+                        <img class="img-zoom" loading="lazy" src="data:image/webp;base64, {{stream_get_contents($x->foto)}}" width="200px" height="200px" style="" alt="">
                     </div>
                     @else
                     <div class="col-12 text-center" style=" background: #f3f4f6">
-                        <img class="rounded " src="{{URL('images/default.png')}}" width="200px" height="200px" style="object-fit: cover;" alt="">
+                        <img class="rounded " src="{{URL('images/default.webp')}}" width="200px" height="200px" style="object-fit: cover;" alt="">
                     </div>
                     @endif
                     <div class="card-body" style="height: 150px; /* overflow: auto; */">
@@ -31,15 +31,28 @@
                             <dd>12x R$ {{ number_format(round($x->vl_peca / 12, 2), 2, ',') }}</dd>
                         </dl>
                     </div>
-                    <div class="card-footer bg-white text-center" style="border: none;"><a href="/pecas/{{$x->id}}"><button type="button" class="col-12 btn btn-primary">comprar</button></a></div>
+                    <div class="card-footer bg-white text-center" style="border: none;">
+                        <a href="/pecas/{{$x->id}}">
+                            <button type="button" class=" col-12 btn btn-outline-primary">
+                                <div class="row col-12 justify-content-between fw-bolder">
+                                    <div class="col-2">
+                                        <i class="bi bi-cart"></i>        
+                                    </div>
+                                    <div class="col-10 text-center">
+                                        Comprar        
+                                    </div>
+                                </div>
+                            </button>
+                        </a>
+                    </div>
                     @else
                     @if($x->foto)
-                    <div class="col-12 text-center">
-                        <img class="mx-auto" loading="lazy" src="data:image/png;base64, {{stream_get_contents($x->foto)}}" style="object-fit: cover; filter: grayscale(100%); opacity: 50%;" width="200px" height="200px" alt="">
+                    <div class="col-12 text-center ">
+                        <img class="mx-auto img-zoom" loading="lazy" src="data:image/webp;base64, {{stream_get_contents($x->foto)}}" width="200px" height="200px" style="object-fit: cover; filter: grayscale(100%); opacity: 50%;" alt="">
                     </div>
                     @else
                     <div class="col-12 text-center" style=" background: #f3f4f6">
-                        <img class="rounded img-fluid" src="{{URL('images/default.png')}}" width="200px" height="200px" style="object-fit: cover;" alt="">
+                        <img class="rounded img-fluid" src="{{URL('images/default.webp')}}" width="200px" height="200px" style="object-fit: cover;" alt="">
                     </div>
                     @endif
                     <div class="card-body text-secondary" style="height: 150px/* ; overflow: auto; */">

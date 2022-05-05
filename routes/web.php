@@ -52,7 +52,12 @@ Route::get('/pecas/todos/{nome?}', function($nome = null){
 Route::get('/dashboard', function(){
     $pedidos = Pedido::where('id_usuario', Auth::user()->id)->orderBy('dt_pedido', 'DESC')->get();
     return view('pedidos.dashboard')->with('pedidos', $pedidos);
-})->middleware('auth');
+})->name('dashboard')->middleware('auth');
+
+Route::get('/usuario/informacoes', function(){
+    $dadosUsuario = Auth::user();
+    return view('usuarios.config')->with('dadosUsuario', $dadosUsuario);
+})->name('informacoes')->middleware('auth');
 
 Route::get('pedido/pagar/{id}', function($id){
     $pedido = Pedido::where('id_usuario', Auth::user()->id)->where('id', $id)->first();

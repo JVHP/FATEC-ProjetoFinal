@@ -2,7 +2,7 @@
 
 @section('body')
 <div class="col-12 pt-5" style="height: 100vh;">
-    <div class="card col-5 mx-auto">
+    <div class="card border-bottom-orange col-5 mx-auto">
         <div class="card-title p-2 mb-0">
             <h1 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-lg-7 col-md-7 col-sm-12 col-12" >Editar Usuário</h1>
             <!-- <hr class="p-1 m-0 bg-primary col-lg-5 col-md-3 col-sm-12 col-md-6" style="opacity: 100%; padding-top: 0"> -->
