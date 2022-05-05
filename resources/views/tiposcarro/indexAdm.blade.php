@@ -1,7 +1,7 @@
 @extends('master')
 
 @section("body")
-<div class="card border-bottom-orange p-2">
+<div class="card-display border-bottom-orange p-2">
     <div class="mx-auto row col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="px-0 col-lg-6 col-md-6 col-sm-12 col-12 text-lg-start text-md-start text-sm-center text-center">
             <h2 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-12">Adiministração de Tipos de Carros</h2>

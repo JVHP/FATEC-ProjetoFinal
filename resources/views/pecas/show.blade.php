@@ -1,7 +1,7 @@
 @extends('master')
 
 @section('body')
-    <div class="card border-bottom-orange">
+    <div class="card-display border-bottom-orange">
         <div class="row col-lg-12 col-md-12 col-sm-12 col-12 p-5 mx-auto">
             <div class="col-lg-3 col-md-5 col-sm-6 col-12 text-center pb-2 mx-md-auto mx-sm-auto mx-auto">
                 @if ($peca->foto)
@@ -69,7 +69,7 @@
         </div> --}}
         </div>
     </div>
-    <div class="card border-bottom-orange mt-3">
+    <div class="card-display border-bottom-orange mt-3">
         <div class="row mx-auto col-lg-12 col-md-12 col-sm-12 col-12">
             <div class="">
                 <div class="">

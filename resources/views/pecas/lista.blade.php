@@ -2,7 +2,7 @@
 @section('body')
 
 <div class="pt-5">
-    <div class="card border-bottom-orange">
+    <div class="card-display border-bottom-orange">
     <div class="p-2">
         <h1 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-lg-2 col-md-2 col-sm-12 col-12" >Peças</h1>
     </div>

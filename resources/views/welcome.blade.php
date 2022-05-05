@@ -1,10 +1,12 @@
 @extends('master')
 
 @section('banner')
-<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+{{-- <div class="col-lg-12 col-md-12 col-sm-12 col-12">
     <div class="d-flex justify-content-center bg-primary-dark">
         <img class="img-fluid w-xl-0 w-lg-75" src="{{URL::asset('images/banner-loja.webp')}}" alt=""><!-- melhorar banner -->
     </div>
+</div> --}}
+<div class="banner col-lg-12 col-md-12 col-sm-12 col-12" style="">
 </div>
 @endsection
 
@@ -16,8 +18,8 @@
     <div class="row mx-auto col-lg-12 col-md-12 col-sm-12 col-12 pb-5">
     <div class="mx-auto pt-2 col-lg-3 col-md-4 col-sm-6 col-12"> 
 -->
-<div class="">
-    <div class="card border-bottom-orange pb-2">
+<div class="welcome-padding-top">
+    <div class="card-display border-bottom-orange pb-2">
         <div class="p-2">
             <h1 class="rounded border-bottom-orange bg-primary-dark text-white p-2 col-lg-3 col-md-3 col-sm-12">Destaques</h1>
         </div>
@@ -28,7 +30,7 @@
                 @if($x->qt_estoque > 0)
                 @if($x->foto)
                 <div class="col-12 text-center">
-                    <img class="img-zoom" loading="lazy" src="data:image/webp;base64, {{stream_get_contents($x->foto)}}" width="200px" height="200px" alt=""> 
+                    <img class="mx-auto img-zoom" loading="lazy" src="data:image/webp;base64, {{stream_get_contents($x->foto)}}" width="200px" height="200px" alt=""> 
                 </div>
                 @else
                     <img class="rounded" src="{{URL('images/default.webp')}}" width="200px" height="200px" style="object-fit: cover;" alt="">
@@ -62,7 +64,7 @@
                 <!-- Cards para estoque indisponível -->
                 @if($x->foto)
                 <div class="col-12 text-center">
-                    <img class="img-zoom out-stock" loading="lazy" src="data:image/webp;base64, {{stream_get_contents($x->foto)}}" alt="" width="200px" height="200px">
+                    <img class="mx-auto img-zoom out-stock" loading="lazy" src="data:image/webp;base64, {{stream_get_contents($x->foto)}}" alt="" width="200px" height="200px">
                 </div>
                 @else
                     <img class="rounded" src="{{URL('images/default.webp')}}"  width="200px" height="200px" style="object-fit: cover;" alt="">

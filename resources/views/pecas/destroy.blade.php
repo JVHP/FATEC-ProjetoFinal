@@ -15,7 +15,7 @@
             <img class="rounded" src="{{URL('images/default.webp')}}" width="300px" style="object-fit: cover;" alt="">
             @endif
         </div>
-        <div class="card border-bottom-orange col-lg-7 col-md-12 col-sm-12 col-12 mx-auto ">
+        <div class="card-display border-bottom-orange col-lg-7 col-md-12 col-sm-12 col-12 mx-auto ">
             <div class="row col-lg-12 col-md-12 col-sm-12 col-12">
                 <div class="col-8">
 

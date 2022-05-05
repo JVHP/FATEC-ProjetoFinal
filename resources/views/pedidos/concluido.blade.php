@@ -2,7 +2,7 @@
 
 @section("body")
 
-<div class="card border-bottom-orange p-3" >
+<div class="card-display border-bottom-orange p-3" >
     <div class="card-title m-auto">
         <h1>Sucesso!</h1>
     </div>

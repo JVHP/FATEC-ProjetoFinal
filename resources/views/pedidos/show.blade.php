@@ -2,7 +2,7 @@
 
 @section("body")
 <div class="mx-auto col-lg-5 col-md-7 col-sm-8 col-12 pt-5 pb-5">
-    <div class="card border-bottom-orange">
+    <div class="card-display border-bottom-orange">
         <form action="/pedido/{{$pedido->id}}" method="POST">
             @csrf
             @METHOD('PUT')

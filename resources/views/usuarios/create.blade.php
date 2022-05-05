@@ -2,7 +2,7 @@
 
 @section('body')
 <div class="col-12 pt-5" style="height: 100vh;">
-    <div class="card border-bottom-orange">
+    <div class="card-display border-bottom-orange">
         <div class="row col-12 mx-auto">
             
             <div class="card-body col-lg-5 col-md-5 col-sm-12 col-12">

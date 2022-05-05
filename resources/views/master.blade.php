@@ -53,7 +53,6 @@
                     </button>
                 </div>
 
-
                 <div
                     class="col-lg-auto col-md-3 col-sm-4 col-6 pb-3 my-auto text-md-start text-center me-md-auto mx-md-0 mx-auto">
                     <h3 style="cursor: pointer" class="pt-4 fw-bold text-light onhov" onclick="window.location='/'">
@@ -61,18 +60,15 @@
                     </h3>
                 </div>
 
-
                 <div class="form-group col-xl-3 col-lg-3 col-md-4 col-sm-12 col-12 my-auto">
                     <input list="pecasList" oninput="getPecas(event.target.value)" id="inputPeca"
-                        class=" card rounded-pill form-control" type="text"
+                        class=" card-search rounded-pill form-control" type="text"
                         style="height: 50px; /* border: 2px solid #334756; border-radius: 5px; */"
                         placeholder="Pesquisar...">
 
                     <datalist id="pecasList" onclick="irParaPeca(event.target.value)">
                     </datalist>
                 </div>
-
-
 
                 <div class="text-end col-xxl-2-custom col-lg-3 col-md-4 col-12 pt-md-0 pt-3 my-auto mx-md-0 mx-auto ">
                     <div>
