@@ -3,13 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Carro;
+
 use App\Http\Requests\UsuarioRequest;
 use App\Http\Requests\UsuarioEditRequest;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\Request;
 
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+
 
 class UsuarioController extends Controller
 {
@@ -35,7 +39,11 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-        return view('auth.register-user');
+        $carros = Carro::orderBy('ano', 'DESC')->orderBy('nm_carro', 'ASC')->get();
+
+        $carrosGroup = $carros->groupBy('ano');
+
+        return view('auth.register-user')->with('carros', $carrosGroup);
     }
 
     /**
@@ -46,19 +54,38 @@ class UsuarioController extends Controller
      */
     public function store(UsuarioRequest $request)
     {
+        try {
+            DB::beginTransaction();
 
-        /* echo "Hallo";
-        if ($request->has('emailC')) {
-            $email = $request->emailC;
+            $senha = Hash::make($request->cd_password);
 
-            $request->request->add(['email' => $email]);
-        } */
+            $request->request->add(['password'=>$senha]);
 
-        $senha = Hash::make($request->cd_password);
+            
+            if ($request->has('carros')) {
+                $carros = $request->carros;
+                $usuario = User::create($request->all());
+                
+                foreach($carros as $carro_id){
+                    Carro::find($carro_id)->usuarios()->save($usuario);
+                } 
+                
+                DB::commit();
 
-        $request->request->add(['password'=>$senha]);
-        User::create($request->all());
-        return redirect('/');
+            } else {
+                User::create($request->all());
+                DB::commit();
+
+            }
+
+            return redirect('/');
+
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return $ex;
+
+        }
+
     }
 
     /**

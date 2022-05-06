@@ -18,4 +18,9 @@ class Carro extends Model
     public function tipoCarro(){
         return $this->belongsTo(TipoCarro::class, 'id_tipo_carro', 'id');
     }
+
+    public function usuarios(){
+        return $this->belongsToMany(User::class, 'carro_usuarios', 'id_carro', 'id_usuario');
+    }
+
 }

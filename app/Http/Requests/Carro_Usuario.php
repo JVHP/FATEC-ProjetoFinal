@@ -24,7 +24,16 @@ class Carro_Usuario extends FormRequest
     public function rules()
     {
         return [
-            //
+            'id_carro'=>['required'],
+            'id_usuario'=>['required'],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'id_carro.required' => 'Selecione um carro.',
+            'id_usuario' => 'Usuário não encontrado.',
         ];
     }
 }

@@ -35,7 +35,7 @@ class CarroUsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Carro_Usuario::create($request->all());
     }
 
     /**

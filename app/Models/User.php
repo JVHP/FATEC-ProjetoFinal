@@ -51,6 +51,10 @@ class User extends Authenticatable
         return $this->hasMany(Pedido::class, 'id_usuario');
     }
 
+    public function carros() {
+        return $this->belongsToMany(Carro::class, 'carro_usuarios', 'id_usuario', 'id_carro');
+    }
+
     public function isAdministrator() {
         return $this->is_admin;
     }

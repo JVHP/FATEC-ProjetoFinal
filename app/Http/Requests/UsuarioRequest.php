@@ -30,6 +30,7 @@ class UsuarioRequest extends FormRequest
             'dt_nasc'=>'required',
             'cep'=>['required', 'max:8', 'min:8'],
             'cd_password'=>'required',
+            'carros'=>['array', 'max:5']
         ];
     }
 
@@ -47,6 +48,7 @@ class UsuarioRequest extends FormRequest
             'cep.max'=>'Limite de 8 caracteres',
             'cep.min'=>'CEP deve ter 8 caracteres',
             'cd_password.required'=>'Senha é obrigatória',
+            'carros'=>'O usuário somente pode ter até 5 carros.',
         ];
     }
 }
