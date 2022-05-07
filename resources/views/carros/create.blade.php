@@ -2,12 +2,12 @@
 
 @section("body")
 <div class="pt-5">
-    <div class="p-2 card-display border-bottom-orange col-lg-5 col-md-7 col-sm-8 col-12 mx-auto">
+    <div class="card-display border-bottom-orange col-lg-5 col-md-7 col-sm-8 col-12 mx-auto">
+        <h2 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-12" >Adicionar Carro</h2>
         <div class="card-title mb-0">
-            <h2 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-lg-7 col-md-7 col-sm-12 col-12" >Adicionar Carro</h2>
             <!-- <hr class="p-1 m-0 bg-primary col-lg-7 col-md-5 col-sm-12 col-md-6" style="opacity: 100%; padding-top: 0"> -->
         </div>
-        <div class="card-body">
+        <div class="p-2 card-body">
             <form class="" action="/carros" method="POST">
                 @csrf
                 <div class="p-2">

@@ -1,18 +1,20 @@
 @extends('master')
 
 @section("body")
-<div class="card-display border-bottom-orange p-2">
-    <div class="mx-auto row col-lg-12 col-md-12 col-sm-12 col-12">
-        <div class="px-0 col-lg-6 col-md-6 col-sm-12 col-12 text-lg-start text-md-start text-sm-center text-center">
-            <h1 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-lg-10 col-md-10 col-sm-12 col-12">Adiministração de Carros</h1>
+<div class="card-display border-bottom-orange">
+    <div class="rounded bg-primary-dark border-bottom-orange text-white p-2 mx-auto row col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="px-0 col-lg-6 col-md-8 col-sm-12 col-12 text-lg-start text-md-start text-sm-center text-center">
+            <h2 class="col-12">
+                Adiministração de Carros
+            </h2>
         </div>
-        <div class="col-lg-6 col-md-6 col-sm-12 col-12 my-auto text-lg-end text-md-end text-sm-center text-center">
-            <a href="/carros/create">
+        <div class="col-lg-6 col-md-4 col-sm-12 col-12 my-auto text-lg-end text-md-end text-sm-center text-center">
+            <a href="/tiposcarro/create">
                 <button class="btn btn-primary">Adicionar carro</button>
             </a>
         </div>
     </div>
-<div class="pt-3 table-responsive">
+<div class="pt-3 table-responsive p-2">
     @if(sizeof($carros) > 0)
     <table class="rounded table bg-white">
         <thead class="bg-primary-dark text-white">

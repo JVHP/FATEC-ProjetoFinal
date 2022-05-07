@@ -3,8 +3,8 @@
 
 <div class="pt-5">
     <div class="card-display border-bottom-orange">
+        <h1 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-12">Peças</h1>
     <div class="p-2">
-        <h1 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-lg-2 col-md-2 col-sm-12 col-12" >Peças</h1>
     </div>
         <div class="row mx-auto col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 pb-5">
             @foreach($varPeca as $x)

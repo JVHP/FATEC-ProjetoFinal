@@ -22,8 +22,8 @@
 -->
 <div class="welcome-padding-top">
     <div class="card-display border-bottom-orange pb-2">
+        <h1 class="rounded border-bottom-orange bg-primary-dark text-white p-2 col-12">Destaques</h1>
         <div class="p-2">
-            <h1 class="rounded border-bottom-orange bg-primary-dark text-white p-2 col-lg-3 col-md-3 col-sm-12">Destaques</h1>
         </div>
         <div class="owl-carousel owl-theme">
             @foreach($varPeca as $x)
