@@ -32,7 +32,7 @@
                             <div class="pt-4 my-auto">
                                 @if ($peca->qt_estoque > 0)
                                     @guest
-                                        <a href="/cadastrar">
+                                        <a href="/login">
                                             <button class="btn btn-primary">
                                                 Comprar
                                             </button>
