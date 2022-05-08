@@ -4,13 +4,17 @@ use App\Models\Peca;
 use App\Models\User;
 use App\Models\Pedido;
 use App\Http\Controllers\PecaController;
-use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\CarroController;
-use App\Http\Controllers\TipoCarroController;
+use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\TipoCarroController;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+
 use Carbon\Carbon;
 
 /*
@@ -24,11 +28,31 @@ use Carbon\Carbon;
 |
 */
 
+
+/* EMAIL */
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+ 
+    return redirect('/');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware(['auth'])->name('verification.notice');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+ 
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.resend');
+
+/* WELCOME */
 Route::get('/', function () {
     $pecas = Peca::take(8)->inRandomOrder()->where('qt_estoque', '>', 0)->get();
     return view('welcome')->with('varPeca', $pecas);
 });
 
+/* PEÇAS */
 Route::get('pecas/nome/{nm_peca}', function ($nm_peca) {    
     $peca = DB::table('pecas')->select(DB::raw('nm_peca, id'))->whereRaw(' UPPER(nm_peca) LIKE ? ', [strtoupper($nm_peca).'%'])->get();
     return $peca;
@@ -49,15 +73,11 @@ Route::get('/pecas/todos/{nome?}', function($nome = null){
     return view('pecas.lista')->with('varPeca', $pecas);
 });
 
+/* PEDIDOS */
 Route::get('/dashboard', function(){
     $pedidos = Pedido::where('id_usuario', Auth::user()->id)->orderBy('dt_pedido', 'DESC')->get();
     return view('pedidos.dashboard')->with('pedidos', $pedidos);
-})->name('dashboard')->middleware('auth');
-
-Route::get('/usuario/informacoes', function(){
-    $dadosUsuario = Auth::user();
-    return view('usuarios.config')->with('dadosUsuario', $dadosUsuario);
-})->name('informacoes')->middleware('auth');
+})->name('dashboard')->middleware(['auth', 'verified']);
 
 Route::get('pedido/pagar/{id}', function($id){
     $pedido = Pedido::where('id_usuario', Auth::user()->id)->where('id', $id)->first();
@@ -71,7 +91,7 @@ Route::get('pedido/cancelar/{id}', function($id){
         ->update(array('ck_finalizado' => 'C'));
 
         return redirect('/dashboard');
-})->middleware('auth');
+})->middleware(['auth', 'verified']);
 
 Route::get('pedido/pagar/concluir/{id}', function($id){
     $pedido = Pedido::where('id', $id)->first();
@@ -88,6 +108,13 @@ Route::get('pedido/pagar/concluir/{id}', function($id){
     }
     
 });
+
+/* USUÁRIO */
+Route::get('/usuario/informacoes', function(){
+    $dadosUsuario = Auth::user();
+    return view('usuarios.config')->with('dadosUsuario', $dadosUsuario);
+})->name('informacoes')->middleware('auth');
+
 
 Route::resource('pecas', PecaController::class);
 

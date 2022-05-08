@@ -53,7 +53,7 @@
                             </div>
 
                             <div class="row mt-2 ps-2 pb-2 form-group">
-                                <div class="col-md-6 text-start">
+                                <div class="col-6 text-start">
                                     @if (Route::has('password.request'))
                                         <a class=" btn-link" href="{{ route('password.request') }}">
                                             {{ __('Esqueceu a senha?') }}
@@ -61,7 +61,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group col-6 row mb-0 text-end">
-                                    <div class="form-check col-auto ps-4 ms-5 text-center">
+                                    <div class="form-check col-12 text-start">
                                         <input class="form-check-input" type="checkbox" name="remember" id="remember"
                                             {{ old('remember') ? 'checked' : '' }}>
                                         <label class="form-check-label" for="remember">
@@ -152,6 +152,6 @@
         </div>
     </div>
     <script>
-        console.log("hello")
+        
     </script>
 @endsection

@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
+use Illuminate\Auth\Events\Registered;
+
 
 class UsuarioController extends Controller
 {
@@ -43,6 +45,8 @@ class UsuarioController extends Controller
 
         $carrosGroup = $carros->groupBy('ano');
 
+        /* echo '<p style="color: white">'.$carros->groupBy(['ano', 'id_tipo_carro']).'</h1>'; */
+
         return view('auth.register-user')->with('carros', $carrosGroup);
     }
 
@@ -61,23 +65,21 @@ class UsuarioController extends Controller
 
             $request->request->add(['password'=>$senha]);
 
-            
+            $usuario = User::create($request->all());
+
             if ($request->has('carros')) {
                 $carros = $request->carros;
-                $usuario = User::create($request->all());
+                
                 
                 foreach($carros as $carro_id){
                     Carro::find($carro_id)->usuarios()->save($usuario);
                 } 
-                
-                DB::commit();
-
-            } else {
-                User::create($request->all());
-                DB::commit();
-
             }
+                
+            event(new Registered($usuario));
 
+            DB::commit();
+            
             return redirect('/');
 
         } catch (Exception $ex) {
