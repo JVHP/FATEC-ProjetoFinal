@@ -73,6 +73,23 @@ Route::get('/pecas/todos/{nome?}', function($nome = null){
     return view('pecas.lista')->with('varPeca', $pecas);
 });
 
+Route::get('/pecas-usuario', function($nome = null){
+    $user = Auth::user();
+    
+    $pecas_carro = DB::table('carro_usuarios')->select(DB::raw('pecas.*'))->distinct()->join('carro_peca', 'carro_usuarios.id_carro', '=', 'carro_peca.carro_id')
+    ->join('pecas', 'carro_peca.peca_id', '=', 'pecas.id')->where('carro_usuarios.id_usuario', '=', $user->id)->orderBy('qt_estoque', 'DESC')->orderBy('nm_peca', 'DESC')->paginate(15);
+
+    $mensagem = '';
+
+    if (sizeof($user->carros()->get()) == 0) {
+        $mensagem = 'Não foram encontrados carros vinculados ao seu usuário';
+    } else
+    if (sizeof($pecas_carro) == 0) {
+        $mensagem = 'Não foram encontradas peças para seu(s) carro(s) em nosos catálogo';
+    }    
+    return view('pecas.lista-carros-usuario')->with('varPeca', $pecas_carro)->with('mensagem', $mensagem);
+});
+
 /* PEDIDOS */
 Route::get('/dashboard', function(){
     $pedidos = Pedido::where('id_usuario', Auth::user()->id)->orderBy('dt_pedido', 'DESC')->get();

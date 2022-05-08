@@ -192,6 +192,13 @@
                             </div>
                         </div>
                     @else
+                        <a href="/pecas-usuario">
+                            <button
+                                class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
+                                Peças para seu(s) carro(s)
+                            </button>
+                        </a>
+                        
                         @if (Auth::user()->isAdministrator())
                             <a href="/pecas">
                                 <button
