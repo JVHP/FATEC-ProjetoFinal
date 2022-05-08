@@ -20,7 +20,7 @@ class CreatePedidosTable extends Migration
             $table->date('dt_pedido');
             $table->date('dt_pagamento')->nullable();
             $table->timestamps();
-            $table->foreign('id_usuario')->references('id')->on('usuarios');
+            $table->foreign('id_usuario')->references('id')->on('users')->onDelete('cascade');;
         });
     }
 

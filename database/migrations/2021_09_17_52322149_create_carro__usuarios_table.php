@@ -18,8 +18,8 @@ class CreateCarroUsuariosTable extends Migration
             $table->bigInteger('id_carro')->unsigned();
             $table->bigInteger('id_usuario')->unsigned();
             $table->timestamps();
-            $table->foreign('id_carro')->references('id')->on('carros');
-            $table->foreign('id_usuario')->references('id')->on('usuarios');
+            $table->foreign('id_carro')->references('id')->on('carros')->onDelete('cascade');
+            $table->foreign('id_usuario')->references('id')->on('user')->onDelete('cascade');
             $table->unique(['id_carro', 'id_usuario']);
         });
     }
