@@ -73,7 +73,7 @@ Route::get('/pecas/todos/{nome?}', function($nome = null){
     return view('pecas.lista')->with('varPeca', $pecas);
 });
 
-Route::get('/pecas-usuario', function($nome = null){
+Route::get('/pecas-usuario', function(){
     $user = Auth::user();
     
     $pecas_carro = DB::table('carro_usuarios')->select(DB::raw('pecas.*'))->distinct()->join('carro_peca', 'carro_usuarios.id_carro', '=', 'carro_peca.carro_id')

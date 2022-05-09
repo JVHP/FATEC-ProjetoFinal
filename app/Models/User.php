@@ -22,11 +22,15 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'dt_nasc', 
+        'cpf', 
         'cep', 
         'cd_cartao',
         'nm_login', 
         'is_admin',
-        'email_verified_at'];
+        'email_verified_at',
+        'nm_rua',
+        'nr_casa',
+        'ds_bairro',];
 
 
     /**

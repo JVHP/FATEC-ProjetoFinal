@@ -29,7 +29,10 @@ class UsuarioRequest extends FormRequest
             /* 'emailC'=>['required','unique:users,email', 'email' ], */
             'dt_nasc'=>'required',
             'cep'=>['required', 'max:8', 'min:8'],
-            'cd_password'=>'required',
+            'cpf'=>['required', 'max:11'],
+            'nm_rua'=>['required', 'max:255'],
+            'ds_bairro'=>['required', 'max:255'],
+            'nr_casa'=>['required', 'max:10'],
             'carros'=>['array', 'max:5']
         ];
     }
@@ -48,6 +51,14 @@ class UsuarioRequest extends FormRequest
             'cep.max'=>'Limite de 8 caracteres',
             'cep.min'=>'CEP deve ter 8 caracteres',
             'cd_password.required'=>'Senha é obrigatória',
+            'cpf.required'=>'CPF é obrigatório',
+            'cpf.max'=>'O tamanho máximo para o CPF é de 11 caracteres',
+            'nm_rua.required'=>'Rua é obrigatória',
+            'nm_rua.max'=>'O tamanho máximo para o logradouro é de 255 caracteres',
+            'ds_bairro.required'=>'Bairro é obrigatório',
+            'ds_bairro.max'=>'O tamanho máximo para o bairro é de 255 caracteres',
+            'nr_casa.required'=>'Nº da residência é obrigatório',
+            'nr_casa.max'=>'O tamanho máximo para o número da residência é de 10 caracteres',
             'carros'=>'O usuário somente pode ter até 5 carros.',
         ];
     }

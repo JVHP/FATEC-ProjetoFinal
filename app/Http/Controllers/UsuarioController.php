@@ -44,6 +44,7 @@ class UsuarioController extends Controller
         $carros = Carro::orderBy('ano', 'DESC')->orderBy('nm_carro', 'ASC')->get();
 
         $carrosGroup = $carros->groupBy('ano');
+        /* $carrosGroup = $carros->groupBy(['ano', 'id_tipo_carro']); */
 
         /* echo '<p style="color: white">'.$carros->groupBy(['ano', 'id_tipo_carro']).'</h1>'; */
 
