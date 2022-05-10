@@ -13,7 +13,7 @@
                         <!-- <hr class="p-1 m-0 bg-primary col-lg-3 col-md-3 col-sm-12 col-md-6" style="opacity: 100%; padding-top: 0"> -->
                     </div>
                     <form method="POST" class="" name="login" action="{{ route('login') }}">
-                        @csrf
+                        {{csrf_field}}
                         <div class="col-lg-9 col-md-9 col-sm-12 col-12 mx-auto">
                             <h1
                                 class=" rounded bg-primary-dark border-bottom-orange text-white p-2 ">
