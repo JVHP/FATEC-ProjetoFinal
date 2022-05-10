@@ -142,3 +142,5 @@ Route::resource('tiposcarro', TipoCarroController::class)->middleware('auth');;
 Route::resource('usuarios', UsuarioController::class);
 
 Auth::routes();
+
+?>
