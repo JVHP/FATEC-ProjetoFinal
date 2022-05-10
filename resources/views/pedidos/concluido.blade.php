@@ -2,13 +2,11 @@
 
 @section("body")
 
-<div class="card-display border-bottom-orange p-3" >
-    <div class="card-title m-auto">
-        <h1>Sucesso!</h1>
-    </div>
-    <div class="card-body">
+<div class="card-display border-bottom-orange" >
+    <h1 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-12">Pagamento</h1>
+    <div class="card-body  p-3">
         <div>
-            <h2 class="text-center">Seu pagamento foi aprovado!</h2>
+            <h2 class="text-center">Sucesso! Seu pagamento foi aprovado!</h2>
         </div>
         <div>
         </div>
