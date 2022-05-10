@@ -12,9 +12,9 @@
         <div class="card-body">
             <h3 class="text-center">Agora é só pagar seu "PIX", ou copiar o link no seu navegador!</h3>
         </div>
-        <img class="mx-auto" src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=http://{{$_SERVER['HTTP_HOST']}}/pedido/pagar/concluir/{{$pedido->id}}" title="Link to Google.com" width="300px" />
+        <img class="mx-auto" src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl={{$_SERVER['HTTP_HOST']}}/pedido/pagar/concluir/{{$pedido->id}}" title="Link to Google.com" width="300px" />
         <p class="mx-auto">
-            http://{{$_SERVER['HTTP_HOST']}}/pedido/pagar/concluir/{{$pedido->id}}
+           {{$_SERVER['HTTP_HOST']}}/pedido/pagar/concluir/{{$pedido->id}}
         </p>
 
     </div>
