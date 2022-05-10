@@ -28,6 +28,11 @@ use Carbon\Carbon;
 |
 */
 
+/* WELCOME */
+Route::get('/', function () {
+    $pecas = Peca::take(8)->inRandomOrder()->where('qt_estoque', '>', 0)->get();
+    return view('welcome')->with('varPeca', $pecas);
+});
 
 /* EMAIL */
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
@@ -46,12 +51,6 @@ Route::post('/email/verification-notification', function (Request $request) {
     return back()->with('message', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.resend');
 
-/* WELCOME */
-Route::get('/', function () {
-    $pecas = Peca::take(8)->inRandomOrder()->where('qt_estoque', '>', 0)->get();
-    return view('welcome')->with('varPeca', $pecas);
-});
-
 /* PEÇAS */
 Route::get('pecas/nome/{nm_peca}', function ($nm_peca) {    
     $peca = DB::table('pecas')->select(DB::raw('nm_peca, id'))->whereRaw(' UPPER(nm_peca) LIKE ? ', [strtoupper($nm_peca).'%'])->get();
@@ -62,7 +61,7 @@ Route::get('pecas/delete/{id}', function ($id) {
     $peca = Peca::find($id);
     $carros = Peca::find($peca->id)->carros()->get();
     return view('pecas.destroy')->with('peca', $peca)->with('carros', $carros);
-})->middleware('auth');;
+})->middleware('auth');
 
 Route::get('/pecas/todos/{nome?}', function($nome = null){
     if ($nome != null) {
@@ -88,7 +87,7 @@ Route::get('/pecas-usuario', function(){
         $mensagem = 'Não foram encontradas peças para seu(s) carro(s) em nosos catálogo';
     }    
     return view('pecas.lista-carros-usuario')->with('varPeca', $pecas_carro)->with('mensagem', $mensagem);
-});
+})->middleware(['auth', 'verified']);
 
 /* PEDIDOS */
 Route::get('/dashboard', function(){
@@ -123,7 +122,6 @@ Route::get('pedido/pagar/concluir/{id}', function($id){
         $message = ['titulo'=>'Erro', 'corpo' => 'Houve algum erro ao pagar seu pedido'];
         return view('pedidos.concluido')->with('message', $message);
     }
-    
 });
 
 /* USUÁRIO */
