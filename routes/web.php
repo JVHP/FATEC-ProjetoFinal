@@ -144,5 +144,3 @@ Route::resource('tiposcarro', TipoCarroController::class)->middleware('auth');;
 Route::resource('usuarios', UsuarioController::class);
 
 Auth::routes();
-
-/* Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home'); */
