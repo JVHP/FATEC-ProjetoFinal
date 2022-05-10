@@ -25,7 +25,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        URL::forceScheme('https');
+        /* Força o esquema https para quando for publicado */
+        if (env('APP_ENV') != 'local') {
+            URL::forceScheme('https');
+        }
         Paginator::useBootstrap();
     }
 }
