@@ -112,14 +112,18 @@ Route::get('pedido/cancelar/{id}', function($id){
 Route::get('pedido/pagar/concluir/{id}', function($id){
     $pedido = Pedido::where('id', $id)->first();
     try{
+        if ($pedido->dt_pagamento != null) {
+            $message = ['titulo'=>'Aviso', 'corpo' => 'Parece que seu pedido já foi pago! Aguarde por mais notícias!'];
+            return view('pedidos.concluido')->with('message', $message);
+        }
         DB::table('pedidos')
         ->where('id', $pedido->id)
         ->limit(1)
         ->update(array('dt_pagamento' => Carbon::now()));
-        $message = ['titulo'=>'Sucesso!', 'corpo' => 'Parabéns! Seu pedido foi pago e aprovado!'];
+        $message = ['titulo'=>'Sucesso', 'corpo' => 'Parabéns! Seu pedido foi pago e aprovado!'];
         return view('pedidos.concluido')->with('message', $message);
     }catch(Exception){
-        $message = ['titulo'=>'Erro', 'corpo' => 'Houve algum erro ao pagar seu pedido'];
+        $message = ['titulo'=>'Aviso', 'corpo' => 'Houve algum erro ao pagar seu pedido'];
         return view('pedidos.concluido')->with('message', $message);
     }
 });
