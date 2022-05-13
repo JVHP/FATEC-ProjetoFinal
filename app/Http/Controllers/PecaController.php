@@ -7,6 +7,7 @@ use App\Models\Carro;
 use App\Models\Foto_Peca;
 use Illuminate\Http\Request;
 use App\Http\Requests\PecaRequest;
+use App\Models\TipoPeca;
 
 class PecaController extends Controller
 {
@@ -36,7 +37,8 @@ class PecaController extends Controller
     public function create()
     {
         $carros = Carro::all();
-        return view('pecas.create')->with('carros', $carros);
+        $tipos = TipoPeca::where('ck_ativo', '=', '1')->get();
+        return view('pecas.create')->with('carros', $carros)->with('tipos', $tipos);
     }
 
     /**
@@ -77,7 +79,8 @@ class PecaController extends Controller
     public function show(Peca $peca)
     {
         $carros = Peca::find($peca->id)->carros()->get();
-        return view('pecas.show')->with('peca', $peca)->with('carros', $carros)/* ->with('fotos', $peca->fotos()->get()) */;
+        $tipos = TipoPeca::where('ck_ativo', '=', '1')->get();
+        return view('pecas.show')->with('peca', $peca)->with('carros', $carros)->with('tipos', $tipos);
     }
 
     /**
@@ -90,7 +93,9 @@ class PecaController extends Controller
     {
         $carros = Carro::all();
         $carrosPeca = Peca::find($peca->id)->carros()->get();
-        return view('pecas.edit')->with('peca', $peca)->with('carros', $carros)->with('carrosPeca', $carrosPeca);
+        $tipos = TipoPeca::where('ck_ativo', '=', '1')->get();
+        $tiposPeca = Peca::find($peca->id)->tipos()->get();
+        return view('pecas.edit')->with('peca', $peca)->with('carros', $carros)->with('carrosPeca', $carrosPeca)->with('tipos', $tipos)->with('tiposPeca', $tiposPeca);
     }
 
     /**

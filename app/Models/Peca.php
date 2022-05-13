@@ -25,6 +25,10 @@ class Peca extends Model
         return $this->hasOne(Foto_Peca::class, 'id_peca', 'id');
     }
 
+    public function tipoPeca() {
+        return $this->belongsTo(Peca::class, 'id_tipo_peca', 'id');
+    }
+
     public function retirarDoEstoque($id){
         DB::table('pecas')->where('id', '=', $id)->decrement('qt_estoque');
         return 'success';

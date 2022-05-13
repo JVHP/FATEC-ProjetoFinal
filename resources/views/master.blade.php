@@ -208,6 +208,12 @@
                                     Gerenciar Peças
                                 </button>
                             </a>
+                            <a href="/tipospeca">
+                                <button
+                                    class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
+                                    Gerenciar Tipos de Peça
+                                </button>
+                            </a>
                         @endif
                     </div>
                 </div>

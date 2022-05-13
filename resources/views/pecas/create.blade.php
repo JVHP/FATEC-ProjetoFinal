@@ -57,6 +57,33 @@
                     </div>
                 </div>
                 <div class="p-2">
+                    <div class="form-floating">
+                        @if($errors->has('id_tipo_peca'))
+                        <select aria-placeholder="Tipo peça" id="id_tipo_peca" class="form-select is-invalid" name="id_tipo_peca" value="{{old('id_tipo_peca')}}">
+                            <option value="" selected="{{old('id_tipo_peca') != null ? false : true}}" disabled>Selecione...</option>
+                            @foreach($tipos as $tp)
+                            @if($tp->id == old('id_tipo_peca'))
+                            <option selected value="{{$tp->id}}">{{$tp->nm_tipo}}</option>
+                            @else
+                            <option value="{{$tp->id}}">{{$tp->nm_tipo}}</option>
+                            @endif
+                            @endforeach
+                        </select>
+                        <div class="invalid-feedback">
+                            {{ $errors->first('id_tipo_peca') }}
+                        </div>
+                        @else
+                        <select aria-placeholder="Tipo peça" id="id_tipo_peca" class="form-select" name="id_tipo_peca">
+                            <option value="" selected disabled>Selecione...</option>
+                            @foreach($tipos as $tp)
+                            <option value="{{$tp->id}}">{{$tp->nm_tipo}}</option>
+                            @endforeach
+                        </select>
+                        @endif
+                        <label for="id_tipo_peca">Tipo peça</label>
+                    </div>
+                </div>
+                <div class="p-2">
                     <label for="carros">Carros Compatíveis(cntrl+click multiseleção)</label>
                     <div class="form-floating">
                         <select aria-placeholder="Carros Compatíveis" style="height: 10rem;" id="carros" class="form-select p-0" name="carros[]" multiple aria-label="multiple select example">

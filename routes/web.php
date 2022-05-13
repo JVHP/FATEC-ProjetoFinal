@@ -8,7 +8,8 @@ use App\Http\Controllers\CarroController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\TipoCarroController;
-
+use App\Http\Controllers\TipoPecaController;
+use App\Models\TipoPeca;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -141,7 +142,9 @@ Route::resource('pedido', PedidoController::class);
 
 Route::resource('carros', CarroController::class);
 
-Route::resource('tiposcarro', TipoCarroController::class)->middleware('auth');;
+Route::resource('tiposcarro', TipoCarroController::class)->middleware('auth');
+
+Route::resource('tipospeca', TipoPecaController::class);
 
 Route::resource('usuarios', UsuarioController::class);
 

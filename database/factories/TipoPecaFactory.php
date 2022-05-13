@@ -2,18 +2,10 @@
 
 namespace Database\Factories;
 
-use App\Models\TipoCarro;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class TipoCarroFactory extends Factory
+class TipoPecaFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = TipoCarro::class;
-
     /**
      * Define the model's default state.
      *
@@ -22,7 +14,8 @@ class TipoCarroFactory extends Factory
     public function definition()
     {
         return [
-            'nm_tipo' => 'Sedãn',
+            'nm_tipo' => 'Amortecedor',
+            'ck_ativo' => '1',
         ];
     }
 }

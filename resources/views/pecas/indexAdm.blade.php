@@ -9,7 +9,7 @@
             </h2>
         </div>
         <div class="col-lg-6 col-md-4 col-sm-12 col-12 my-auto text-lg-end text-md-end text-sm-center text-center">
-            <a href="/tiposcarro/create">
+            <a href="/pecas/create">
                 <button class="btn btn-primary">Adicionar peça</button>
             </a>
         </div>
