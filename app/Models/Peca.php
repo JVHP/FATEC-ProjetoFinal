@@ -10,7 +10,7 @@ class Peca extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nm_peca', 'vl_peca', 'qt_estoque', 'foto'];
+    protected $fillable = ['nm_peca', 'vl_peca', 'qt_estoque', 'foto', 'id_tipo_peca'];
 
 
     public function carros() {
