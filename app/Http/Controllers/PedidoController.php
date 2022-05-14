@@ -6,7 +6,9 @@ use App\Models\Pedido;
 use App\Models\Peca;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Exception;
 
 class PedidoController extends Controller
 {
@@ -119,10 +121,10 @@ class PedidoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Pedido $pedido)
-    {
-        $pedido->pecas()->detach();
+    {        
+        $pedido->pecas()-> detach();
         $pedido->delete();
-
+        
         return redirect('/dashboard');
     }
 }

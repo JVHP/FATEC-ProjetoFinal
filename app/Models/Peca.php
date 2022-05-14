@@ -26,7 +26,7 @@ class Peca extends Model
     }
 
     public function tipoPeca() {
-        return $this->belongsTo(Peca::class, 'id_tipo_peca', 'id');
+        return $this->belongsTo(TipoPeca::class, 'id_tipo_peca', 'id');
     }
 
     public function retirarDoEstoque($id){

@@ -22,6 +22,10 @@
                         @endif
                         <label for="nm_tipo">Nome do Tipo de Peça</label>
                     </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" name="ck_ativo" type="checkbox" role="switch" id="flexSwitchCheck">
+                        <label class="form-check-label" for="flexSwitchCheck">Ativo</label>
+                    </div>
                 </div>
                 <div class="p-2">
                     <input class="btn btn-success" type="submit" value="Salvar">

@@ -21,6 +21,7 @@
 
                         <div class="card-title">
                             <p class="pb-0 mb-0">Código: {{ $peca->id }}</p>
+                            <p class="pb-0 mb-0">Categoria: {{ $tipoPeca->nm_tipo }}</p>
                             <h1>{{ $peca->nm_peca }}</h1>
                         </div>
                         <div class="card-body">

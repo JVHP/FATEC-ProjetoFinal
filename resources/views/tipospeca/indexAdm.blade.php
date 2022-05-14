@@ -21,6 +21,7 @@
             <tr>
                 <th class="m-0 text-center">Id</th>
                 <th>Nome</th>
+                <th class="m-0 text-center">Ativo</th>
                 <th class="m-0 text-center">Ações</th>
             </tr>
         </thead>
@@ -29,6 +30,13 @@
             <tr>
                 <td class="m-0 text-center">{{$x->id}}</td>
                 <td class="m-0">{{$x->nm_tipo}}</td>
+                <td class="m-0 text-center">
+                    @if($x->ck_ativo == 1) 
+                    <img src="{{ URL::asset('icons/check.svg')}}" alt="">
+                    @elseif($x->ck_ativo == 0)
+                    <img src="{{ URL::asset('icons/x.svg')}}" alt="">
+                    @endif
+                </td>
                 <td class="m-0 text-center">
                     <a href="/tipospeca/{{$x->id}}/edit">
                         <button class="btn btn-outline-info">Editar</button>

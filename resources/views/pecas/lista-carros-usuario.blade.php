@@ -43,7 +43,7 @@
                             <dd><span class="text-success">à vista</span>
                                 <p>R$ {{ number_format($x->vl_peca, 2, ',') }}</p>
                             </dd>
-                            <dd>12x R$ {{ number_format(round($x->vl_peca / 12, 2), 2, ',') }}</dd>
+                            <dd>12x R$ {{ number_format(round($x->vl_peca / 12, 2), 2, ',') }} sem juros</dd>
                         </dl>
                     </div>
                     <div class="card-footer bg-white text-center" style="border: none;">
@@ -75,8 +75,9 @@
                             <h5 class="fw-bold col-auto text-truncate" data-bs-toggle="tooltip" data-bs-placement="right" title="{{$x->nm_peca}}">{{ $x->nm_peca }} </h5>
                         </div>
                         <dl>
-                            <dd>R$ {{ number_format($x->vl_peca, 2, ',') }}</dd>
-                            <dd>12x R$ {{ number_format(round($x->vl_peca / 12, 2), 2, ',') }}</dd>
+                            <dd><span class="text-success">à vista</span>
+                                <p>R$ {{ number_format($x->vl_peca, 2, ',') }}</p></dd>
+                            <dd>12x R$ {{ number_format(round($x->vl_peca / 12, 2), 2, ',') }} sem juros</dd>
                         </dl>
                     </div>
                     <div class="card-footer bg-white text-center" style="border: none;"><button type="button" class="col-12 btn btn-primary disabled">Indisponível</button></div>

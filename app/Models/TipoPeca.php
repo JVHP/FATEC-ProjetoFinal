@@ -9,9 +9,11 @@ class TipoPeca extends Model
 {
     use HasFactory;
 
+    protected $table = 'tipo_pecas';
+
     protected $fillable = ['nm_tipo' ,'ck_ativo'];
 
     public function pecas() {
-        return $this->belongsToMany(Peca::class, 'id', 'id_tipo_peca');
+        return $this->hasMany(Peca::class, 'id_tipo_peca', 'id');
     }
 }

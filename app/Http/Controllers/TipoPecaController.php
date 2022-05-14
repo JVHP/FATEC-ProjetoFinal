@@ -45,6 +45,12 @@ class TipoPecaController extends Controller
      */
     public function store(TipoPecaRequest $request)
     {
+        if ($request->ck_ativo == 'off') {
+            $request->request->add(['ck_ativo' => '0']);
+        } else if ($request->ck_ativo == 'on') {
+            $request->request->add(['ck_ativo' => '1']);
+        }
+
         TipoPeca::create($request->all());
         return redirect('/tipospeca');
     }
@@ -84,19 +90,23 @@ class TipoPecaController extends Controller
     {
         $tipoPeca = TipoPeca::findOrFail($id);
 
-        if ($request->ck_ativo == 'off') {
+        if (!$request->has('ck_ativo')) {
+            $pecas = $tipoPeca->pecas()->select('pecas.id')->get();
+
+            if (sizeof($pecas) > 0) {
+                
+                return view('tipospeca.edit')->with('tipo', $tipoPeca)->with('message', "Não é possível desativar o tipo pois existem peças vinculadas à ele.");
+            }
+
             $request->request->add(['ck_ativo' => '0']);
 
-            $pecas = TipoPeca::find($tipoPeca)->pecas()->find();
-            if (sizeof($pecas) > 0) {
-                return TipoPeca::edit($tipoPeca)->with('message', "Não é possível excluír o tipo pois existem peças vinculadas.");
-            }
         } else if ($request->ck_ativo == 'on') {
             $request->request->add(['ck_ativo' => '1']);
+
         }
 
         $tipoPeca->update($request->all());
-        return redirect('/tipospeca');
+        return $request;
     }
 
     /**

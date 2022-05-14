@@ -21,6 +21,7 @@
             <tr>
                 <th class="m-0 text-center">Id</th>
                 <th>Nome</th>
+                <th>Categoria</th>
                 <th class="m-0 text-center">Valor</th>
                 <th class="m-0 text-center">Estoque</th>
                 <th class="m-0 text-center">Comandos</th>
@@ -31,6 +32,7 @@
             <tr>
                 <td class="m-0 text-center">{{$x->id}}</td>
                 <td class="m-0">{{$x->nm_peca}}</td>
+                <td class="m-0">{{$x->nm_tipo}}</td>
                 <td class="m-0 text-center">R$ {{number_format($x->vl_peca, 2, ',')}}</td>
                 <td class="m-0 text-center">{{$x->qt_estoque}}</td>
                 <td class="m-0 text-center">
