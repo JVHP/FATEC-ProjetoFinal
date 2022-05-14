@@ -9,7 +9,7 @@
             </h2>
         </div>
         <div class="col-lg-6 col-md-4 col-sm-12 col-12 my-auto text-lg-end text-md-end text-sm-center text-center">
-            <a href="/tiposcarro/create">
+            <a href="/pecas/create">
                 <button class="btn btn-primary">Adicionar peça</button>
             </a>
         </div>
@@ -21,6 +21,7 @@
             <tr>
                 <th class="m-0 text-center">Id</th>
                 <th>Nome</th>
+                <th>Categoria</th>
                 <th class="m-0 text-center">Valor</th>
                 <th class="m-0 text-center">Estoque</th>
                 <th class="m-0 text-center">Comandos</th>
@@ -31,6 +32,7 @@
             <tr>
                 <td class="m-0 text-center">{{$x->id}}</td>
                 <td class="m-0">{{$x->nm_peca}}</td>
+                <td class="m-0">{{$x->nm_tipo}}</td>
                 <td class="m-0 text-center">R$ {{number_format($x->vl_peca, 2, ',')}}</td>
                 <td class="m-0 text-center">{{$x->qt_estoque}}</td>
                 <td class="m-0 text-center">

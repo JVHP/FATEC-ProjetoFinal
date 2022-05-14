@@ -10,7 +10,7 @@ class Peca extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nm_peca', 'vl_peca', 'qt_estoque', 'foto'];
+    protected $fillable = ['nm_peca', 'vl_peca', 'qt_estoque', 'foto', 'id_tipo_peca'];
 
 
     public function carros() {
@@ -23,6 +23,10 @@ class Peca extends Model
 
     public function fotos(){
         return $this->hasOne(Foto_Peca::class, 'id_peca', 'id');
+    }
+
+    public function tipoPeca() {
+        return $this->belongsTo(TipoPeca::class, 'id_tipo_peca', 'id');
     }
 
     public function retirarDoEstoque($id){

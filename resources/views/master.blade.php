@@ -112,7 +112,7 @@
                                             </a>
                                         </div>
                                         <div class="col-12 text-start">
-                                            <a href="{{ route('informacoes') }}" class="text-light py-1 me-2 my-2">
+                                            <a href="{{ route('informacoes') }}" class="text-light py-1 me-1 my-2">
                                                 <img src="{{ URL::asset('icons/settings.svg') }}" alt="">
                                             </a>
                                             <a href="{{ route('dashboard') }}" class="text-light py-1 me-2 my-2">
@@ -206,6 +206,12 @@
                                 <button
                                     class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
                                     Gerenciar Peças
+                                </button>
+                            </a>
+                            <a href="/tipospeca">
+                                <button
+                                    class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
+                                    Gerenciar Tipos de Peça
                                 </button>
                             </a>
                         @endif

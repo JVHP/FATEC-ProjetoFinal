@@ -8,7 +8,8 @@ use App\Http\Controllers\CarroController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\TipoCarroController;
-
+use App\Http\Controllers\TipoPecaController;
+use App\Models\TipoPeca;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -60,7 +61,8 @@ Route::get('pecas/nome/{nm_peca}', function ($nm_peca) {
 Route::get('pecas/delete/{id}', function ($id) {
     $peca = Peca::find($id);
     $carros = Peca::find($peca->id)->carros()->get();
-    return view('pecas.destroy')->with('peca', $peca)->with('carros', $carros);
+    $tipoPeca = Peca::find($peca->id)->tipoPeca()->first();
+    return view('pecas.destroy')->with('peca', $peca)->with('carros', $carros)->with('tipoPeca', $tipoPeca);
 })->middleware('auth');
 
 Route::get('/pecas/todos/{nome?}', function($nome = null){
@@ -101,12 +103,32 @@ Route::get('pedido/pagar/{id}', function($id){
 })->middleware('auth');
 
 Route::get('pedido/cancelar/{id}', function($id){
-    DB::table('pedidos')
-        ->where('id', $id)
-        ->limit(1)
-        ->update(array('ck_finalizado' => 'C'));
+        try {
+            $pecasQtd = DB::table('peca_pedidos')
+                        ->join('pedidos', 'pedidos.id', '=', 'peca_pedidos.id_pedido')
+                        ->join('pecas', 'pecas.id', '=', 'peca_pedidos.id_peca')
+                        ->select('peca_pedidos.qt_peca', 'peca_pedidos.id_peca')
+                        ->where('pedidos.id', '=', $id)
+                        ->get();    
 
-        return redirect('/dashboard');
+            foreach($pecasQtd as $peca) {
+             $pecas = Peca::find($peca->id_peca);       
+             
+             DB::table('pecas')
+             ->where('id', '=', $peca->id_peca)
+             ->update(['qt_estoque' => intval($pecas->qt_estoque + $peca->qt_peca)]);
+            }
+                            
+
+            DB::table('pedidos')
+                ->where('id', $id)
+                ->limit(1)
+                ->update(array('ck_finalizado' => 'C'));
+
+            return redirect('/dashboard');
+        } catch (Exception $ex) {
+            return $ex;
+        }
 })->middleware(['auth', 'verified']);
 
 Route::get('pedido/pagar/concluir/{id}', function($id){
@@ -141,7 +163,9 @@ Route::resource('pedido', PedidoController::class);
 
 Route::resource('carros', CarroController::class);
 
-Route::resource('tiposcarro', TipoCarroController::class)->middleware('auth');;
+Route::resource('tiposcarro', TipoCarroController::class)->middleware('auth');
+
+Route::resource('tipospeca', TipoPecaController::class);
 
 Route::resource('usuarios', UsuarioController::class);
 

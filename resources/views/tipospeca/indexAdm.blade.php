@@ -5,12 +5,12 @@
     <div class="rounded bg-primary-dark border-bottom-orange text-white p-2 mx-auto row col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="px-0 col-lg-6 col-md-8 col-sm-12 col-12 text-lg-start text-md-start text-sm-center text-center">
             <h2 class="col-12">
-                Adiministração de Tipos de Carro
+                Adiministração de Tipos de Peça
             </h2>
         </div>
         <div class="col-lg-6 col-md-4 col-sm-12 col-12 my-auto text-lg-end text-md-end text-sm-center text-center">
-            <a href="/tiposcarro/create">
-                <button class="btn btn-primary">Adicionar tipo de carro</button>
+            <a href="/tipospeca/create">
+                <button class="btn btn-primary">Adicionar tipo de peça</button>
             </a>
         </div>
     </div>
@@ -21,6 +21,7 @@
             <tr>
                 <th class="m-0 text-center">Id</th>
                 <th>Nome</th>
+                <th class="m-0 text-center">Ativo</th>
                 <th class="m-0 text-center">Ações</th>
             </tr>
         </thead>
@@ -30,10 +31,17 @@
                 <td class="m-0 text-center">{{$x->id}}</td>
                 <td class="m-0">{{$x->nm_tipo}}</td>
                 <td class="m-0 text-center">
-                    <a href="/tiposcarro/{{$x->id}}/edit">
+                    @if($x->ck_ativo == 1) 
+                    <img src="{{ URL::asset('icons/check.svg')}}" alt="">
+                    @elseif($x->ck_ativo == 0)
+                    <img src="{{ URL::asset('icons/x.svg')}}" alt="">
+                    @endif
+                </td>
+                <td class="m-0 text-center">
+                    <a href="/tipospeca/{{$x->id}}/edit">
                         <button class="btn btn-outline-info">Editar</button>
                     </a>
-                    <a href="/tiposcarro/{{$x->id}}">
+                    <a href="/tipospeca/{{$x->id}}">
                         <button class="btn btn-outline-success">Visualizar</button>
                     </a>
                 </td>
