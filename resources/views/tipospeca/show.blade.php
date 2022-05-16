@@ -13,7 +13,7 @@
             <div class="card-body">
                 <dl class="">
                     <dd class="h3 fw-bolder">{{$tipo->nm_tipo}}</dd>
-                    <dd class="h3 fw-bolder">{{$tipo->ck_ativo}}</dd>
+                    <dd class="h3 fw-bolder">{{$tipo->ck_ativo == '1' ? 'Ativo' : 'Inativo'}}</dd>
                 </dl>
                 <a href="/tipospeca"><button type="button" class="btn btn-primary">Voltar</button></a>
                 <input class="btn btn-danger col-3" type="submit" value="Excluir">

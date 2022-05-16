@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Marca;
+use App\Http\Requests\MarcaRequest;
 use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class MarcaController extends Controller
 {
@@ -40,7 +43,7 @@ class MarcaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MarcaRequest $request)
     {
         Marca::create($request->all());
         return redirect('/marcas');
@@ -66,7 +69,6 @@ class MarcaController extends Controller
      */
     public function edit(Marca $marca)
     {
-        //TODO
         return view('marcas.edit')->with('marca', $marca);
     }
 
@@ -77,9 +79,17 @@ class MarcaController extends Controller
      * @param  \App\Models\Marca  $marca
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Marca $marca)
+    public function update(MarcaRequest $request, Marca $marca)
     {
-        //TODO
+        Validator::make($request->rules(), [
+            'nm_marca' => [
+                'required', 
+                Rule::unique('marcas')->ignore($marca->id),
+            ],
+        ]);
+
+        $marca->update($request->all());
+
         return redirect('/marcas');
     }
 

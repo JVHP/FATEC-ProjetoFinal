@@ -32,7 +32,7 @@
                 <td class="m-0 text-center">{{$x->id}}</td>
                 <td class="m-0">{{$x->nm_marca}}</td>
                 <td class="m-0">{{$x->categoria()}}</td>
-                <td class="m-0 text-center">{{$x->ds_marca}}</td>
+                <td class="m-0" style="max-width: 165px; cursor: pointer"><p id="descricao" class="text-truncate" onclick="modificarTamanho(event)">{{$x->ds_marca}}</p></td>
                 <td class="m-0 text-center">
                     <a href="/marcas/{{$x->id}}/edit">
                         <button class="btn btn-outline-info">Editar</button>

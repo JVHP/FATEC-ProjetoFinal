@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class Carro extends FormRequest
+class MarcaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class Carro extends FormRequest
     public function rules()
     {
         return [
-            'nm_marca'=>['required', 'max:255', 'unique:marcas'],
+            'nm_marca'=>['required', 'max:255'/* , 'unique:marcas' Movida para o controller de marcas */],
             'ck_categoria_marca'=>['required'],
             'ds_marca'=>['max:350'],
         ];
