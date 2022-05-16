@@ -3,10 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Marca;
+use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
 
 class MarcaController extends Controller
 {
+
+    public function _constructor() {
+        $this->middleware(['auth', 'admin.user']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +20,8 @@ class MarcaController extends Controller
      */
     public function index()
     {
-        //
+        $marcas = Marca::orderBy('id', 'asc')->paginate(15);
+        return view('marcas.indexAdm')->with('marcas', $marcas);
     }
 
     /**
@@ -24,7 +31,7 @@ class MarcaController extends Controller
      */
     public function create()
     {
-        //
+        return view('marcas.create');
     }
 
     /**
@@ -35,7 +42,8 @@ class MarcaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Marca::create($request->all());
+        return redirect('/marcas');
     }
 
     /**
@@ -46,7 +54,8 @@ class MarcaController extends Controller
      */
     public function show(Marca $marca)
     {
-        //
+        //TODO
+        return view('marcas.show')->with('marca', $marca);
     }
 
     /**
@@ -57,7 +66,8 @@ class MarcaController extends Controller
      */
     public function edit(Marca $marca)
     {
-        //
+        //TODO
+        return view('marcas.edit')->with('marca', $marca);
     }
 
     /**
@@ -69,7 +79,8 @@ class MarcaController extends Controller
      */
     public function update(Request $request, Marca $marca)
     {
-        //
+        //TODO
+        return redirect('/marcas');
     }
 
     /**
@@ -80,6 +91,7 @@ class MarcaController extends Controller
      */
     public function destroy(Marca $marca)
     {
-        //
+        //TODO
+        return redirect('/marcas');
     }
 }

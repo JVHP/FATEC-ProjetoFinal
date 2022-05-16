@@ -13,9 +13,13 @@ class MarcaFactory extends Factory
      */
     public function definition()
     {
-        return [
+        /* return [
             'nm_marca'=>'Metal Horse',
             'ck_categoria_marca'=>'P',
+        ]; */
+        return [
+            'nm_marca'=>'Ford',
+            'ck_categoria_marca'=>'C',
         ];
     }
 }

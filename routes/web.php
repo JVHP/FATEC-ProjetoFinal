@@ -5,6 +5,7 @@ use App\Models\User;
 use App\Models\Pedido;
 use App\Http\Controllers\PecaController;
 use App\Http\Controllers\CarroController;
+use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\TipoCarroController;
@@ -168,5 +169,7 @@ Route::resource('tiposcarro', TipoCarroController::class)->middleware('auth');
 Route::resource('tipospeca', TipoPecaController::class);
 
 Route::resource('usuarios', UsuarioController::class);
+
+Route::resource('marcas', MarcaController::class);
 
 Auth::routes();

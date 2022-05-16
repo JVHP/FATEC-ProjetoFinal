@@ -26,6 +26,7 @@ class Carro extends FormRequest
         return [
             'nm_marca'=>['required', 'max:255', 'unique:marcas'],
             'ck_categoria_marca'=>['required'],
+            'ds_marca'=>['max:350'],
         ];
     }
     
@@ -41,6 +42,7 @@ class Carro extends FormRequest
             'nm_marca.max'=>'Tamanho máximo para o nome é de 255 caracteres',
             'nm_marca.unique'=>'Já existe uma marca com este nome',
             'ck_categoria_marca.required'=>'Selecione um categoria.',
+            'ds_marca.max'=>'Tamanho máximo para a descrição é de 350 caracteres.',
         ];
     }
 
