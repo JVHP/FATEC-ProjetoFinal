@@ -71,29 +71,33 @@
         </div>
     </div>
     <div class="card-display border-bottom-orange mt-3">
-        <div class="row mx-auto col-lg-12 col-md-12 col-sm-12 col-12">
-            <div class="">
-                <div class="">
-                    <h3>Informações sobre o produto</h3>
-                    <div>
-                        <ul>
-                            <div class="">
-                                <div class="" style="height: 100%;">
-                                    <div>
-                                        <dl>
-                                            <dd>Compatível com o(s) seguinte(s) carro(s):</dd>
-                                            @forelse($carros as $xx)
-                                                <dd class="fw-bold">{{ $xx->nm_carro }}</dd>
-                                            @empty
-                                                <dd class="fw-bold">Compatibilidade Universal</dd>
-                                            @endforelse
-                                        </dl>
-                                    </div>
-                                </div>
+        <h1 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-12">Informações sobre o produto</h1>
+        <div class="row mx-auto col-lg-12 col-md-12 col-sm-12 col-12 p-3">
+            <div>
+                <ul>
+                    <div class="">
+                        <div class="" style="height: 100%;">
+                            <div>
+                                <dl>
+                                    <dd class="pb-0 mb-0">Marca: </dd>
+                                    <dd>
+                                        <b>{{ $peca->marca()->first()->nm_marca }}</b>
+                                    </dd>
+                                </dl>
                             </div>
-                        </ul>
+                            <div>
+                                <dl>
+                                    <dd>Compatível com o(s) seguinte(s) carro(s):</dd>
+                                    @forelse($carros as $xx)
+                                        <dd class="fw-bold">{{ $xx->nm_carro }}</dd>
+                                    @empty
+                                        <dd class="fw-bold">Compatibilidade Universal</dd>
+                                    @endforelse
+                                </dl>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </ul>
             </div>
         </div>
     </div>

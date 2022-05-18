@@ -153,15 +153,15 @@
                 @else
                     @if (Auth::user()->isAdministrator())
                         <div class="accordion-item" style="border-radius: none; border: none">
-                            <h2 class="accordion-header" id="flush-headingThree">
+                            <h2 class="accordion-header" id="flush-headingUsuarios">
                                 <button class="accordion-button collapsed bg-orange" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#flush-collapseThree" aria-expanded="false"
-                                    aria-controls="flush-collapseThree">
+                                    data-bs-target="#flush-collapseUsuarios" aria-expanded="false"
+                                    aria-controls="flush-collapseUsuarios">
                                     Usuários
                                 </button>
                             </h2>
-                            <div id="flush-collapseThree" class="accordion-collapse collapse"
-                                aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                            <div id="flush-collapseUsuarios" class="accordion-collapse collapse"
+                                aria-labelledby="flush-headingUsuarios" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body p-0">
                                     <a href="/usuarios">
                                         <button
@@ -172,22 +172,42 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="accordion-item" style="border-radius: none; border: none">
+                            <h2 class="accordion-header" id="flush-headingMarcas">
+                                <button class="accordion-button collapsed bg-orange" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapseMarcas" aria-expanded="false"
+                                    aria-controls="flush-collapseMarcas">
+                                    Marcas
+                                </button>
+                            </h2>
+                            <div id="flush-collapseMarcas" class="accordion-collapse collapse"
+                                aria-labelledby="flush-headingMarcas" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body p-0">
+                                    <a href="/marcas">
+                                        <button
+                                            class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
+                                            Gerenciar Marcas
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     @endif
                 @endguest
                 <div class="accordion-item" style="border-radius: none; border: none">
-                    <h2 class="accordion-header" id="flush-headingOne">
+                    <h2 class="accordion-header" id="flush-headingPecas">
                         <button class="accordion-button collapsed bg-orange" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                            data-bs-target="#flush-collapsePecas" aria-expanded="false" aria-controls="flush-collapsePecas">
                             Peças
                         </button>
                     </h2>
-                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                    <div id="flush-collapsePecas" class="accordion-collapse collapse" aria-labelledby="flush-headingPecas"
                         data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body p-0">
                             <a href="/pecas/todos">
                                 <button
                                     class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
-                                    Todas Peças
+                                    Todas as Peças
                                 </button>
                             </a>
                             @guest
@@ -223,13 +243,13 @@
         @else
             @if (Auth::user()->isAdministrator())
                 <div class="accordion-item" style="border-radius: 0; border: none">
-                    <h2 class="accordion-header" id="flush-headingTwo">
+                    <h2 class="accordion-header" id="flush-headingCarros">
                         <button class="accordion-button collapsed bg-orange " type="button" data-bs-toggle="collapse"
-                            data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                            data-bs-target="#flush-collapseCarros" aria-expanded="false" aria-controls="flush-collapseCarros">
                             Carros
                         </button>
                     </h2>
-                    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
+                    <div id="flush-collapseCarros" class="accordion-collapse collapse" aria-labelledby="flush-headingCarros"
                         data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body p-0">
                             <a href="/carros">
@@ -265,6 +285,8 @@
 
 <script src="/js/register-user/register-user.js">
 </script>
+<script src="/js/master/datalist.js">
+</script>
 
 <script>
     $('.owl-carousel').owlCarousel({
@@ -296,52 +318,10 @@
         }
     })
 
-
-    //Função para popular o DataList
-    let listaPecas = document.getElementById('pecasList');
-
-    let opcaoTodos = document.createElement('option')
-    opcaoTodos.text = "Ir para todos"
-    opcaoTodos.value = "Ir para todos"
-    opcaoTodos.id = "all"
-    listaPecas.appendChild(opcaoTodos)
-
-
-    function getPecas(peca) {
-        let i = 0
-        var request = $.get('/pecas/nome/' + peca);
-        request.then((response) => {
-            while (listaPecas.firstChild) {
-                listaPecas.removeChild(listaPecas.lastChild)
-            }
-            var pecas = null
-            pecas = response;
-            pecas.forEach((item) => {
-                i++
-                let option = document.createElement('option');
-                option.text = "Código: " + item.id
-                option.value = item.nm_peca
-                option.id = "peca" + i
-                listaPecas.appendChild(option)
-            })
-        })
+    //Função para tamanho de descrições
+    function modificarTamanho(event) {
+        let element = event.srcElement;
+        element.classList.toggle('text-truncate');
     }
 
-    //Função seleção opção DataList
-    $(document).ready(function() {
-        $('#inputPeca').on('change', function() {
-            var userText = $(this).val();
-
-            $("#pecasList").find("option").each(function() {
-                if ($(this).val() == userText) {
-                    irParaPeca($(this).text());
-                }
-            })
-        })
-    });
-
-    //Função de pesquisa
-    function irParaPeca(peca) {
-        window.location = '/pecas/' + peca.substr(8)
-    }
 </script>
