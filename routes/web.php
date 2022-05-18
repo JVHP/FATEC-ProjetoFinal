@@ -54,6 +54,11 @@ Route::post('/email/verification-notification', function (Request $request) {
 })->middleware(['auth', 'throttle:6,1'])->name('verification.resend');
 
 /* PEÇAS */
+/* Route::get('pecas/todos/', function($categoria_id) {
+    $peca = DB::table('pecas')->where('id_tipo_peca', '=', $categoria_id)->get();
+    return $peca;
+});
+ */
 Route::get('pecas/nome/{nm_peca}', function ($nm_peca) {    
     $peca = DB::table('pecas')->select(DB::raw('nm_peca, id'))->whereRaw(' UPPER(nm_peca) LIKE ? ', [strtoupper($nm_peca).'%'])->get();
     return $peca;
@@ -66,7 +71,7 @@ Route::get('pecas/delete/{id}', function ($id) {
     return view('pecas.destroy')->with('peca', $peca)->with('carros', $carros)->with('tipoPeca', $tipoPeca);
 })->middleware('auth');
 
-Route::get('/pecas/todos/{nome?}', function($nome = null){
+Route::get('/pecas/todos/{nome?}/{categoria_id?}', function($nome = null){
     if ($nome != null) {
         $pecas = Peca::orderBy('qt_estoque', 'DESC')->orderBy('nm_peca', 'DESC')->whereRaw(' UPPER(nm_peca) LIKE ? ', [strtoupper($nome).'%'])->paginate(15);
     }else{
@@ -150,6 +155,11 @@ Route::get('pedido/pagar/concluir/{id}', function($id){
         return view('pedidos.concluido')->with('message', $message);
     }
 });
+
+/* Route::get('/categorias-pecas/', function() {
+    $tipos = DB::table('tipo_pecas')->where('ck_ativo', '=', '1')->get();
+    return $tipos;
+}); */
 
 /* USUÁRIO */
 Route::get('/usuario/informacoes', function(){
