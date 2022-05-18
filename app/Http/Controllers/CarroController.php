@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Carro;
 use App\Models\TipoCarro;
+use App\Models\Marca;
 use Illuminate\Http\Request;
+use App\Http\Requests\CarroRequest;
 
 class CarroController extends Controller
 {
@@ -33,7 +35,8 @@ class CarroController extends Controller
     public function create()
     {
         $tiposCarro = TipoCarro::all();
-        return view('carros.create')->with('tipos', $tiposCarro);
+        $marcas = Marca::whereIn('ck_categoria_marca', ['C', 'A'])->get();
+        return view('carros.create')->with('tipos', $tiposCarro)->with('marcas', $marcas);
     }
 
     /**
@@ -42,7 +45,7 @@ class CarroController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CarroRequest $request)
     {
         Carro::create($request->all());
         return redirect('/carros');
@@ -57,7 +60,8 @@ class CarroController extends Controller
     public function show(Carro $carro)
     {
         $tipo = TipoCarro::all();
-        return view('carros.show')->with('carro', $carro)->with('tipo', $tipo);
+        $marcas = Marca::whereIn('ck_categoria_marca', ['C', 'A'])->get();
+        return view('carros.show')->with('carro', $carro)->with('tipo', $tipo)->with('marcas', $marcas);
     }
 
     /**
@@ -69,7 +73,10 @@ class CarroController extends Controller
     public function edit(Carro $carro)
     {
         $tipo = TipoCarro::all();
-        return view('carros.edit')->with('carro', $carro)->with('tipo', $tipo);
+        $marcas = Marca::whereIn('ck_categoria_marca', ['C', 'A'])->get();
+        $marcaCarro = $carro->marca()->first();
+       
+        return view('carros.edit')->with('carro', $carro)->with('tipo', $tipo)->with('marcas', $marcas)->with('marcaCarro', $marcaCarro);
     }
 
     /**
@@ -79,7 +86,7 @@ class CarroController extends Controller
      * @param  \App\Models\Carro  $carro
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Carro $carro)
+    public function update(CarroRequest $request, Carro $carro)
     {
         $carro->update($request->all());
         return redirect('/carros');
@@ -93,7 +100,19 @@ class CarroController extends Controller
      */
     public function destroy(Carro $carro)
     {
-        $carro->pecas()->detach();
+
+        if (sizeof($carro->pecas()->get())) {
+            $tipo = TipoCarro::all();
+            $marcas = Marca::whereIn('ck_categoria_marca', ['C', 'A'])->get();
+
+            return view('carros.show')
+                ->with('carro', $carro)
+                ->with('tipo', $tipo)
+                ->with('marcas', $marcas)
+                ->with('message', 'Não é possível excluír carro, pois contém peças vinculadas a ele.');
+        }
+
+        /* $carro->pecas()->detach(); */
         $carro->delete();
         return redirect('/carros');
     }

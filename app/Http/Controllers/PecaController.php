@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\PecaRequest;
 use App\Models\TipoPeca;
+use App\Models\Marca;
 
 class PecaController extends Controller
 {
@@ -29,7 +30,8 @@ class PecaController extends Controller
         $pecas =/*  Peca::orderBy('id', 'ASC')->paginate(10); */
                 DB::table('pecas')
                 ->join('tipo_pecas', 'pecas.id_tipo_peca', '=', 'tipo_pecas.id')
-                ->select('pecas.*', 'tipo_pecas.nm_tipo')
+                ->join('marcas', 'pecas.id_marca', '=', 'marcas.id')
+                ->select('pecas.*', 'tipo_pecas.nm_tipo', 'marcas.nm_marca')
                 ->orderBy('id', 'ASC')
                 ->paginate(10);
 
@@ -46,7 +48,8 @@ class PecaController extends Controller
     {
         $carros = Carro::all();
         $tipos = TipoPeca::where('ck_ativo', '=', '1')->get();
-        return view('pecas.create')->with('carros', $carros)->with('tipos', $tipos);
+        $marcas = Marca::whereIn('ck_categoria_marca', ['P', 'A'])->get();
+        return view('pecas.create')->with('carros', $carros)->with('tipos', $tipos)->with('marcas', $marcas);
     }
 
     /**
@@ -74,7 +77,6 @@ class PecaController extends Controller
             Peca::create($request->all());
         }
         
-        /* Peca::create($request->all());*/
         return redirect('/pecas'); 
     }
 
@@ -88,7 +90,8 @@ class PecaController extends Controller
     {
         $carros = Peca::find($peca->id)->carros()->get();
         $tipoPeca = Peca::find($peca->id)->tipoPeca()->first();
-        return view('pecas.show')->with('peca', $peca)->with('carros', $carros)->with('tipoPeca', $tipoPeca);
+        $marca = Marca::whereIn('ck_categoria_marca', ['P', 'A'])->get();
+        return view('pecas.show')->with('peca', $peca)->with('carros', $carros)->with('tipoPeca', $tipoPeca)->with('marca', $marca);
     }
 
     /**
@@ -101,9 +104,21 @@ class PecaController extends Controller
     {
         $carros = Carro::all();
         $carrosPeca = Peca::find($peca->id)->carros()->get();
+
         $tipos = TipoPeca::where('ck_ativo', '=', '1')->get();
         $tipoPeca = Peca::find($peca->id)->tipoPeca()->get();
-        return view('pecas.edit')->with('peca', $peca)->with('carros', $carros)->with('carrosPeca', $carrosPeca)->with('tipos', $tipos)->with('tiposPeca', $tipoPeca);
+
+
+        $marcaPeca = Peca::find($peca->id)->marca()->get();
+        $marcas = Marca::whereIn('ck_categoria_marca', ['P', 'A'])->get();
+
+        return view('pecas.edit')->with('peca', $peca)
+            ->with('carros', $carros)
+            ->with('carrosPeca', $carrosPeca)
+            ->with('tipos', $tipos)
+            ->with('tiposPeca', $tipoPeca)
+            ->with('marcas', $marcas)
+            ->with('marcaPeca', $marcaPeca);
     }
 
     /**
@@ -125,9 +140,6 @@ class PecaController extends Controller
             $carros = $request->carros;
                 
             $peca->carros()->sync($carros);
-            /* foreach($carros as $x){
-                Carro::find($x)->pecas()->sync($peca);
-            } */ 
         }
 
         $peca->update($request->all());
@@ -147,9 +159,4 @@ class PecaController extends Controller
         $peca->delete();
         return redirect('/pecas');
     }
-
-    /* public function foto($id)
-    {
-        return view('peca.foto')->with('id', $id);
-    } */
 }

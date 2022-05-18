@@ -34,6 +34,37 @@
                 </div>
                 <div class="p-2">
                     <div class="form-floating">
+                        @if($errors->has('id_marca'))
+                        <select aria-placeholder="Marca" id="id_marca" class="form-select is-invalid" name="id_marca" value="{{old('id_marca')}}">
+                            <option value="" selected="{{old('id_marca') != null ? false : true}}" disabled>Selecione...</option>
+                            @foreach($marcas as $mrc)
+                            @if($mrc->id == old('id_tipo_peca'))
+                            <option selected value="{{$mrc->id}}">{{$mrc->nm_marca}}</option>
+                            @else
+                            <option value="{{$mrc->id}}">{{$mrc->nm_marca}}</option>
+                            @endif
+                            @endforeach
+                        </select>
+                        <div class="invalid-feedback">
+                            {{ $errors->first('id_marca') }}
+                        </div>
+                        @else
+                        <select aria-placeholder="Marca" id="id_marca" class="form-select" name="id_marca">
+                            <option value="" selected disabled>Selecione...</option>
+                            @foreach($marcas as $mrc)
+                            @if($mrc->id == $peca->id_marca)
+                            <option selected value="{{$mrc->id}}">{{$mrc->nm_marca}}</option>
+                            @else
+                            <option value="{{$mrc->id}}">{{$mrc->nm_marca}}</option>
+                            @endif
+                            @endforeach
+                        </select>
+                        @endif
+                        <label for="id_marca">Marca</label>
+                    </div>
+                </div>
+                <div class="p-2">
+                    <div class="form-floating">
                         @if($errors->has('vl_peca'))
                         <input aria-describedby="invalid-feedback" class="form-control is-invalid" type="number" step="0.01" name="vl_peca" id="vl_peca" placeholder="Valor" value="{{(empty(old('vl_peca'))) ? $peca->vl_peca : (old('vl_peca'))}}">
                         <div class="invalid-feedback">

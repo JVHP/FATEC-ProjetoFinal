@@ -9,7 +9,7 @@
             </h2>
         </div>
         <div class="col-lg-6 col-md-4 col-sm-12 col-12 my-auto text-lg-end text-md-end text-sm-center text-center">
-            <a href="/tiposcarro/create">
+            <a href="/carros/create">
                 <button class="btn btn-primary">Adicionar carro</button>
             </a>
         </div>
@@ -22,6 +22,7 @@
                 <th class="m-0 text-center">Id</th>
                 <th>Nome</th>
                 <th>Ano</th>
+                <th>Marca</th>
                 <th>Categoria</th>
                 <th class="m-0 text-center">Ações</th>
             </tr>
@@ -32,6 +33,7 @@
                 <td class="m-0 text-center">{{$x->id}}</td>
                 <td class="m-0">{{$x->nm_carro}}</td>
                 <td class="m-0">{{$x->ano}}</td>
+                <td class="m-0">{{$x->marca()->first()->nm_marca}}</td>
                 <td class="m-0">{{$x->tipoCarro()->first()->nm_tipo}}</td>
                 <td class="m-0 text-center">
                     <a href="carros/{{$x->id}}/edit">

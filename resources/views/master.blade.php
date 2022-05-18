@@ -207,7 +207,7 @@
                             <a href="/pecas/todos">
                                 <button
                                     class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
-                                    Todas Peças
+                                    Todas as Peças
                                 </button>
                             </a>
                             @guest

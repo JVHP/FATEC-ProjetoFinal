@@ -31,6 +31,14 @@
                         <div class="pt-3">
                             <h3>Informações adicionais:</h3>
                             <div>
+                                <div>
+                                    <dl>
+                                        <dd class="pb-0 mb-0">Marca: </dd>
+                                        <dd>
+                                            <b>{{ $peca->marca()->first()->nm_marca }}</b>
+                                        </dd>
+                                    </dl>
+                                </div>
 
                                 <div>
                                     <dl>

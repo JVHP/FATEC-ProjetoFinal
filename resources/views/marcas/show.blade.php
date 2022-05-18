@@ -7,16 +7,16 @@
         <form action="/tiposcarro/{{$marca->id}}" method="POST">
             @csrf
             @method('DELETE')
-            <div class="card-title ps-2 pt-2 mb-0">
-                <!-- <hr class="p-1 m-0 bg-primary col-lg-8 col-md-8 col-sm-12 col-md-6" style="opacity: 100%; padding-top: 0"> -->
-            </div>
+            @if(isset($message))
+            <div class="alert alert-danger">{{$message}}</div>
+            @endif
             <div class="card-body">
                 <dl class="">
-                    <dd class="h3 fw-bolder">{{$marca->nm_marca}}</dd>
-                    <dd class="h3 fw-bolder">{{$marca->categoria()}}</dd>
-                    <dd class="h3 fw-bolder">{{$marca->ds_marca}}</dd>
+                    <dd class="h4 fw-bolder">{{$marca->nm_marca}}</dd>
+                    <dd class="h5 fw-bolder">{{$marca->categoria()}}</dd>
+                    <textarea class="form-control" disabled style="background-color: white; height: 160px;">{{empty($marca->ds_marca) ? 'Marca não contém detalhes' : $marca->ds_marca}}</textarea>
                 </dl>
-                <a href="/tiposcarro"><button type="button" class="btn btn-primary">Voltar</button></a>
+                <a href="/marcas"><button type="button" class="btn btn-primary">Voltar</button></a>
                 <input class="btn btn-danger col-3" type="submit" value="Excluir">
             </div>
         </form>

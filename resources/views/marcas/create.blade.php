@@ -29,7 +29,8 @@
                                     <label class="btn btn-outline-success my-2 col-5" for="marca_peca">Peça</label>
                                 <input class="form-check btn-check" id="marca_carro" type="radio" name="ck_categoria_marca" value="C">
                                     <label class="btn btn-outline-success my-2 col-5" for="marca_carro">Carro</label>
-                                
+                                <input class="form-check btn-check" id="marca_ambas" type="radio" name="ck_categoria_marca" value="A">
+                                    <label class="btn btn-outline-success my-2 col-5" for="marca_ambas">Ambas</label>
                                 </div>
                             </div>
                             @if($errors->has('ck_categoria_marca'))

@@ -8,11 +8,12 @@ use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Nette\Utils\Arrays;
 
 class MarcaController extends Controller
 {
 
-    public function _constructor() {
+    public function __construct() {
         $this->middleware(['auth', 'admin.user']);
     }
 
@@ -88,6 +89,33 @@ class MarcaController extends Controller
             ],
         ]);
 
+        if ($request->ck_categoria_marca != $marca->ck_categoria_marca) {
+            $vinculados = $marca->vinculados();
+
+            if (sizeof($vinculados) > 0) {
+
+                $message = "A categoria da marca não pode ser alterada pois existem ";
+    
+                switch($marca->ck_categoria_marca) {
+                    case 'P':
+                        $message += "Peça(s)";
+                        break;
+                    case 'C':
+                        $message += "Carro(s)";
+                        break;
+                    case 'A':
+                        $message += "Peça(s)/Carro(s)";
+                        break;
+                    default:
+                        $message += "dados";
+                        break;
+                }
+
+                return view('marcas.edit')->with('marca', $marca)->with('message', " vinculados a ela.");
+            }
+        }
+
+
         $marca->update($request->all());
 
         return redirect('/marcas');
@@ -101,7 +129,30 @@ class MarcaController extends Controller
      */
     public function destroy(Marca $marca)
     {
-        //TODO
+        $vinculados = $marca->vinculados();
+
+        if (sizeof($vinculados) > 0) {
+            $message = "A categoria da marca não pode ser alterada pois existem ";
+    
+            switch($marca->ck_categoria_marca) {
+                case 'P':
+                    $message += "Peça(s)";
+                    break;
+                case 'C':
+                    $message += "Carro(s)";
+                    break;
+                case 'A':
+                    $message += "Peça(s)/Carro(s)";
+                    break;
+                default:
+                    $message += "dados";
+                    break;
+            }
+            
+            return view('marcas.show')->with('marca', $marca)->with('message', "vinculados a ela.");
+        }
+
+        $marca->delete();
         return redirect('/marcas');
     }
 }
