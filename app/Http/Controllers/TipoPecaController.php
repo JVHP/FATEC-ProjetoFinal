@@ -106,7 +106,7 @@ class TipoPecaController extends Controller
         }
 
         $tipoPeca->update($request->all());
-        return $request;
+        return redirect('/tipospeca');
     }
 
     /**

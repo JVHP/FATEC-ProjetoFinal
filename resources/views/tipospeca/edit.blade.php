@@ -23,7 +23,11 @@
                         @endif
                         <label for="nm_tipo">Nome do Tipo de Peça</label>
                         <div class="form-check form-switch">
-                            <input class="form-check-input" name="ck_ativo" type="checkbox" value="{{empty(old('ck_ativo')) ? ($tipo->ck_ativo == 1 ? true : false) : (old('ck_ativo'))}}" role="switch" id="flexSwitchCheck">
+                            @if($tipo->ck_ativo == 1)
+                            <input class="form-check-input" name="ck_ativo" type="checkbox" value="on" checked role="switch" id="flexSwitchCheck">
+                            @else
+                            <input class="form-check-input" name="ck_ativo" type="checkbox" value="" role="switch" id="flexSwitchCheck">
+                            @endif
                             <label class="form-check-label" for="flexSwitchCheck">Ativo</label>
                         </div>
                     </div>
