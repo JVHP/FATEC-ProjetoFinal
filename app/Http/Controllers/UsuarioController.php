@@ -7,7 +7,7 @@ use App\Models\Carro;
 
 use App\Http\Requests\UsuarioRequest;
 use App\Http\Requests\UsuarioEditRequest;
-
+use App\Models\Marca;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
@@ -44,11 +44,13 @@ class UsuarioController extends Controller
         $carros = Carro::orderBy('ano', 'DESC')->orderBy('nm_carro', 'ASC')->get();
 
         $carrosGroup = $carros->groupBy('ano');
+
+        $marcas = Marca::whereIn('ck_categoria_marca', ['C', 'A'])->get();
         /* $carrosGroup = $carros->groupBy(['ano', 'id_tipo_carro']); */
 
         /* echo '<p style="color: white">'.$carros->groupBy(['ano', 'id_tipo_carro']).'</h1>'; */
 
-        return view('auth.register-user')->with('carros', $carrosGroup);
+        return view('auth.register-user')->with('carros', $carrosGroup)->with('marcas', $marcas);
     }
 
     /**

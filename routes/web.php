@@ -2,6 +2,7 @@
 
 use App\Models\Peca;
 use App\Models\User;
+use App\Models\Carro;
 use App\Models\Pedido;
 use App\Http\Controllers\PecaController;
 use App\Http\Controllers\CarroController;
@@ -34,6 +35,15 @@ use Carbon\Carbon;
 Route::get('/', function () {
     $pecas = Peca::take(8)->inRandomOrder()->where('qt_estoque', '>', 0)->get();
     return view('welcome')->with('varPeca', $pecas);
+});
+
+/* Carros */
+Route::get('/carros-registro/{ano}/{id_marca}', function ($ano, $id_marca) {
+    $carros = Carro::where('ano', $ano)->where('id_marca', $id_marca)->orderBy('ano', 'DESC')->orderBy('nm_carro', 'ASC')->get();
+
+    /* $carrosGroup = $carros->groupBy('ano'); */
+
+    return $carros;
 });
 
 /* EMAIL */
