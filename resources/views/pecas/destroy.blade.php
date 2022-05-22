@@ -42,7 +42,7 @@
                                     <input disabled class="form-control" type="number" step="0.01" name="vl_peca"
                                         id="vl_peca" placeholder="Valor"
                                         value="{{$peca->vl_peca}}">
-                                    <label for="vl_peca">Valor<b class="text-danger">*</b></label>
+                                    <label for="vl_peca">Valor</label>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-12 p-2">
@@ -50,7 +50,7 @@
                                     <input disabled class="form-control" type="number" name="qt_estoque" id="qt_estoque"
                                         placeholder="Estoque"
                                         value="{{ $peca->qt_estoque }}">
-                                    <label for="qt_estoque">Estoque<b class="text-danger">*</b></label>
+                                    <label for="qt_estoque">Estoque</label>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-12 p-2">
