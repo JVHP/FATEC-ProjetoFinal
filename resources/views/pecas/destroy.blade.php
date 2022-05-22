@@ -4,7 +4,7 @@
 <form action="/pecas/{{$peca->id}}" method="POST">
     @csrf
     @method('DELETE')
-    <div class="row col-lg-12 col-md-12 col-sm-12 col-12 p-5">
+    <div class="row col-lg-12 col-md-12 col-sm-12 col-12 p-lg-5 p-2 mx-auto">
         <div class="col-lg-3 col-md-5 col-sm-6 col-12 text-center pb-2 mx-md-auto mx-sm-auto mx-auto">
             @if($peca->foto)
             <img class="rounded" src="data:image/webp;base64, {{stream_get_contents($peca->foto)}}" width="300px" style="object-fit: cover;" alt="">
@@ -33,6 +33,14 @@
                             <div>
                                 <div>
                                     <dl>
+                                        <dd class="pb-0 mb-0"><h3>Descrição:</h3></dd>
+                                        <dd>
+                                            @if(!empty($peca->ds_peca))
+                                            <b><h5 class="ms-2">{{ $peca->ds_peca }}</h5></b>
+                                            @else
+                                            <b><h5 class="ms-2">Esta peça não contém Descrição</h5></b>
+                                            @endif
+                                        </dd>
                                         <dd class="pb-0 mb-0">Marca: </dd>
                                         <dd>
                                             <b>{{ $peca->marca()->first()->nm_marca }}</b>

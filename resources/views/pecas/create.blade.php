@@ -137,8 +137,22 @@
                                         <label for="id_tipo_peca">Tipo peça</label>
                                     </div>
                                 </div>
-                                <div class="col-lg-12 col-12 p-2">
-                                    <label for="carros">Carros Compatíveis(cntrl+click multiseleção)</label>
+                                <div class="col-lg-6 col-12 p-2">
+                                    <div class="form-floating">
+                                        @if ($errors->has('ds_peca'))
+                                        <textarea class="form-control is-invalid" maxlength="500" style="height: 12.6rem" name="ds_peca" id="ds_peca">{{old('ds_peca')}}</textarea>
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('ds_peca') }}
+                                        </div>
+                                        @else
+                                        <textarea class="form-control" maxlength="500" style="height: 12.6rem" name="ds_peca" id="ds_peca">{{(old('ds_peca'))}}</textarea>
+                                        @endif
+                                        <label for="ds_peca">Descrição da peça</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-12 p-2">
+                                    <div class="card p-2" style="height: 12.6rem">
+                                    <label for="carros">Carros Compatíveis</label>
                                     <div class="form-floating">
                                         <select aria-placeholder="Carros Compatíveis" style="height: 10rem;" id="carros"
                                             class="form-select p-0" name="carros[]" multiple
@@ -147,6 +161,7 @@
                                                 <option value="{{ $c->id }}">{{ $c->nm_carro }}</option>
                                             @endforeach
                                         </select>
+                                    </div>
                                     </div>
                                 </div>
                             </div>

@@ -28,6 +28,8 @@ class PecaRequest extends FormRequest
             'vl_peca'=>'required',
             'qt_estoque'=>'required',
             'id_tipo_peca'=>'required',
+            'id_marca'=>'required',
+            'ds_peca'=>'max:500',
         ];
     }
     
@@ -38,6 +40,8 @@ class PecaRequest extends FormRequest
             'vl_peca.required'=>'Valor é obrigatório',
             'qt_estoque.required'=>'Estoque é obrigatório',
             'id_tipo_peca.required'=>'Tipo da peça é obrigatório',
+            'id_marca.required'=>'Marca da peça é obrigatória',
+            'ds_peca.max'=>'Tamanho máximo para descrição é de 500 caracteres.',
         ];
     }
 }

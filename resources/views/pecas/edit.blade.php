@@ -3,7 +3,7 @@
 @section('body')
     <div class="pt-5">
         <div class="card-display border-bottom-orange col-12 mx-auto">
-            <h2 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-12">Editar Peça</h2>
+            <h2 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-12">Editar Peça - {{$peca->nm_peca}}</h2>
             <div class="p-2 card-title mb-0">
                 <!-- <hr class="p-1 m-0 bg-primary col-lg-5 col-md-3 col-sm-12 col-md-6" style="opacity: 100%; padding-top: 0"> -->
             </div>
@@ -43,7 +43,7 @@
                                                 placeholder="Nome Peça"
                                                 value="{{ empty(old('nm_peca')) ? $peca->nm_peca : old('nm_peca') }}">
                                         @endif
-                                        <label for="nm_peca">Nome Peça</label>
+                                        <label for="nm_peca">Nome Peça<b class="text-danger">*</b></label>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-12 p-2">
@@ -54,7 +54,7 @@
                                                 <option value="" selected="{{ old('id_marca') != null ? false : true }}"
                                                     disabled>Selecione...</option>
                                                 @foreach ($marcas as $mrc)
-                                                    @if ($mrc->id == old('id_tipo_peca'))
+                                                    @if ($mrc->id == old('id_marca'))
                                                         <option selected value="{{ $mrc->id }}">{{ $mrc->nm_marca }}
                                                         </option>
                                                     @else
@@ -82,7 +82,7 @@
                                                 @endforeach
                                             </select>
                                         @endif
-                                        <label for="id_marca">Marca</label>
+                                        <label for="id_marca">Marca<b class="text-danger">*</b></label>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-12 p-2">
@@ -99,7 +99,7 @@
                                                 id="vl_peca" placeholder="Valor"
                                                 value="{{ empty(old('vl_peca')) ? $peca->vl_peca : old('vl_peca') }}">
                                         @endif
-                                        <label for="vl_peca">Valor</label>
+                                        <label for="vl_peca">Valor<b class="text-danger">*</b></label>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-12 p-2">
@@ -116,7 +116,7 @@
                                                 placeholder="Estoque"
                                                 value="{{ empty(old('qt_estoque')) ? $peca->qt_estoque : old('qt_estoque') }}">
                                         @endif
-                                        <label for="qt_estoque">Estoque</label>
+                                        <label for="qt_estoque">Estoque<b class="text-danger">*</b></label>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-12 p-2">
@@ -130,8 +130,7 @@
                                                     Selecione...</option>
                                                 @foreach ($tipos as $tp)
                                                     @if ($tp->id == old('id_tipo_peca'))
-                                                        <option selected value="{{ $tp->id }}">{{ $tp->nm_tipo }}
-                                                        </option>
+                                                        <option selected value="{{ $tp->id }}">{{ $tp->nm_tipo }}</option>
                                                     @else
                                                         <option value="{{ $tp->id }}">{{ $tp->nm_tipo }}</option>
                                                     @endif
@@ -154,27 +153,42 @@
                                                 @endforeach
                                             </select>
                                         @endif
-                                        <label for="id_tipo_peca">Tipo peça</label>
+                                        <label for="id_tipo_peca">Tipo peça<b class="text-danger">*</b></label>
                                     </div>
                                 </div>
-                                <div class="col-12 p-2">
-                                    <label for="carros">Carros Compatíveis(cntrl+click multiseleção)</label>
+                                <div class="col-lg-6 col-12 p-2">
                                     <div class="form-floating">
-                                        <select aria-placeholder="Carros Compatíveis" style="height: 10rem;" id="carros"
-                                            class="form-select p-0" name="carros[]" multiple
-                                            aria-label="multiple select example">
-                                            @foreach ($carros as $c)
-                                                @foreach ($carrosPeca as $cp)
-                                                    @if ($cp->id == $c->id)
-                                                        <option value="{{ $c->id }}" selected>{{ $c->nm_carro }}
-                                                        </option>
+                                        @if ($errors->has('ds_peca'))
+                                        <textarea class="form-control is-invalid" maxlength="500" style="height: 12.6rem" name="ds_peca" id="ds_peca">{{empty(old('ds_peca')) ? $peca->ds_peca : old('ds_peca')}}</textarea>
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('ds_peca') }}
+                                        </div>
+                                        @else
+                                        <textarea class="form-control" maxlength="500" style="height: 12.6rem" name="ds_peca" id="ds_peca">{{empty(old('ds_peca')) ? $peca->ds_peca : old('ds_peca')}}</textarea>
+                                        @endif
+                                        <label for="ds_peca">Descrição da peça</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-12 p-2">
+                                    <div class="card p-2" style="height: 12.6rem">
+                                        <label for="carros">Carros Compatíveis</label>
+                                        <div class="form-floating">
+                                            <select aria-placeholder="Carros Compatíveis" style="height: 10rem;" id="carros"
+                                                class="form-select p-0" name="carros[]" multiple
+                                                aria-label="multiple select example">
+                                                @foreach ($carros as $c)
+                                                    @foreach ($carrosPeca as $cp)
+                                                        @if ($cp->id == $c->id)
+                                                            <option value="{{ $c->id }}" selected>{{ $c->nm_carro }}
+                                                            </option>
+                                                        @endif
+                                                    @endforeach
+                                                    @if (!$carrosPeca->contains($c))
+                                                        <option value="{{ $c->id }}">{{ $c->nm_carro }}</option>
                                                     @endif
                                                 @endforeach
-                                                @if (!$carrosPeca->contains($c))
-                                                    <option value="{{ $c->id }}">{{ $c->nm_carro }}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
