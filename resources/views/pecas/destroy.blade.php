@@ -1,74 +1,97 @@
 @extends('master')
 
 @section('body')
-<form action="/pecas/{{$peca->id}}" method="POST">
-    @csrf
-    @method('DELETE')
-    <div class="row col-lg-12 col-md-12 col-sm-12 col-12 p-lg-5 p-2 mx-auto">
-        <div class="col-lg-3 col-md-5 col-sm-6 col-12 text-center pb-2 mx-md-auto mx-sm-auto mx-auto">
-            @if($peca->foto)
-            <img class="rounded" src="data:image/webp;base64, {{stream_get_contents($peca->foto)}}" width="300px" style="object-fit: cover;" alt="">
-            @else
-            <?php
-            /*<img class="mx-auto" loading="lazy" src="{{Storage::disk('local')->url('/fotos/pecas/'.$fotos[0]->nm_armazenamento)}}" style="object-fit: cover; filter: grayscale(100%); opacity: 50%;" width="200px" alt="">*/
-            ?>
-            <img class="rounded" src="{{URL('images/default.webp')}}" width="300px" style="object-fit: cover;" alt="">
-            @endif
+<div class="pt-5">
+    <div class="card-display border-bottom-orange col-12 mx-auto">
+        <h2 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-12">Visualizar Peça - {{$peca->nm_peca}}</h2>
+        <div class="p-2 card-title mb-0">
         </div>
-        <div class="card-display border-bottom-orange col-lg-7 col-md-12 col-sm-12 col-12 mx-auto ">
-            <div class="row col-lg-12 col-md-12 col-sm-12 col-12">
-                <div class="col-8">
-
-                    <div class="card-title">
-                        <p class="pb-0 mb-0">Código: {{$peca->id}}</p>
-                        <p class="pb-0 mb-0">Categoria: {{ $tipoPeca->nm_tipo }}</p>
-                        <h1>{{$peca->nm_peca}}</h1>
-                    </div>
-                    <div class="card-body">
-                        <dl class="h4">Preço Bruto
-                            <dd class="h3 fw-bolder">R$ {{ number_format($peca->vl_peca, 2, ',') }}</dd>
-                        </dl>
-                        <div class="pt-3">
-                            <h3>Informações adicionais:</h3>
-                            <div>
-                                <div>
-                                    <dl>
-                                        <dd class="pb-0 mb-0"><h3>Descrição:</h3></dd>
-                                        <dd>
-                                            @if(!empty($peca->ds_peca))
-                                            <b><h5 class="ms-2">{{ $peca->ds_peca }}</h5></b>
-                                            @else
-                                            <b><h5 class="ms-2">Esta peça não contém Descrição</h5></b>
-                                            @endif
-                                        </dd>
-                                        <dd class="pb-0 mb-0">Marca: </dd>
-                                        <dd>
-                                            <b>{{ $peca->marca()->first()->nm_marca }}</b>
-                                        </dd>
-                                    </dl>
-                                </div>
-
-                                <div>
-                                    <dl>
-                                        <dd>Compatível com o(s) seguinte(s) carro(s):</dd>
-                                        @forelse($carros as $xx)
-                                        <dd class="fw-bold">{{$xx->nm_carro}}</dd>
-                                        @empty
-                                        <dd class="fw-bold">Compatibilidade Universal</dd>
-                                        @endforelse
-                                    </dl>
-                                </div>
-                            </div>
-                            <div class="pt-3">
-                                <a href="/pecas"><button type="button" class="btn btn-primary">Voltar</button></a>
-                                <input type="submit" class="btn btn-danger" value="Deletar">
-
+        <div class="card-body">
+            <form action="/pecas/{{$peca->id}}" method="POST">
+                @csrf
+                @method('DELETE')
+                <div class="row col-12">
+                    <div class="col-lg-4 col-12 my-auto">
+                        <div class="p-2">
+                            <div class="text-center">
+                                <img id="imgPeca"
+                                    src="{{ $peca->foto ? 'data:image/webp;base64,' . stream_get_contents($peca->foto) : URL::asset('images/default.webp') }}"
+                                    alt="Imagem" width="200" height="200" />
                             </div>
                         </div>
                     </div>
+                    <div class="col-lg-8 col-12">
+                        <div class="row">
+                            <div class="col-lg-6 col-12 p-2">
+                                <input type="hidden" name="id_peca" value="{{ $peca->id }}">
+                                <div class="form-floating">
+                                    <input disabled class="form-control" type="text" name="nm_peca" id="nm_peca"
+                                        placeholder="Nome Peça" value="{{$peca->nm_peca}}">
+                                    <label for="nm_peca">Nome Peça</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-12 p-2">
+                                <div class="form-floating">
+                                    <input disabled class="form-select" aria-placeholder="Marca" id="id_marca" 
+                                    type="text" value="{{$peca->marca()->first()->nm_marca}}" placeholder="Marca">
+                                    <label for="id_marca">Marca</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-12 p-2">
+                                <div class="form-floating">
+                                    <input disabled class="form-control" type="number" step="0.01" name="vl_peca"
+                                        id="vl_peca" placeholder="Valor"
+                                        value="{{$peca->vl_peca}}">
+                                    <label for="vl_peca">Valor<b class="text-danger">*</b></label>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-12 p-2">
+                                <div class="form-floating">
+                                    <input disabled class="form-control" type="number" name="qt_estoque" id="qt_estoque"
+                                        placeholder="Estoque"
+                                        value="{{ $peca->qt_estoque }}">
+                                    <label for="qt_estoque">Estoque<b class="text-danger">*</b></label>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-12 p-2">
+                                <div class="form-floating">
+                                    <input disabled class="form-control" type="text" name="id_tipo" id="id_tipo"
+                                        placeholder="Estoque"
+                                        value="{{ $tipoPeca->nm_tipo }}">
+                                    <label for="id_tipo_peca">Tipo peça</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-12 p-2">
+                                <div class="form-floating">
+                                    <textarea disabled class="form-control" maxlength="500" style="height: 12.6rem" name="ds_peca" id="ds_peca">{{$peca->ds_peca}}</textarea>
+                                    <label for="ds_peca">Descrição da peça</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-12 p-2">
+                                <div class="card p-2" style="height: 12.6rem; background: #e9ecef;">
+                                    <label for="carros">Carros Compatíveis</label>
+                                    <div class="form-floating">
+                                        <select disabled aria-placeholder="Carros Compatíveis" style="height: 10rem;" id="carros"
+                                            class="form-select p-0" name="" multiple
+                                            aria-label="multiple select example">
+                                            @forelse($carros as $xx)
+                                            <option class="" selected>{{$xx->nm_carro}}</option>
+                                            @empty
+                                            <option class="" selected>Compatibilidade Universal</option>
+                                            @endforelse
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-end p-2">
+                        <a href="/pecas"><button type="button" class="btn btn-primary">Voltar</button></a>
+                        <input type="submit" class="btn btn-danger" value="Deletar">
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
-</form>
+</div>
 @endsection
