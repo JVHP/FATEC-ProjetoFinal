@@ -1,7 +1,3 @@
-
-
-
-
 function getCEPInfos(event) {
     if (event.length == 8) {
         let formCadastro = document.forms.cadastro;
@@ -57,39 +53,16 @@ function getCars() {
                     </label>
                 </div> */
 
-                let inputCar = document.createElement("input")
-                inputCar.classList.add("form-check")
-                inputCar.classList.add("btn-check")
-                inputCar.setAttribute("type", "checkbox")
-                inputCar.setAttribute("name", "carros[]")
-                inputCar.setAttribute("value",  carro.id)
-                inputCar.setAttribute("id", `btn-check${carro.id}`)
-                inputCar.addEventListener("click", function (event) {
-                    let divCarrosLista = document.querySelector("#carroslista")
-
-                    let divCarroAtual = document.querySelector(`#${carro.nm_carro}`)
-
-                    if (divCarroAtual != null) {
-                        divCarrosLista.removeChild(divCarroAtual)
-                    } else {
-                        divCarroAtual = document.createElement("div")
-                        divCarroAtual.setAttribute("id", carro.nm_carro)
-                        divCarroAtual.innerHTML = carro.nm_carro
-                        
-                        divCarrosLista.appendChild(divCarroAtual)
-                    }
-                })
+                let inputCar = createCarInput(carro);
 
                 let labelCar = document.createElement("label")
-                labelCar.classList.add("btn")
-                labelCar.classList.add("btn-outline-success")
+                labelCar.classList.add("btn", "btn-outline-success")
                 labelCar.setAttribute("for", `btn-check${carro.id}`)
                 labelCar.innerHTML = carro.nm_carro
 
 
                 let divCol = document.createElement("div")
-                divCol.classList.add("col-auto")
-                divCol.classList.add("m-2")
+                divCol.classList.add("col-auto", "m-2")
 
                 divCol.appendChild(inputCar)
                 divCol.appendChild(labelCar)
@@ -103,8 +76,81 @@ function getCars() {
         createErrorElement("Ocorreu um erro ao buscar os carros");
     })
 
-
 } 
+
+function createCarInput(carro) {
+    let inputCar = document.createElement("input")
+
+    inputCar.classList.add("form-check")
+    inputCar.classList.add("btn-check")
+    inputCar.setAttribute("type", "checkbox")
+    inputCar.setAttribute("name", "carros[]")
+    inputCar.setAttribute("value",  carro.id)
+    inputCar.setAttribute("id", `btn-check${carro.id}`)
+
+    inputCar.addEventListener("click", function (event) {
+        let divCarrosLista = document.querySelector("#carroslista")
+
+        let divCarroAtual = document.querySelector(`#${carro.nm_carro}`)
+
+        if (divCarroAtual != null) {
+            divCarrosLista.removeChild(divCarroAtual)
+
+        } else {
+            let divMain = document.createElement("div")
+            divMain.classList.add("card", "p-2", "m-3")
+            divMain.setAttribute("id", carro.nm_carro)
+
+
+            divCarroAtual = document.createElement("div")
+            divCarroAtual.setAttribute("id", `autal${carro.nm_carro}`)
+            divCarroAtual.classList.add("row", "col-12", "mx-auto", "py-2")
+
+            let DivCarro = document.createElement("div");
+            let DivKm1 = document.createElement("div");
+            let DivMediaKm2 = document.createElement("div");
+            let Div3 = document.createElement("div");
+
+            DivCarro.classList.add("col-3", "h-3", "my-auto")
+            DivKm1.classList.add("col-3", "form-floating")
+            DivMediaKm2.classList.add("col-3", "form-floating")
+            Div3.classList.add("col-3", "form-floating")
+
+            let LabelCarro = document.createElement("h3");
+            let inputKm = document.createElement("input");
+            let inputMediaKm = document.createElement("input");
+            let input3 = document.createElement("input");
+
+            LabelCarro.innerHTML = carro.nm_carro
+            inputKm.classList.add("form-control")
+            inputKm.setAttribute("name", "km")
+            inputKm.setAttribute("type", "text")
+            inputMediaKm.classList.add("form-control")
+            inputMediaKm.setAttribute("name", "media_km")
+            inputMediaKm.setAttribute("type", "text")
+            input3.classList.add("form-control")
+            input3.setAttribute("name", "input3")
+            input3.setAttribute("type", "text")
+            
+            DivCarro.appendChild(LabelCarro)
+            DivKm1.appendChild(inputKm)
+            DivMediaKm2.appendChild(inputMediaKm)
+            Div3.appendChild(input3)
+
+            divCarroAtual.appendChild(DivCarro)
+            divCarroAtual.appendChild(DivKm1)
+            divCarroAtual.appendChild(DivMediaKm2)
+            divCarroAtual.appendChild(Div3)
+
+           /*  divCarroAtual.innerHTML = carro.nm_carro */
+
+            divMain.appendChild(divCarroAtual)
+            divCarrosLista.appendChild(divMain)
+        }
+    })
+
+    return inputCar
+}
 
 function adicionarLinhaCarro(carro) {
     console.log(carro)
@@ -124,10 +170,7 @@ function createErrorElement(mensagem_erro) {
 
     let texto_erro = document.createElement("p");
     texto_erro.setAttribute("id", "texto");
-    texto_erro.classList.add("text-danger");
-    texto_erro.classList.add("p-0");
-    texto_erro.classList.add("m-0");
-    texto_erro.classList.add("mx-auto");
+    texto_erro.classList.add("text-danger", "p-0", "m-0", "mx-auto");
     texto_erro.append(mensagem_erro)
     console.log(texto_erro)
     div.appendChild(texto_erro)
