@@ -39,11 +39,16 @@ Route::get('/', function () {
 
 /* Carros */
 Route::get('/carros-registro/{ano}/{id_marca}', function ($ano, $id_marca) {
-    $carros = Carro::where('ano', $ano)->where('id_marca', $id_marca)->orderBy('ano', 'DESC')->orderBy('nm_carro', 'ASC')->get();
+    $carros = Carro::join('tipo_carros', 'tipo_carros.id', '=', 'carros.id_tipo_carro')
+                    ->where('ano', $ano)
+                    ->where('id_marca', $id_marca)
+                    ->orderBy('ano', 'DESC')
+                    ->orderBy('nm_carro', 'ASC')
+                    ->get();
 
-    /* $carrosGroup = $carros->groupBy('ano'); */
+    $carrosGroup = $carros->groupBy('nm_tipo');
 
-    return $carros;
+    return $carrosGroup;
 });
 
 /* EMAIL */

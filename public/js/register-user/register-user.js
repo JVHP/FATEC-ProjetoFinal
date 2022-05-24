@@ -25,8 +25,6 @@ function getCEPInfos(event) {
 }
 
 function getCars() {
-    removeErrorElement()
-
     let formCadastro = document.forms.cadastro
     let marca = formCadastro.id_marca
     let ano = formCadastro.ano_carro
@@ -40,51 +38,83 @@ function getCars() {
             if (resp.data.length == 0) {
                 return createErrorElement("Não foram encontrados carros");
             }
+            
+            removeErrorElement()
 
-            resp.data.map(carro => {
-
-                /* <div class="col-auto m-2">
-                    <input class="form-check btn-check" type="checkbox"
-                        id="btn-check{{ $carro->id }}" name="carros[]"
-                        value="{{ $carro->id }}" id="">
-                    <label class="btn btn-outline-success"
-                        for="btn-check{{ $carro->id }}" for="">
-                        {{ $carro->nm_carro }}
-                    </label>
-                </div> */
-
-                let inputCar = createCarInput(carro);
-
-                let labelCar = document.createElement("label")
-                labelCar.classList.add("btn", "btn-outline-success")
-                labelCar.setAttribute("for", `btn-check${carro.id}`)
-                labelCar.innerHTML = carro.nm_carro
-
-
-                let divCol = document.createElement("div")
-                divCol.classList.add("col-auto", "m-2")
-
-                divCol.appendChild(inputCar)
-                divCol.appendChild(labelCar)
-
-
-                div.append(divCol)
+            Object.keys(resp.data).map(tipos => {
+                createAccordionDiv(tipos, resp.data[tipos])
             })
 
     })
     .catch((ex) => {
+        console.log(ex)
         createErrorElement("Ocorreu um erro ao buscar os carros");
     })
 
 } 
 
+function createAccordionDiv(tipo, carros) {
+    let accordion = document.querySelector("#accordionExample");
+
+    let accordionItem = document.createElement("div");
+    accordionItem.classList.add("accordion-item");
+
+    let h2Tipo = document.createElement("h2");
+    h2Tipo.classList.add("accordion-header");
+    h2Tipo.setAttribute("id", `heading${tipo}`);
+
+    let btnTrigger = document.createElement("button");
+    btnTrigger.classList.add("accordion-button", "collapsed");
+    btnTrigger.setAttribute("type", "button");
+    btnTrigger.setAttribute("data-bs-toggle", "collapse");
+    btnTrigger.setAttribute("data-bs-target", `#collapse${tipo}`);
+    btnTrigger.setAttribute("aria-expanded", "false");
+    btnTrigger.setAttribute("aria-controls", `collapse${tipo}`);
+    btnTrigger.innerHTML = tipo;
+    
+    h2Tipo.appendChild(btnTrigger);
+    accordionItem.appendChild(h2Tipo);
+    accordion.appendChild(accordionItem);
+
+    let divCollapse = document.createElement("div");
+    divCollapse.classList.add("accordion-collapse", "collapse");
+    divCollapse.setAttribute("id", `collapse${tipo}`)
+    divCollapse.setAttribute("aria-labelledby", `heading${tipo}`)
+    divCollapse.setAttribute("data-bs-parent", "#accordionExample")
+    
+    let divBody = document.createElement("div");
+    divBody.classList.add("accordion-body", "row", "col-12");
+    
+    carros.map(carro => {    
+        let inputCar = createCarInput(carro);
+        
+        let labelCar = document.createElement("label")
+        labelCar.classList.add("btn", "btn-outline-success")
+        labelCar.setAttribute("for", `btn-check${carro.id}`)
+        labelCar.innerHTML = carro.nm_carro
+    
+    
+        let divCol = document.createElement("div")
+        divCol.classList.add("col-auto", "m-1")
+    
+        divCol.appendChild(inputCar)
+        divCol.appendChild(labelCar)
+    
+        divBody.append(divCol)
+    })
+
+    divCollapse.appendChild(divBody)
+
+    accordionItem.appendChild(divCollapse)    
+
+    accordion.appendChild(accordionItem)
+}
+
 function createCarInput(carro) {
     let inputCar = document.createElement("input")
 
-    inputCar.classList.add("form-check")
-    inputCar.classList.add("btn-check")
+    inputCar.classList.add("form-check", "btn-check")
     inputCar.setAttribute("type", "checkbox")
-    inputCar.setAttribute("name", "carros[]")
     inputCar.setAttribute("value",  carro.id)
     inputCar.setAttribute("id", `btn-check${carro.id}`)
 
@@ -101,7 +131,6 @@ function createCarInput(carro) {
             divMain.classList.add("card", "p-2", "m-3")
             divMain.setAttribute("id", carro.nm_carro)
 
-
             divCarroAtual = document.createElement("div")
             divCarroAtual.setAttribute("id", `autal${carro.nm_carro}`)
             divCarroAtual.classList.add("row", "col-12", "mx-auto", "py-2")
@@ -117,25 +146,57 @@ function createCarInput(carro) {
             Div3.classList.add("col-3", "form-floating")
 
             let LabelCarro = document.createElement("h3");
+            LabelCarro.classList.add("my-auto");
+
             let inputKm = document.createElement("input");
             let inputMediaKm = document.createElement("input");
             let input3 = document.createElement("input");
+            let inputHidden = document.createElement("input");
+
+            let labelKm = document.createElement("label");
+            let labelMediaKm = document.createElement("label");
+            let label3 = document.createElement("label");
+            labelKm.classList.add("ms-2")
+            labelMediaKm.classList.add("ms-2")
+            label3.classList.add("ms-2")
+
+            labelKm.innerHTML = "Input"
+            labelMediaKm.innerHTML = "Input"
+            label3.innerHTML = "Input"
 
             LabelCarro.innerHTML = carro.nm_carro
+
+            inputHidden.setAttribute("name", `carros[${carro.id}][id]`)
+            inputHidden.setAttribute("value", `${carro.id}`)
+            inputHidden.setAttribute("type", "hidden")
+
             inputKm.classList.add("form-control")
-            inputKm.setAttribute("name", "km")
-            inputKm.setAttribute("type", "text")
+            inputKm.setAttribute("type", "number")
+            inputKm.setAttribute("placeholder", "Input")
+            inputKm.setAttribute("name", `carros[${carro.id}][km]`)
+            inputKm.setAttribute("value",  `0`)
+
             inputMediaKm.classList.add("form-control")
-            inputMediaKm.setAttribute("name", "media_km")
-            inputMediaKm.setAttribute("type", "text")
+            inputMediaKm.setAttribute("type", "number")
+            inputMediaKm.setAttribute("placeholder", "Input")
+            inputMediaKm.setAttribute("name",  `carros[${carro.id}][media_km]`)
+            inputMediaKm.setAttribute("value",  `0`)
+
             input3.classList.add("form-control")
-            input3.setAttribute("name", "input3")
-            input3.setAttribute("type", "text")
+            input3.setAttribute("type", "number")
+            input3.setAttribute("placeholder", "Input")
+            input3.setAttribute("name",  `carros[${carro.id}][input3]`)
+            input3.setAttribute("value",  `0`)
             
             DivCarro.appendChild(LabelCarro)
             DivKm1.appendChild(inputKm)
             DivMediaKm2.appendChild(inputMediaKm)
             Div3.appendChild(input3)
+            Div3.appendChild(inputHidden)
+
+            DivKm1.appendChild(labelKm)
+            DivMediaKm2.appendChild(labelMediaKm)
+            Div3.appendChild(label3)
 
             divCarroAtual.appendChild(DivCarro)
             divCarroAtual.appendChild(DivKm1)
@@ -166,6 +227,8 @@ function removeErrorElement() {
 }
 
 function createErrorElement(mensagem_erro) {
+    removeErrorElement();
+
     let div = document.querySelector("#divSearch");
 
     let texto_erro = document.createElement("p");

@@ -62,7 +62,7 @@ class UsuarioController extends Controller
     public function store(UsuarioRequest $request)
     {
         try {
-            DB::beginTransaction();
+            /* DB::beginTransaction();
 
             $senha = Hash::make($request->cd_password);
 
@@ -83,7 +83,9 @@ class UsuarioController extends Controller
 
             DB::commit();
             
-            return redirect('/');
+            return redirect('/'); */
+
+            return $request;
 
         } catch (Exception $ex) {
             DB::rollBack();

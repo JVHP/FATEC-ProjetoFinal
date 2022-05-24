@@ -185,12 +185,12 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-4 col-md-12 col-sm-12 col-12 ms-auto my-auto">
-                                <div class="row col-12 mx-auto" id="divSearch">
+                        <div class="col-lg-4 col-md-12 col-sm-12 col-12 px-3 ms-auto my-auto">
+                                <div class="row col-12 mx-auto justify-content-between my-2" id="divSearch">
                                     <div class="col-6">
                                         <div class="form-floating">
                                             <select class="form-select" placeholder="Marca" name="id_marca" id="id_marca">
-                                                <option selected>Marca</option>
+                                                <option selected disabled>Marca</option>
                                                 @foreach ($marcas as $marca)
                                                 <option value="{{$marca->id}}">{{$marca->nm_marca}}</option>
                                                 @endforeach
@@ -208,96 +208,24 @@
                                         <button type="button" onclick="getCars()" class="btn btn-primary p-2 rounded-circle"><img class="m-0 p-0" src="{{URL::asset('icons/search-white.svg')}}" alt=""></button>
                                     </div>
                                 </div>
-
-
                             <div class="p-1">
-                                <div class="card p-1 overflow-auto" style="height: 320px">
+                                <div class="card p-1 overflow-auto" style="height: 255px">
                                     <div class="card-title">Pesquise os carros acima para exibi-los aqui</div>
                                     <div class="accordion" id="accordionExample">
-                                        {{-- @foreach ($carros as $carros_ano)
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header" id="heading{{ $carros_ano[0]->ano }}">
-                                                    <button class="accordion-button collapsed" type="button"
-                                                        data-bs-toggle="collapse"
-                                                        data-bs-target="#collapse{{ $carros_ano[0]->ano }}"
-                                                        aria-expanded="false"
-                                                        aria-controls="collapse{{ $carros_ano[0]->ano }}">
-                                                        {{ $carros_ano[0]->ano }}
-                                                    </button>
-                                                </h2>
-                                                <div id="collapse{{ $carros_ano[0]->ano }}"
-                                                    class="accordion-collapse collapse"
-                                                    aria-labelledby="heading{{ $carros_ano[0]->ano }}"
-                                                    data-bs-parent="#accordionExample">
-                                                    <div class="accordion-body row col-12">
-                                                        @foreach ($carros_ano as $carro)
-                                                            <div class="col-auto m-2">
-                                                                <input class="form-check btn-check" type="checkbox"
-                                                                    id="btn-check{{ $carro->id }}" name="carros[]"
-                                                                    value="{{ $carro->id }}" id="">
-                                                                <label class="btn btn-outline-success"
-                                                                    for="btn-check{{ $carro->id }}" for="">
-                                                                    {{ $carro->nm_carro }}
-                                                                </label>
-                                                            </div>
-                                                        @endforeach
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endforeach --}}
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="p-1">
-                                <div class="card p-1 overflow-auto" style="max-height: 320px">
-                                    <div class="card-title">Selecione seu(s) carro(s)</div>
-                                    <div class="accordion" id="accordionExample">
-                                        @foreach ($carros as $carros_ano)
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header" id="heading{{ $carros_ano[0]->ano }}">
-                                                    <button class="accordion-button collapsed" type="button"
-                                                        data-bs-toggle="collapse"
-                                                        data-bs-target="#collapse{{ $carros_ano[0]->ano }}"
-                                                        aria-expanded="false"
-                                                        aria-controls="collapse{{ $carros_ano[0]->ano }}">
-                                                        {{ $carros_ano[0]->ano }}
-                                                    </button>
-                                                </h2>
-                                                <div id="collapse{{ $carros_ano[0]->ano }}"
-                                                    class="accordion-collapse collapse"
-                                                    aria-labelledby="heading{{ $carros_ano[0]->ano }}"
-                                                    data-bs-parent="#accordionExample">
-                                                    <div class="accordion-body row col-12">
-                                                        @foreach ($carros_ano as $carro)
-                                                            <div class="col-auto m-2">
-                                                                <input class="form-check btn-check" type="checkbox"
-                                                                    id="btn-check{{ $carro->id }}" name="carros[]"
-                                                                    value="{{ $carro->id }}" id="">
-                                                                <label class="btn btn-outline-success"
-                                                                    for="btn-check{{ $carro->id }}" for="">
-                                                                    {{ $carro->nm_carro }}
-                                                                </label>
-                                                            </div>
-                                                        @endforeach
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div> --}}
                             @if (isset($errors) && $errors->has('carros'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('carros') }}
                                 </div>
                             @endif
                         </div>
+
+                        <div id="carroslista" class="mx-auto"></div>
                     </div>
 
-
-                    <div id="carroslista"></div>
-
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-12 text-end p-3">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-12 text-end p-3 mx-auto">
                         <button type="submit" for="cadastro" class="btn btn-primary"> Cadastrar </button>
                     </div>
                 </form>
