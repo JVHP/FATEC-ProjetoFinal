@@ -115,7 +115,8 @@ function createCarInput(carro) {
 
     inputCar.classList.add("form-check", "btn-check")
     inputCar.setAttribute("type", "checkbox")
-    inputCar.setAttribute("value",  carro.id)
+    inputCar.setAttribute("value", carro.id)
+    inputCar.setAttribute("name", "carros[]")
     inputCar.setAttribute("id", `btn-check${carro.id}`)
 
     inputCar.addEventListener("click", function (event) {
@@ -160,9 +161,9 @@ function createCarInput(carro) {
             labelMediaKm.classList.add("ms-2")
             label3.classList.add("ms-2")
 
-            labelKm.innerHTML = "Input"
-            labelMediaKm.innerHTML = "Input"
-            label3.innerHTML = "Input"
+            labelKm.innerHTML = "Kilômetros rodados"
+            labelMediaKm.innerHTML = "Média aproximada de kilômetros por semana"
+            label3.innerHTML = "Ainda sem atribuição"
 
             LabelCarro.innerHTML = carro.nm_carro
 
@@ -172,19 +173,19 @@ function createCarInput(carro) {
 
             inputKm.classList.add("form-control")
             inputKm.setAttribute("type", "number")
-            inputKm.setAttribute("placeholder", "Input")
+            inputKm.setAttribute("placeholder", "Kilômetros rodados")
             inputKm.setAttribute("name", `carros[${carro.id}][km]`)
             inputKm.setAttribute("value",  `0`)
 
             inputMediaKm.classList.add("form-control")
             inputMediaKm.setAttribute("type", "number")
-            inputMediaKm.setAttribute("placeholder", "Input")
+            inputMediaKm.setAttribute("placeholder", "Média de kilômetros")
             inputMediaKm.setAttribute("name",  `carros[${carro.id}][media_km]`)
             inputMediaKm.setAttribute("value",  `0`)
 
             input3.classList.add("form-control")
             input3.setAttribute("type", "number")
-            input3.setAttribute("placeholder", "Input")
+            input3.setAttribute("placeholder", "Ainda sem atribuição")
             input3.setAttribute("name",  `carros[${carro.id}][input3]`)
             input3.setAttribute("value",  `0`)
             
