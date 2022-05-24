@@ -209,7 +209,7 @@
                                     </div>
                                 </div>
                             <div class="p-1">
-                                <div class="card p-1 overflow-auto" style="height: 255px">
+                                <div class="card p-1 overflow-auto">
                                     <div class="card-title">Pesquise os carros acima para exibi-los aqui</div>
                                     <div class="accordion" id="accordionExample">
                                     </div>
