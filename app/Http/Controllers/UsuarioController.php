@@ -8,6 +8,9 @@ use App\Models\Carro;
 use App\Http\Requests\UsuarioRequest;
 use App\Http\Requests\UsuarioEditRequest;
 use App\Models\Marca;
+use DateTime;
+use Detalhes_Carro_Usuario;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
@@ -15,7 +18,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Auth\Events\Registered;
-
+use phpDocumentor\Reflection\Types\Object_;
 
 class UsuarioController extends Controller
 {
@@ -62,7 +65,7 @@ class UsuarioController extends Controller
     public function store(UsuarioRequest $request)
     {
         try {
-            /* DB::beginTransaction();
+            DB::beginTransaction();
 
             $senha = Hash::make($request->cd_password);
 
@@ -72,20 +75,30 @@ class UsuarioController extends Controller
 
             if ($request->has('carros')) {
                 $carros = $request->carros;
-                
-                
+                            
                 foreach($carros as $carro_id){
-                    Carro::find($carro_id)->usuarios()->save($usuario);
+                    $insert = Carro::find($carro_id['id'])->usuarios()->save($usuario);
+
+                    $carro_usuario = DB::table('carro_usuarios')->where(['id_usuario'=>$insert->id, 'id_carro' => $carro_id['id']])->first();
+
+                    DB::table('detalhes_carro_usuario')->insert([
+                        [
+                         'qt_kilometragem' => $carro_id['qt_kilometragem'],
+                         'qt_media_kilometragem' => $carro_id['qt_media_kilometragem'],
+                         'dt_ultima_troca_oleo' => new DateTime($carro_id['dt_ultima_troca_oleo']),
+                         'id_carro_usuarios' => $carro_usuario->id
+                        ]
+                    ]);
+                
                 } 
+
             }
                 
             event(new Registered($usuario));
 
             DB::commit();
             
-            return redirect('/'); */
-
-            return $request;
+            return redirect('/');
 
         } catch (Exception $ex) {
             DB::rollBack();

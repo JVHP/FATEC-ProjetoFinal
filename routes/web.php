@@ -44,6 +44,7 @@ Route::get('/carros-registro/{ano}/{id_marca}', function ($ano, $id_marca) {
                     ->where('id_marca', $id_marca)
                     ->orderBy('ano', 'DESC')
                     ->orderBy('nm_carro', 'ASC')
+                    ->select('carros.nm_carro', 'carros.id', 'tipo_carros.nm_tipo')
                     ->get();
 
     $carrosGroup = $carros->groupBy('nm_tipo');

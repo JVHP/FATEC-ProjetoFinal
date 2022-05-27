@@ -12,7 +12,7 @@
                 <form class="" action="/usuarios" name="cadastro" method="POST">
                     <div class="row col-12 mx-auto justify-content-center">
                         <div class="row col-lg-8 col-12 justify-content-lg-between justify-content-center">
-                            
+
                             @csrf
                             <div class="col-lg-6 col-md-9 col-sm-12 col-12">
                                 <div class="form-floating p-1">
@@ -144,7 +144,7 @@
                                         </div>
                                     @else
                                         <input type="text" class="form-control" id="nm_rua" maxlength="255" name="nm_rua"
-                                             placeholder="Rua" value="{{ old('nm_rua') }}" />
+                                            placeholder="Rua" value="{{ old('nm_rua') }}" />
                                     @endif
                                     <label for="endereco">Logradouro<b class="text-danger">*</b></label>
                                 </div>
@@ -160,8 +160,7 @@
                                         </div>
                                     @else
                                         <input type="text" class="form-control" id="ds_bairro" maxlength="255"
-                                             name="ds_bairro" placeholder="Bairro"
-                                            value="{{ old('ds_bairro') }}" />
+                                            name="ds_bairro" placeholder="Bairro" value="{{ old('ds_bairro') }}" />
                                     @endif
                                     <label for="endereco">Bairro<b class="text-danger">*</b></label>
                                 </div>
@@ -176,9 +175,15 @@
                                             {{ $errors->first('nr_casa') }}
                                         </div>
                                     @else
-                                        <input type="text" class="form-control" id="nr_casa" maxlength="255"
-                                            disabled="true" name="nr_casa" placeholder="Nº Residência"
-                                            value="{{ old('nr_casa') }}" />
+                                        @if(old('nr_casa') != null) 
+                                            <input type="text" class="form-control" id="nr_casa" maxlength="255"
+                                                name="nr_casa" placeholder="Nº Residência"
+                                                value="{{ old('nr_casa') }}" />
+                                        @else
+                                            <input type="text" class="form-control" id="nr_casa" maxlength="255"
+                                                disabled="true" name="nr_casa" placeholder="Nº Residência"
+                                                value="{{ old('nr_casa') }}" />
+                                        @endif
                                     @endif
                                     <label for="endereco">Nº Residência<b class="text-danger">*</b></label>
                                 </div>
@@ -186,28 +191,31 @@
                         </div>
 
                         <div class="col-lg-4 col-md-12 col-sm-12 col-12 px-3 ms-auto my-auto">
-                                <div class="row col-12 mx-auto justify-content-between my-2" id="divSearch">
-                                    <div class="col-6">
-                                        <div class="form-floating">
-                                            <select class="form-select" placeholder="Marca" name="id_marca" id="id_marca">
-                                                <option selected disabled>Marca</option>
-                                                @foreach ($marcas as $marca)
-                                                <option value="{{$marca->id}}">{{$marca->nm_marca}}</option>
-                                                @endforeach
-                                            </select>
-                                            <label for="">Marca</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="form-floating">
-                                            <input placeholder="Ano" class="form-control" type="text" name="ano_carro" id="ano_carro">
-                                            <label for="">Ano</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-2 my-auto">
-                                        <button type="button" onclick="getCars()" class="btn btn-primary p-2 rounded-circle"><img class="m-0 p-0" src="{{URL::asset('icons/search-white.svg')}}" alt=""></button>
+                            <div class="row col-12 mx-auto justify-content-between my-2" id="divSearch">
+                                <div class="col-6">
+                                    <div class="form-floating">
+                                        <select class="form-select" placeholder="Marca" name="id_marca" id="id_marca">
+                                            <option selected disabled>Marca</option>
+                                            @foreach ($marcas as $marca)
+                                                <option value="{{ $marca->id }}">{{ $marca->nm_marca }}</option>
+                                            @endforeach
+                                        </select>
+                                        <label for="">Marca</label>
                                     </div>
                                 </div>
+                                <div class="col-4">
+                                    <div class="form-floating">
+                                        <input placeholder="Ano" class="form-control" type="text" name="ano_carro"
+                                            id="ano_carro">
+                                        <label for="">Ano</label>
+                                    </div>
+                                </div>
+                                <div class="col-2 my-auto">
+                                    <button type="button" onclick="getCars()"
+                                        class="btn btn-primary p-2 rounded-circle"><img class="m-0 p-0"
+                                            src="{{ URL::asset('icons/search-white.svg') }}" alt=""></button>
+                                </div>
+                            </div>
                             <div class="p-1">
                                 <div class="card p-1 overflow-auto">
                                     <div class="card-title">Pesquise os carros acima para exibi-los aqui</div>
@@ -215,14 +223,101 @@
                                     </div>
                                 </div>
                             </div>
-                            @if (isset($errors) && $errors->has('carros'))
-                                <div class="invalid-feedback">
+                            @if ($errors->has('carros'))
+                                <div class="text-center text-danger">
                                     {{ $errors->first('carros') }}
                                 </div>
                             @endif
                         </div>
 
-                        <div id="carroslista" class="mx-auto"></div>
+                        @if (isset($errors) && old('carros') != null)
+                            <div id="carroslista" class="mx-auto">
+                                @foreach (old('carros') as $carro)
+                                {{old('carros['.$carro['id'].']')}}
+                                    @inject('carroClass', \App\Models\Carro::class)
+                                    <div class="card p-2 m-3"
+                                        id="{{ $carroClass->where('id', '=', $carro['id'])->first()->nm_carro }}">
+                                        <div id="atual{{ $carroClass->where('id', '=', $carro['id'])->first()->nm_carro }}"
+                                            class="row col-12 mx-auto py-2">
+                                            <div class="col-md-3 col-12 h-3 my-auto">
+                                                <h3 class="my-auto">
+                                                    {{ $carroClass->where('id', '=', $carro['id'])->first()->nm_carro }}
+                                                </h3>
+                                            </div>
+
+                                            @if ($errors->has('carros.'. $carro['id'] .'.qt_kilometragem'))
+                                                <div class="col-md-3 col-12 form-floating">
+                                                    <input class="form-control is-invalid" type="number"
+                                                        placeholder="Kilômetros rodados"
+                                                        name="{{ 'carros[' . $carro['id'] . '][qt_kilometragem]' }}" 
+                                                        value="{{ $carro['qt_kilometragem'] }}">
+                                                    <label class="ms-2">Kilômetros rodados</label>
+                                                    <div class="invalid-feedback">
+                                                        {{ $errors->first('carros.'. $carro['id'] .'.qt_kilometragem') }}
+                                                    </div>
+                                                </div>
+                                            @else
+                                                <div class="col-md-3 col-12 form-floating">
+                                                    <input class="form-control" type="number"
+                                                        placeholder="Kilômetros rodados"
+                                                        name="{{ 'carros[' . $carro['id'] . '][qt_kilometragem]' }}"
+                                                        value="{{ $carro['qt_kilometragem'] }}">
+                                                    <label class="ms-2">Kilômetros rodados</label>
+                                                </div>
+                                            @endif
+
+                                            @if ($errors->has('carros.'. $carro['id'] .'.qt_media_kilometragem'))
+                                                <div class="col-md-3 col-12 form-floating">
+                                                    <input class="form-control is-invalid" type="number"
+                                                        placeholder="Média de kilômetros por semana"
+                                                        name="{{ 'carros[' . $carro['id'] . '][qt_media_kilometragem]' }}"
+                                                        value="{{$carro['qt_media_kilometragem']}}">
+                                                    <label class="ms-2">Média de kilômetros por semana</label>
+                                                    <div class="invalid-feedback">
+                                                        {{ $errors->first('carros.'. $carro['id'] .'.qt_media_kilometragem') }}
+                                                    </div>
+                                                </div>
+                                            @else
+                                                <div class="col-md-3 col-12 form-floating">
+                                                    <input class="form-control" type="number"
+                                                        placeholder="Média de kilômetros por semana"
+                                                        name="{{ 'carros[' . $carro['id'] . '][qt_media_kilometragem]' }}"
+                                                        value="{{$carro['qt_media_kilometragem']}}">
+                                                    <label class="ms-2">Média de kilômetros por semana</label>
+                                                </div>
+                                            @endif
+
+                                            @if ($errors->has('carros.'. $carro['id'] .'.dt_ultima_troca_oleo'))
+                                                <div class="col-md-3 col-12 form-floating">
+                                                    <input class="form-control is-invalid" type="date"
+                                                        placeholder="Última troca de óleo"
+                                                        name="{{ 'carros[' . $carro['id'] . '][dt_ultima_troca_oleo]' }}"
+                                                        value="{{$carro['dt_ultima_troca_oleo']}}">
+                                                    <label class="ms-2">Última troca de óleo</label>
+                                                    <div class="invalid-feedback">
+                                                        {{ $errors->first('carros.'. $carro['id'] .'.dt_ultima_troca_oleo') }}
+                                                    </div>
+                                                </div>
+                                            @else
+                                                <div class="col-md-3 col-12 form-floating">
+                                                    <input class="form-control" type="date"
+                                                        placeholder="Última troca de óleo"
+                                                        name="{{ 'carros[' . $carro['id'] . '][dt_ultima_troca_oleo]' }}"
+                                                        value="{{$carro['dt_ultima_troca_oleo']}}">
+                                                    <label class="ms-2">Última troca de óleo</label>
+                                                </div>
+                                            @endif
+
+                                            <input name="{{ 'carros[' . $carro['id'] . '][id]' }}" value="{{ $carro['id'] }}"
+                                                type="hidden">
+
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @else
+                            <div id="carroslista" class="mx-auto"></div>
+                        @endif
                     </div>
 
                     <div class="col-lg-12 col-md-12 col-sm-12 col-12 text-end p-3 mx-auto">
@@ -233,8 +328,4 @@
         </div>
     @endsection
 
-    <script>
-
-
-
-    </script>
+    <script></script>

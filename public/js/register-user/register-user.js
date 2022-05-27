@@ -116,12 +116,11 @@ function createCarInput(carro) {
     inputCar.classList.add("form-check", "btn-check")
     inputCar.setAttribute("type", "checkbox")
     inputCar.setAttribute("value", carro.id)
-    inputCar.setAttribute("name", "carros[]")
+    /* inputCar.setAttribute("name", "carros[]") */
     inputCar.setAttribute("id", `btn-check${carro.id}`)
 
     inputCar.addEventListener("click", function (event) {
         let divCarrosLista = document.querySelector("#carroslista")
-
         let divCarroAtual = document.querySelector(`#${carro.nm_carro}`)
 
         if (divCarroAtual != null) {
@@ -133,7 +132,7 @@ function createCarInput(carro) {
             divMain.setAttribute("id", carro.nm_carro)
 
             divCarroAtual = document.createElement("div")
-            divCarroAtual.setAttribute("id", `autal${carro.nm_carro}`)
+            divCarroAtual.setAttribute("id", `atual${carro.nm_carro}`)
             divCarroAtual.classList.add("row", "col-12", "mx-auto", "py-2")
 
             let DivCarro = document.createElement("div");
@@ -141,10 +140,10 @@ function createCarInput(carro) {
             let DivMediaKm2 = document.createElement("div");
             let Div3 = document.createElement("div");
 
-            DivCarro.classList.add("col-3", "h-3", "my-auto")
-            DivKm1.classList.add("col-3", "form-floating")
-            DivMediaKm2.classList.add("col-3", "form-floating")
-            Div3.classList.add("col-3", "form-floating")
+            DivCarro.classList.add("col-md-3", "col-12", "h-3", "my-auto")
+            DivKm1.classList.add("col-md-3", "col-12", "form-floating")
+            DivMediaKm2.classList.add("col-md-3", "col-12", "form-floating")
+            Div3.classList.add("col-md-3", "col-12", "form-floating")
 
             let LabelCarro = document.createElement("h3");
             LabelCarro.classList.add("my-auto");
@@ -162,8 +161,8 @@ function createCarInput(carro) {
             label3.classList.add("ms-2")
 
             labelKm.innerHTML = "Kilômetros rodados"
-            labelMediaKm.innerHTML = "Média aproximada de kilômetros por semana"
-            label3.innerHTML = "Ainda sem atribuição"
+            labelMediaKm.innerHTML = "Média de kilômetros por semana"
+            label3.innerHTML = "Última troca de óleo"
 
             LabelCarro.innerHTML = carro.nm_carro
 
@@ -174,20 +173,20 @@ function createCarInput(carro) {
             inputKm.classList.add("form-control")
             inputKm.setAttribute("type", "number")
             inputKm.setAttribute("placeholder", "Kilômetros rodados")
-            inputKm.setAttribute("name", `carros[${carro.id}][km]`)
-            inputKm.setAttribute("value",  `0`)
+            inputKm.setAttribute("name", `carros[${carro.id}][qt_kilometragem]`)
+            inputKm.setAttribute("value",  `null`)
 
             inputMediaKm.classList.add("form-control")
             inputMediaKm.setAttribute("type", "number")
-            inputMediaKm.setAttribute("placeholder", "Média de kilômetros")
-            inputMediaKm.setAttribute("name",  `carros[${carro.id}][media_km]`)
-            inputMediaKm.setAttribute("value",  `0`)
+            inputMediaKm.setAttribute("placeholder", "Média de kilômetros por semana")
+            inputMediaKm.setAttribute("name",  `carros[${carro.id}][qt_media_kilometragem]`)
+            inputMediaKm.setAttribute("value",  `null`)
 
             input3.classList.add("form-control")
-            input3.setAttribute("type", "number")
-            input3.setAttribute("placeholder", "Ainda sem atribuição")
-            input3.setAttribute("name",  `carros[${carro.id}][input3]`)
-            input3.setAttribute("value",  `0`)
+            input3.setAttribute("type", "date")
+            input3.setAttribute("placeholder", "Última troca de óleo")
+            input3.setAttribute("name",  `carros[${carro.id}][dt_ultima_troca_oleo]`)
+            input3.setAttribute("value",  `null`)
             
             DivCarro.appendChild(LabelCarro)
             DivKm1.appendChild(inputKm)

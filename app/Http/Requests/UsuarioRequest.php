@@ -23,18 +23,40 @@ class UsuarioRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'nm_usuario'=>['required', 'max:255'],
-            'email'=>['required', 'email', 'max:255', 'unique:users'],
-            /* 'emailC'=>['required','unique:users,email', 'email' ], */
-            'dt_nasc'=>'required',
-            'cep'=>['required', 'max:8', 'min:8'],
-            'cpf'=>['required', 'max:11'],
-            'nm_rua'=>['required', 'max:255'],
-            'ds_bairro'=>['required', 'max:255'],
-            'nr_casa'=>['required', 'max:10'],
-            'carros'=>['array', 'max:5']
-        ];
+
+
+        if ($this->has('carros')) {
+            return [
+                'nm_usuario'=>['required', 'max:255'],
+                'email'=>['required', 'email', 'max:255', 'unique:users'],
+                /* 'emailC'=>['required','unique:users,email', 'email' ], */
+                'dt_nasc'=>'required',
+                'cep'=>['required', 'max:8', 'min:8'],
+                'cpf'=>['required', 'max:11'],
+                'nm_rua'=>['required', 'max:255'],
+                'ds_bairro'=>['required', 'max:255'],
+                'nr_casa'=>['required', 'max:10'],
+                'carros'=>['array', 'max:5'],
+                'carros.*.id' => 'required',
+                'carros.*.qt_kilometragem' => 'required',
+                'carros.*.qt_media_kilometragem' => 'required',
+                'carros.*.dt_ultima_troca_oleo' => 'required',
+            ];
+        } else {
+            return [
+                'nm_usuario'=>['required', 'max:255'],
+                'email'=>['required', 'email', 'max:255', 'unique:users'],
+                /* 'emailC'=>['required','unique:users,email', 'email' ], */
+                'dt_nasc'=>'required',
+                'cep'=>['required', 'max:8', 'min:8'],
+                'cpf'=>['required', 'max:11'],
+                'nm_rua'=>['required', 'max:255'],
+                'ds_bairro'=>['required', 'max:255'],
+                'nr_casa'=>['required', 'max:10'],
+                'carros'=>['array', 'max:5']
+            ];
+        }
+
     }
 
     public function messages()
@@ -59,7 +81,10 @@ class UsuarioRequest extends FormRequest
             'ds_bairro.max'=>'O tamanho máximo para o bairro é de 255 caracteres',
             'nr_casa.required'=>'Nº da residência é obrigatório',
             'nr_casa.max'=>'O tamanho máximo para o número da residência é de 10 caracteres',
-            'carros'=>'O usuário somente pode ter até 5 carros.',
+            'carros.max'=>'O usuário pode cadastrar somente até 5 carros.',
+            'carros.*.qt_kilometragem.required' => 'Insira a kilometragem.',
+            'carros.*.qt_media_kilometragem.required' => 'Insira a quantidade média de kilometragem.',
+            'carros.*.dt_ultima_troca_oleo.required' => 'Insira a data da última troca de óleo.',
         ];
     }
 }
