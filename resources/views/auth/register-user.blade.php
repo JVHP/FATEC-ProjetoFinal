@@ -205,7 +205,7 @@
                                 </div>
                                 <div class="col-4">
                                     <div class="form-floating">
-                                        <input placeholder="Ano" class="form-control" type="text" name="ano_carro"
+                                        <input placeholder="Ano" class="form-control" type="number" step="1" name="ano_carro"
                                             id="ano_carro">
                                         <label for="">Ano</label>
                                     </div>
@@ -231,22 +231,25 @@
                         </div>
 
                         @if (isset($errors) && old('carros') != null)
-                            <div id="carroslista" class="mx-auto">
+                            <div id="carroslista" class="mx-auto row col-12">
                                 @foreach (old('carros') as $carro)
                                 {{old('carros['.$carro['id'].']')}}
                                     @inject('carroClass', \App\Models\Carro::class)
-                                    <div class="card p-2 m-3"
+                                    <div class="card col-md-3 col-12 p-2 m-3 mx-auto"
                                         id="{{ $carroClass->where('id', '=', $carro['id'])->first()->nm_carro }}">
                                         <div id="atual{{ $carroClass->where('id', '=', $carro['id'])->first()->nm_carro }}"
                                             class="row col-12 mx-auto py-2">
-                                            <div class="col-md-3 col-12 h-3 my-auto">
-                                                <h3 class="my-auto">
+                                            <div class="col-12 h-3 my-auto row justify-content-between">
+                                                <h3 class="my-auto col-10 text-truncate">
                                                     {{ $carroClass->where('id', '=', $carro['id'])->first()->nm_carro }}
                                                 </h3>
+                                                <button class="btn btn-danger col-auto mb-2" onclick="excluirCarro({{strval($carroClass->where('id', '=', $carro['id'])->first()->nm_carro)}})" type="button">
+                                                    X
+                                                </button>
                                             </div>
 
                                             @if ($errors->has('carros.'. $carro['id'] .'.qt_kilometragem'))
-                                                <div class="col-md-3 col-12 form-floating">
+                                                <div class="col-12 form-floating">
                                                     <input class="form-control is-invalid" type="number"
                                                         placeholder="Kilômetros rodados"
                                                         name="{{ 'carros[' . $carro['id'] . '][qt_kilometragem]' }}" 
@@ -257,7 +260,7 @@
                                                     </div>
                                                 </div>
                                             @else
-                                                <div class="col-md-3 col-12 form-floating">
+                                                <div class="col-12 form-floating">
                                                     <input class="form-control" type="number"
                                                         placeholder="Kilômetros rodados"
                                                         name="{{ 'carros[' . $carro['id'] . '][qt_kilometragem]' }}"
@@ -267,7 +270,7 @@
                                             @endif
 
                                             @if ($errors->has('carros.'. $carro['id'] .'.qt_media_kilometragem'))
-                                                <div class="col-md-3 col-12 form-floating">
+                                                <div class="col-12 form-floating">
                                                     <input class="form-control is-invalid" type="number"
                                                         placeholder="Média de kilômetros por semana"
                                                         name="{{ 'carros[' . $carro['id'] . '][qt_media_kilometragem]' }}"
@@ -278,7 +281,7 @@
                                                     </div>
                                                 </div>
                                             @else
-                                                <div class="col-md-3 col-12 form-floating">
+                                                <div class="col-12 form-floating">
                                                     <input class="form-control" type="number"
                                                         placeholder="Média de kilômetros por semana"
                                                         name="{{ 'carros[' . $carro['id'] . '][qt_media_kilometragem]' }}"
@@ -288,7 +291,7 @@
                                             @endif
 
                                             @if ($errors->has('carros.'. $carro['id'] .'.dt_ultima_troca_oleo'))
-                                                <div class="col-md-3 col-12 form-floating">
+                                                <div class="col-12 form-floating">
                                                     <input class="form-control is-invalid" type="date"
                                                         placeholder="Última troca de óleo"
                                                         name="{{ 'carros[' . $carro['id'] . '][dt_ultima_troca_oleo]' }}"
@@ -299,7 +302,7 @@
                                                     </div>
                                                 </div>
                                             @else
-                                                <div class="col-md-3 col-12 form-floating">
+                                                <div class="col-12 form-floating">
                                                     <input class="form-control" type="date"
                                                         placeholder="Última troca de óleo"
                                                         name="{{ 'carros[' . $carro['id'] . '][dt_ultima_troca_oleo]' }}"

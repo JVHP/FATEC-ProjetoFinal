@@ -121,6 +121,7 @@ function createCarInput(carro) {
 
     inputCar.addEventListener("click", function (event) {
         let divCarrosLista = document.querySelector("#carroslista")
+        divCarrosLista.classList.add("row", "col-12")
         let divCarroAtual = document.querySelector(`#${carro.nm_carro}`)
 
         if (divCarroAtual != null) {
@@ -128,7 +129,7 @@ function createCarInput(carro) {
 
         } else {
             let divMain = document.createElement("div")
-            divMain.classList.add("card", "p-2", "m-3")
+            divMain.classList.add("card", "col-md-3", "col-12", "p-2", "m-3", "mx-auto")
             divMain.setAttribute("id", carro.nm_carro)
 
             divCarroAtual = document.createElement("div")
@@ -140,13 +141,21 @@ function createCarInput(carro) {
             let DivMediaKm2 = document.createElement("div");
             let Div3 = document.createElement("div");
 
-            DivCarro.classList.add("col-md-3", "col-12", "h-3", "my-auto")
-            DivKm1.classList.add("col-md-3", "col-12", "form-floating")
-            DivMediaKm2.classList.add("col-md-3", "col-12", "form-floating")
-            Div3.classList.add("col-md-3", "col-12", "form-floating")
+            DivCarro.classList.add("col-12", "h-3", "my-auto", "row", "justify-content-between", "mb-2")
+            DivKm1.classList.add("col-12", "form-floating", "my-2")
+            DivMediaKm2.classList.add("col-12", "form-floating", "my-2")
+            Div3.classList.add("col-12", "form-floating", "my-2")
+
+            let btnExcluirCarro = document.createElement("button");
+            btnExcluirCarro.classList.add("btn", "btn-danger", "col-auto");
+            btnExcluirCarro.innerHTML = "X";
+            btnExcluirCarro.setAttribute("type", "button");
+            btnExcluirCarro.addEventListener("click", function() {
+                divCarrosLista.removeChild(divMain)
+            });
 
             let LabelCarro = document.createElement("h3");
-            LabelCarro.classList.add("my-auto");
+            LabelCarro.classList.add("my-auto", "col-10", "text-truncate");
 
             let inputKm = document.createElement("input");
             let inputMediaKm = document.createElement("input");
@@ -189,6 +198,7 @@ function createCarInput(carro) {
             input3.setAttribute("value",  `null`)
             
             DivCarro.appendChild(LabelCarro)
+            DivCarro.appendChild(btnExcluirCarro)
             DivKm1.appendChild(inputKm)
             DivMediaKm2.appendChild(inputMediaKm)
             Div3.appendChild(input3)
@@ -211,6 +221,13 @@ function createCarInput(carro) {
     })
 
     return inputCar
+}
+
+function excluirCarro(id_div_carro) {
+    let divCarrosLista = document.querySelector("#carroslista")    
+    if (id_div_carro != null) {
+        divCarrosLista.removeChild(id_div_carro)
+    }
 }
 
 function adicionarLinhaCarro(carro) {
