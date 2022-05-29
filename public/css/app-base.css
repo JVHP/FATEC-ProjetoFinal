@@ -200,3 +200,9 @@ a {
 .border-bottom-orange {
   border-bottom: 8px solid #FF4C29;
 }
+
+.hidden {
+  visibility: hidden;
+  height: 0;
+  width: 0;
+}

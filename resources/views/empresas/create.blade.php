@@ -4,12 +4,12 @@
     <div class="col-12 pt-5" style="height: 100vh;">
         <div class="card-display border-bottom-orange">
             <h1 class="rounded bg-primary-dark border-bottom-orange text-white p-2">
-                Cadastro de Usuário
+                Cadastro Empresarial
             </h1>
             <div class="card-body">
                 {{-- <div class="card-title mb-0">
                 </div> --}}
-                <form class="" action="/usuarios" name="cadastro" method="POST">
+                <form class="" action="/empresas" name="cadastro" method="POST">
                     <div class="row col-12 mx-auto justify-content-center">
                         <div class="row col-lg-8 col-12 justify-content-lg-between justify-content-center">
 
@@ -32,7 +32,7 @@
                                                     ? $_GET['nm_usuario']
                                                     : old('nm_usuario')) }}" />
                                     @endif
-                                    <label for="nome">Nome<b class="text-danger">*</b></label>
+                                    <label for="nome">Nome Responsável<b class="text-danger">*</b></label>
                                 </div>
                             </div>
 
@@ -50,7 +50,7 @@
                                             placeholder="E-mail"
                                             value="{{ old('email') != null ? old('email') : (isset($_GET['emailC']) ? $_GET['emailC'] : old('email')) }}" />
                                     @endif
-                                    <label for="email">E-mail<b class="text-danger">*</b></label>
+                                    <label for="email">E-mail Responsável<b class="text-danger">*</b></label>
                                 </div>
                             </div>
 
@@ -66,11 +66,26 @@
                                         <input type="cpf" class="form-control" maxlength="11" id="cpf" name="cpf"
                                             placeholder="CPF" value="{{ old('cpf') }}" />
                                     @endif
-                                    <label for="cpf">CPF<b class="text-danger">*</b></label>
+                                    <label for="cpf">CNPJ<b class="text-danger">*</b></label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-9 col-sm-12 col-12">
+                                <div class="form-floating p-1">
+                                    @if (isset($errors) && $errors->has('cpf'))
+                                        <input type="cpf" class="form-control is-invalid" maxlength="11" id="cpf" name="cpf"
+                                            placeholder="CPF" value="{{ old('cpf') }}" />
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('cpf') }}
+                                        </div>
+                                    @else
+                                        <input type="cpf" class="form-control" maxlength="11" id="cpf" name="cpf"
+                                            placeholder="CPF" value="{{ old('cpf') }}" />
+                                    @endif
+                                    <label for="cpf">Razão Social<b class="text-danger">*</b></label>
                                 </div>
                             </div>
 
-                            <div class="col-lg-6 col-md-9 col-sm-12 col-12">
+                            {{-- <div class="col-lg-6 col-md-9 col-sm-12 col-12">
                                 <div class="form-floating p-1">
                                     @if (isset($errors) && $errors->has('dt_nasc'))
                                         <input class="form-control is-invalid" type="date" min="1900-01-01"
@@ -87,7 +102,7 @@
                                     @endif
                                     <label for="idade">Data de nascimento<b class="text-danger">*</b></label>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="col-lg-6 col-md-9 col-sm-12 col-12">
                                 <div class="form-floating p-1">
@@ -189,140 +204,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-lg-4 col-md-12 col-sm-12 col-12 px-3 ms-auto my-auto">
-                            <div class="row col-12 mx-auto justify-content-between my-2" id="divSearch">
-                                <div class="col-6">
-                                    <div class="form-floating">
-                                        <select class="form-select" placeholder="Marca" name="id_marca" id="id_marca">
-                                            <option selected disabled>Marca</option>
-                                            @foreach ($marcas as $marca)
-                                                <option value="{{ $marca->id }}">{{ $marca->nm_marca }}</option>
-                                            @endforeach
-                                        </select>
-                                        <label for="">Marca</label>
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="form-floating">
-                                        <input placeholder="Ano" class="form-control" type="number" step="1" name="ano_carro"
-                                            id="ano_carro">
-                                        <label for="">Ano</label>
-                                    </div>
-                                </div>
-                                <div class="col-2 my-auto">
-                                    <button type="button" onclick="getCars()"
-                                        class="btn btn-primary p-2 rounded-circle"><img class="m-0 p-0"
-                                            src="{{ URL::asset('icons/search-white.svg') }}" alt=""></button>
-                                </div>
-                            </div>
-                            <div class="p-1">
-                                <div class="card p-1 overflow-auto">
-                                    <div class="card-title">Pesquise os carros acima para exibi-los aqui</div>
-                                    <div class="accordion" id="accordionExample">
-                                    </div>
-                                </div>
-                            </div>
-                            @if ($errors->has('carros'))
-                                <div class="text-center text-danger">
-                                    {{ $errors->first('carros') }}
-                                </div>
-                            @endif
-                        </div>
-
-                        @if (isset($errors) && old('carros') != null)
-                            <div id="carroslista" class="mx-auto row col-12">
-                                @foreach (old('carros') as $carro)
-                                {{old('carros['.$carro['id'].']')}}
-                                    @inject('carroClass', \App\Models\Carro::class)
-                                    <div class="card col-md-3 col-12 p-2 m-3 mx-auto"
-                                        id="{{ $carroClass->where('id', '=', $carro['id'])->first()->nm_carro }}">
-                                        <div id="atual{{ $carroClass->where('id', '=', $carro['id'])->first()->nm_carro }}"
-                                            class="row col-12 mx-auto py-2">
-                                            <div class="col-12 h-3 my-auto row justify-content-between mb-2">
-                                                <h3 class="my-auto col-10 text-truncate">
-                                                    {{ $carroClass->where('id', '=', $carro['id'])->first()->nm_carro }}
-                                                </h3>
-                                                <button class="btn btn-danger col-auto" onclick="excluirCarro({{strval($carroClass->where('id', '=', $carro['id'])->first()->nm_carro)}})" type="button">
-                                                    X
-                                                </button>
-                                            </div>
-
-                                            @if ($errors->has('carros.'. $carro['id'] .'.qt_kilometragem'))
-                                                <div class="col-12 form-floating">
-                                                    <input class="form-control is-invalid" type="number"
-                                                        placeholder="Kilômetros rodados"
-                                                        name="{{ 'carros[' . $carro['id'] . '][qt_kilometragem]' }}" 
-                                                        value="{{ $carro['qt_kilometragem'] }}">
-                                                    <label class="ms-2">Kilômetros rodados</label>
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('carros.'. $carro['id'] .'.qt_kilometragem') }}
-                                                    </div>
-                                                </div>
-                                            @else
-                                                <div class="col-12 form-floating">
-                                                    <input class="form-control" type="number"
-                                                        placeholder="Kilômetros rodados"
-                                                        name="{{ 'carros[' . $carro['id'] . '][qt_kilometragem]' }}"
-                                                        value="{{ $carro['qt_kilometragem'] }}">
-                                                    <label class="ms-2">Kilômetros rodados</label>
-                                                </div>
-                                            @endif
-
-                                            @if ($errors->has('carros.'. $carro['id'] .'.qt_media_kilometragem'))
-                                                <div class="col-12 form-floating">
-                                                    <input class="form-control is-invalid" type="number"
-                                                        placeholder="Média de kilômetros por semana"
-                                                        name="{{ 'carros[' . $carro['id'] . '][qt_media_kilometragem]' }}"
-                                                        value="{{$carro['qt_media_kilometragem']}}">
-                                                    <label class="ms-2">Média de kilômetros por semana</label>
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('carros.'. $carro['id'] .'.qt_media_kilometragem') }}
-                                                    </div>
-                                                </div>
-                                            @else
-                                                <div class="col-12 form-floating">
-                                                    <input class="form-control" type="number"
-                                                        placeholder="Média de kilômetros por semana"
-                                                        name="{{ 'carros[' . $carro['id'] . '][qt_media_kilometragem]' }}"
-                                                        value="{{$carro['qt_media_kilometragem']}}">
-                                                    <label class="ms-2">Média de kilômetros por semana</label>
-                                                </div>
-                                            @endif
-
-                                            @if ($errors->has('carros.'. $carro['id'] .'.dt_ultima_troca_oleo'))
-                                                <div class="col-12 form-floating">
-                                                    <input class="form-control is-invalid" type="date"
-                                                        placeholder="Última troca de óleo"
-                                                        name="{{ 'carros[' . $carro['id'] . '][dt_ultima_troca_oleo]' }}"
-                                                        value="{{$carro['dt_ultima_troca_oleo']}}">
-                                                    <label class="ms-2">Última troca de óleo</label>
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('carros.'. $carro['id'] .'.dt_ultima_troca_oleo') }}
-                                                    </div>
-                                                </div>
-                                            @else
-                                                <div class="col-12 form-floating">
-                                                    <input class="form-control" type="date"
-                                                        placeholder="Última troca de óleo"
-                                                        name="{{ 'carros[' . $carro['id'] . '][dt_ultima_troca_oleo]' }}"
-                                                        value="{{$carro['dt_ultima_troca_oleo']}}">
-                                                    <label class="ms-2">Última troca de óleo</label>
-                                                </div>
-                                            @endif
-
-                                            <input name="{{ 'carros[' . $carro['id'] . '][id]' }}" value="{{ $carro['id'] }}"
-                                                type="hidden">
-
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        @else
-                            <div id="carroslista" class="mx-auto"></div>
-                        @endif
-                    </div>
-
                     <div class="col-lg-12 col-md-12 col-sm-12 col-12 text-end p-3 mx-auto">
                         <button type="submit" for="cadastro" class="btn btn-primary"> Cadastrar </button>
                     </div>

@@ -6,6 +6,7 @@ use App\Models\Carro;
 use App\Models\Pedido;
 use App\Http\Controllers\PecaController;
 use App\Http\Controllers\CarroController;
+use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\UsuarioController;
@@ -48,6 +49,8 @@ Route::get('/loja/{cd_empresa?}', function ($cd_empresa = null) {
         $pecas = Peca::take(5)->inRandomOrder()->where('qt_estoque', '>', 0)->get();
         session(['cd_empresa' => $cd_empresa]);
         return view('welcome-company')->with('varPeca', $pecas);
+    } else {
+        return redirect('404');
     }
 });
 
@@ -211,5 +214,7 @@ Route::resource('tipospeca', TipoPecaController::class);
 Route::resource('usuarios', UsuarioController::class);
 
 Route::resource('marcas', MarcaController::class);
+
+Route::resource('empresas', EmpresaController::class);
 
 Auth::routes();

@@ -83,7 +83,7 @@
                         <div class="col-12">
                             <div class="col-lg-9 col-md-9 col-sm-12 col-12 mx-auto">
                                 <h1 class="rounded bg-primary-dark border-bottom-orange text-white p-2">
-                                    Cadastro
+                                    Cadastro de Usuário
                                 </h1>
                                 <div class="form-floating p-1">
                                     @if ($errors->has('nm_usuario'))
