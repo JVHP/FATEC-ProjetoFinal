@@ -239,11 +239,11 @@
                                         id="{{ $carroClass->where('id', '=', $carro['id'])->first()->nm_carro }}">
                                         <div id="atual{{ $carroClass->where('id', '=', $carro['id'])->first()->nm_carro }}"
                                             class="row col-12 mx-auto py-2">
-                                            <div class="col-12 h-3 my-auto row justify-content-between">
+                                            <div class="col-12 h-3 my-auto row justify-content-between mb-2">
                                                 <h3 class="my-auto col-10 text-truncate">
                                                     {{ $carroClass->where('id', '=', $carro['id'])->first()->nm_carro }}
                                                 </h3>
-                                                <button class="btn btn-danger col-auto mb-2" onclick="excluirCarro({{strval($carroClass->where('id', '=', $carro['id'])->first()->nm_carro)}})" type="button">
+                                                <button class="btn btn-danger col-auto" onclick="excluirCarro({{strval($carroClass->where('id', '=', $carro['id'])->first()->nm_carro)}})" type="button">
                                                     X
                                                 </button>
                                             </div>

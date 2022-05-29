@@ -11,6 +11,7 @@ use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\TipoCarroController;
 use App\Http\Controllers\TipoPecaController;
+use App\Models\Empresa;
 use App\Models\TipoPeca;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,6 +20,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,8 +35,20 @@ use Carbon\Carbon;
 
 /* WELCOME */
 Route::get('/', function () {
-    $pecas = Peca::take(8)->inRandomOrder()->where('qt_estoque', '>', 0)->get();
-    return view('welcome')->with('varPeca', $pecas);
+    /* $pecas = Peca::take(8)->inRandomOrder()->where('qt_estoque', '>', 0)->get(); */
+    session(['cd_empresa' => null]);
+    return view('welcome')/* ->with('varPeca', $pecas) */;
+});
+
+/* WELCOME */
+Route::get('/loja/{cd_empresa?}', function ($cd_empresa = null) {
+    if ($cd_empresa != null){
+        $empresa = Empresa::where('url_customizada', '=', $cd_empresa)->first();
+        echo $empresa;
+        $pecas = Peca::take(5)->inRandomOrder()->where('qt_estoque', '>', 0)->get();
+        session(['cd_empresa' => $cd_empresa]);
+        return view('welcome-company')->with('varPeca', $pecas);
+    }
 });
 
 /* Carros */
@@ -75,19 +89,19 @@ Route::post('/email/verification-notification', function (Request $request) {
     return $peca;
 });
  */
-Route::get('pecas/nome/{nm_peca}', function ($nm_peca) {    
+Route::get('/loja/{cd_empresa}/pecas/nome/{nm_peca}', function ($nm_peca) {    
     $peca = DB::table('pecas')->select(DB::raw('nm_peca, id'))->whereRaw(' UPPER(nm_peca) LIKE ? ', [strtoupper($nm_peca).'%'])->get();
     return $peca;
 });
 
-Route::get('pecas/delete/{id}', function ($id) {
+Route::get('/loja/{cd_empresa}/pecas/delete/{id}', function ($id) {
     $peca = Peca::find($id);
     $carros = Peca::find($peca->id)->carros()->get();
     $tipoPeca = Peca::find($peca->id)->tipoPeca()->first();
     return view('pecas.destroy')->with('peca', $peca)->with('carros', $carros)->with('tipoPeca', $tipoPeca);
 })->middleware('auth');
 
-Route::get('/pecas/todos/{nome?}/{categoria_id?}', function($nome = null){
+Route::get('/loja/{cd_empresa}/pecas/todos/{nome?}/{categoria_id?}', function($nome = null){
     if ($nome != null) {
         $pecas = Peca::orderBy('qt_estoque', 'DESC')->orderBy('nm_peca', 'DESC')->whereRaw(' UPPER(nm_peca) LIKE ? ', [strtoupper($nome).'%'])->paginate(15);
     }else{
@@ -96,7 +110,7 @@ Route::get('/pecas/todos/{nome?}/{categoria_id?}', function($nome = null){
     return view('pecas.lista')->with('varPeca', $pecas);
 });
 
-Route::get('/pecas-usuario', function(){
+Route::get('/loja/{cd_empresa}/pecas-usuario', function(){
     $user = Auth::user();
     
     $pecas_carro = DB::table('carro_usuarios')->select(DB::raw('pecas.*'))->distinct()->join('carro_peca', 'carro_usuarios.id_carro', '=', 'carro_peca.carro_id')
@@ -184,9 +198,9 @@ Route::get('/usuario/informacoes', function(){
 })->name('informacoes')->middleware('auth');
 
 
-Route::resource('pecas', PecaController::class);
+Route::resource('/loja/{cd_empresa}/pecas', PecaController::class);
 
-Route::resource('pedido', PedidoController::class);
+Route::resource('/loja/{cd_empresa}/pedido', PedidoController::class);
 
 Route::resource('carros', CarroController::class);
 
