@@ -18,8 +18,8 @@ class CreateEmpresasTable extends Migration
             $table->string("cnpj", 14);
             $table->string("cnpj_mascara", 18);
             $table->string("url_customizada", 20);
-            $table->integer('id_reponsavel');
-            $table->foreign('id_reponsavel')->references('id')->on('users');
+            $table->integer('id_responsavel');
+            $table->foreign('id_responsavel')->references('id')->on('users');
             $table->timestamps();
         });
     }

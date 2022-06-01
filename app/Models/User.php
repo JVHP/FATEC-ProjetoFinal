@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable; 
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Enums\TipoCadastro;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -30,7 +31,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at',
         'nm_rua',
         'nr_casa',
-        'ds_bairro',];
+        'ds_bairro',
+        'ck_tipo_cadastro',
+        'cnpj_empresa_cadastrada',
+    ];
 
 
     /**
@@ -62,6 +66,22 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function isAdministrator() {
         return $this->is_admin;
+    }
+    
+    public function isEmpresa() {
+        return ($this->ck_tipo_cadastro == TipoCadastro::Empresa);
+    }
+    
+    public function isFuncionario() {
+        return ($this->ck_tipo_cadastro == TipoCadastro::Funcionario);
+    }
+    
+    public function isCliente() {
+        return ($this->ck_tipo_cadastro == TipoCadastro::Cliente);
+    }
+    
+    public function getId() {
+        return $this->id;
     }
 
     public function firstName() {

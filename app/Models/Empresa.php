@@ -14,6 +14,6 @@ class Empresa extends Model
         "cnpj_mascara", 
         "razao_social", 
         "url_customizada", 
-        "id_reponsavel"
+        "id_responsavel"
     ];
 }

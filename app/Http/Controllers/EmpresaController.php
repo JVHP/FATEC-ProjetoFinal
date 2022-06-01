@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Empresa;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EmpresaController extends Controller
 {
@@ -14,7 +16,10 @@ class EmpresaController extends Controller
      */
     public function index()
     {
-        //
+        $responsavel = User::find(Auth::user()->id);
+        $empresas = Empresa::where('id_responsavel', '=', $responsavel->id)->paginate(10);
+
+        return view('empresas.index')->with('empresas', $empresas);
     }
 
     /**
@@ -35,7 +40,26 @@ class EmpresaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //TODO testar pegar ID com Auth::id();
+        $responsavel = User::find(Auth::user()->id);
+
+        $request->request->add(["cnpj_mascara" => $this->Mask("##.###.###/####-##", $request->cnpj)]);
+        $request->request->add(["id_responsavel" => $responsavel->id]);
+
+        Empresa::create($request->all());
+        return redirect('/empresas');
+    }
+
+    function Mask($mask,$str){
+
+        $str = str_replace(" ","",$str);
+    
+        for($i=0;$i<strlen($str);$i++){
+            $mask[strpos($mask,"#")] = $str[$i];
+        }
+    
+        return $mask;
+    
     }
 
     /**

@@ -27,7 +27,6 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
         import "bootstrap-icons/font/bootstrap-icons.css"
@@ -55,12 +54,15 @@
     <div class="p-3">
         <div class="mx-auto container-xxl">
             <div class="row col-12 m-0">
+                @guest
+                @else
                 <div class="col-lg-1 col-md-1 col-sm-1 col-1 y-auto ps-4 my-auto ">
                     <button class="btn" type="button" data-bs-toggle="offcanvas"
                         data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
                         <img src="{{ URL::asset('icons/menu.svg') }}" alt="">
                     </button>
                 </div>
+                @endguest
 
                 <div
                     class="col-lg-auto col-md-3 col-sm-4 col-6 pb-3 my-auto text-md-start text-center me-md-auto mx-md-0 mx-auto">
@@ -73,15 +75,20 @@
                     </h3>
                 </div>
 
-                <div class="form-group col-xl-3 col-lg-3 col-md-4 col-sm-12 col-12 my-auto">
-                    <input list="pecasList" oninput="getPecas(event.target.value)" id="inputPeca"
-                        class=" card-search rounded-pill form-control" type="text"
-                        style="height: 50px; /* border: 2px solid #334756; border-radius: 5px; */"
-                        placeholder="Pesquisar...">
-
-                    <datalist id="pecasList" onclick="irParaPeca(event.target.value)">
-                    </datalist>
-                </div>
+                @guest
+                    @if(session('cd_empresa')) 
+                        <div class="form-group col-xl-3 col-lg-3 col-md-4 col-sm-12 col-12 my-auto">
+                            <input list="pecasList" oninput="getPecas(event.target.value)" id="inputPeca"
+                                class=" card-search rounded-pill form-control" type="text"
+                                style="height: 50px; /* border: 2px solid #334756; border-radius: 5px; */"
+                                placeholder="Pesquisar...">
+        
+                            <datalist id="pecasList" onclick="irParaPeca(event.target.value)">
+                            </datalist>
+                        </div>
+                    @endif
+                @else
+                @endguest
                 
                 <div class="text-end col-xxl-2-custom col-lg-3 col-md-4 col-12 pt-md-0 pt-3 my-auto mx-md-0 mx-auto ">
                     <div>
@@ -122,12 +129,18 @@
                                             </a>
                                         </div>
                                         <div class="col-12 text-start">
+                                            @if (Auth::user()->isCliente())
                                             <a href="{{ route('informacoes') }}" class="text-light py-1 me-1 my-2">
                                                 <img src="{{ URL::asset('icons/settings.svg') }}" alt="">
                                             </a>
                                             <a href="{{ route('dashboard') }}" class="text-light py-1 me-2 my-2">
                                                 <img src="{{ URL::asset('icons/shopping-cart.svg') }}" alt="">
                                             </a>
+                                            @elseif (Auth::user()->isEmpresa())
+                                            <a href="/empresas" class="text-light py-1 me-2 my-2">
+                                                <img src="{{ URL::asset('icons/briefcase.svg') }}" alt="">
+                                            </a>
+                                            @endif
                                             <a href="{{ route('logout') }}" class="text-light py-1 my-2"
                                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                                 <img src="{{ URL::asset('icons/log-out.svg') }}" alt="">
@@ -202,6 +215,48 @@
                                 </div>
                             </div>
                         </div>
+                    @endif
+                    @if (Auth::user()->isEmpresa())
+                        <div class="accordion-item" style="border-radius: none; border: none">
+                            <h2 class="accordion-header" id="flush-headingEmpresas">
+                                <button class="accordion-button collapsed bg-orange" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapseEmpresas" aria-expanded="false"
+                                    aria-controls="flush-collapseEmpresas">
+                                    Empresas
+                                </button>
+                            </h2>
+                            <div id="flush-collapseEmpresas" class="accordion-collapse collapse"
+                                aria-labelledby="flush-headingEmpresas" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body p-0">
+                                    <a href="/empresas">
+                                        <button
+                                            class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
+                                            Gerenciar Empresas
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- <div class="accordion-item" style="border-radius: none; border: none">
+                            <h2 class="accordion-header" id="flush-headingMarcas">
+                                <button class="accordion-button collapsed bg-orange" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapseMarcas" aria-expanded="false"
+                                    aria-controls="flush-collapseMarcas">
+                                    Marcas
+                                </button>
+                            </h2>
+                            <div id="flush-collapseMarcas" class="accordion-collapse collapse"
+                                aria-labelledby="flush-headingMarcas" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body p-0">
+                                    <a href="/marcas">
+                                        <button
+                                            class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
+                                            Gerenciar Marcas
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div> --}}
                     @endif
                 @endguest
                 <div class="accordion-item" style="border-radius: none; border: none">

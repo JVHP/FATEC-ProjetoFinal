@@ -32,3 +32,7 @@ function trocarExibicao(tab) {
             console.log("Não foi encontrada tab escolhida no botão");
     }
 }
+
+function irParaLogin() {
+    window.location = '/login'
+}
