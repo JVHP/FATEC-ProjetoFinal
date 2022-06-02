@@ -137,7 +137,7 @@
         </div>
         </div>
     @else
-        <div class="card-display">
+        <div class="card-display border-bottom-orange">
             <h1 class="rounded border-bottom-orange bg-primary-dark text-white p-2 col-12">Dashboard</h1>
             <div class="card-body row">
                 <div class="col-lg-3 col-md-6 col-12 mx-auto">
