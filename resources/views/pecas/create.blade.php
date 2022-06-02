@@ -26,7 +26,7 @@
                         </div>
                         <div class="col-lg-8 col-12">
                             <div class="row">
-                                <div class="col-lg-6 col-12 p-2">
+                                <div class="col-lg-4 col-12 p-2">
                                     <div class="form-floating">
                                         @if ($errors->has('nm_peca'))
                                             <input aria-describedby="invalid-feedback" class="form-control is-invalid"
@@ -42,7 +42,7 @@
                                         <label for="nm_peca">Nome Peça</label>
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-12 p-2">
+                                <div class="col-lg-4 col-12 p-2">
                                     <div class="form-floating">
                                         @if ($errors->has('id_marca'))
                                             <select aria-placeholder="Marca" id="id_marca" class="form-select is-invalid"
@@ -71,6 +71,37 @@
                                             </select>
                                         @endif
                                         <label for="id_marca">Marca</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-12 p-2">
+                                    <div class="form-floating">
+                                        @if ($errors->has('id_empresa'))
+                                            <select aria-placeholder="Empresa" id="id_empresa" class="form-select is-invalid"
+                                                name="id_marca" value="{{ old('id_empresa') }}">
+                                                <option value="" selected="{{ old('id_empresa') != null ? false : true }}"
+                                                    disabled>Selecione...</option>
+                                                @foreach ($empresas as $cmp)
+                                                    @if ($cmp->id == old('id_empresa'))
+                                                        <option selected value="{{ $cmp->id }}">{{ $cmp->razao_social }}
+                                                        </option>
+                                                    @else
+                                                        <option value="{{ $cmp->id }}">{{ $cmp->razao_social }}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                            <div class="invalid-feedback">
+                                                {{ $errors->first('id_empresa') }}
+                                            </div>
+                                        @else
+                                            <select aria-placeholder="Empresa" id="id_empresa" class="form-select"
+                                                name="id_empresa">
+                                                <option value="" selected disabled>Selecione...</option>
+                                                @foreach ($empresas as $cmp)
+                                                    <option value="{{ $cmp->id }}">{{ $cmp->razao_social }}</option>
+                                                @endforeach
+                                            </select>
+                                        @endif
+                                        <label for="id_marca">Empresa</label>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-12  p-2">

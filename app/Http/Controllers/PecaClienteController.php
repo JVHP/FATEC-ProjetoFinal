@@ -8,10 +8,8 @@ use App\Models\Foto_Peca;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\PecaRequest;
-use App\Models\Empresa;
 use App\Models\TipoPeca;
 use App\Models\Marca;
-use Illuminate\Support\Facades\Auth;
 
 class PecaController extends Controller
 {
@@ -24,25 +22,18 @@ class PecaController extends Controller
     public function __construct()
     {
         $this->middleware('auth', ['except' => ['show']]);
-        $this->middleware('employee_parts.user', ['except' => ['show']]);
+        $this->middleware('company.user', ['except' => ['show']]);
+        $this->middleware('employee.user', ['except' => ['show']]);
     }
 
     public function index()
     {   
-
-        $empresas_usuario = DB::table('empresas')
-                ->join('empresas_usuarios', 'empresas_usuarios.id_empresa', '=', 'empresas.id')
-                ->where('empresas_usuarios.id_usuario', '=', Auth::user()->id)
-                ->select('empresas.id')
-                ->get()->toArray();
-
-        $pecas = DB::table('pecas')
+        $pecas =/*  Peca::orderBy('id', 'ASC')->paginate(10); */
+                DB::table('pecas')
                 ->join('tipo_pecas', 'pecas.id_tipo_peca', '=', 'tipo_pecas.id')
                 ->join('marcas', 'pecas.id_marca', '=', 'marcas.id')
-                ->join('empresas', 'empresas.id', '=', 'pecas.id_empresa')
-                ->select('pecas.*', 'tipo_pecas.nm_tipo', 'marcas.nm_marca', 'empresas.razao_social')
-                ->whereIn('pecas.id_empresa', (array_column($empresas_usuario, 'id')))
-                ->orderBy('pecas.id', 'ASC')
+                ->select('pecas.*', 'tipo_pecas.nm_tipo', 'marcas.nm_marca')
+                ->orderBy('id', 'ASC')
                 ->paginate(10);
 
 
@@ -59,13 +50,7 @@ class PecaController extends Controller
         $carros = Carro::all();
         $tipos = TipoPeca::where('ck_ativo', '=', '1')->get();
         $marcas = Marca::whereIn('ck_categoria_marca', ['P', 'A'])->get();
-        $empresas = DB::table("empresas")
-            ->join("empresas_usuarios", 'empresas_usuarios.id_empresa', '=', 'empresas.id')
-            ->where('empresas_usuarios.id_usuario', '=', Auth::user()->id)
-            ->select('empresas.*')
-            ->get();    
-
-        return view('pecas.create')->with('carros', $carros)->with('tipos', $tipos)->with('marcas', $marcas)->with('empresas', $empresas);
+        return view('pecas.create')->with('carros', $carros)->with('tipos', $tipos)->with('marcas', $marcas);
     }
 
     /**
@@ -128,21 +113,13 @@ class PecaController extends Controller
         $marcaPeca = Peca::find($peca->id)->marca()->get();
         $marcas = Marca::whereIn('ck_categoria_marca', ['P', 'A'])->get();
 
-        $empresas = DB::table("empresas")
-            ->join("empresas_usuarios", 'empresas_usuarios.id_empresa', '=', 'empresas.id')
-            ->where('empresas_usuarios.id_usuario', '=', Auth::user()->id)
-            ->select('empresas.*')
-            ->get();    
-
-        return view('pecas.edit')
-            ->with('peca', $peca)
+        return view('pecas.edit')->with('peca', $peca)
             ->with('carros', $carros)
             ->with('carrosPeca', $carrosPeca)
             ->with('tipos', $tipos)
             ->with('tiposPeca', $tipoPeca)
             ->with('marcas', $marcas)
-            ->with('marcaPeca', $marcaPeca)
-            ->with('empresas', $empresas);
+            ->with('marcaPeca', $marcaPeca);
     }
 
     /**

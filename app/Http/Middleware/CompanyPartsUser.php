@@ -4,8 +4,11 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
-class RemoveCompanySession
+
+class CompanyPartsUser
 {
     /**
      * Handle an incoming request.
@@ -16,10 +19,9 @@ class RemoveCompanySession
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!$request->is('loja/*')) {
-            session(['empresa' => null]);
+        if (Auth::check() && (!auth()->user()->isEmpresa() && !auth()->user()->isFuncionario())) {
+            return redirect('/');
         }
-
         return $next($request);
     }
 }

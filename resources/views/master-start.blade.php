@@ -65,8 +65,8 @@
                 <div
                     class="col-lg-auto col-md-3 col-sm-4 col-6 pb-3 my-auto text-md-start text-center me-md-auto mx-md-0 mx-auto">
                     <h3 style="cursor: pointer" class="pt-4 fw-bold text-light onhov" onclick="window.location='/'">
-                        @if(session('cd_empresa')) 
-                            {{session('cd_empresa')}}
+                        @if(session('empresa')) 
+                            {{session('empresa')->razao_social}}
                         @else
                             iTURBO
                         @endif

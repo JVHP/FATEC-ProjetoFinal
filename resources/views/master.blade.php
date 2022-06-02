@@ -7,8 +7,8 @@
     <!--<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">-->
 
     <title>
-        @if(session('cd_empresa')) 
-            {{session('cd_empresa')}}
+        @if(session('empresa')) 
+            {{session('empresa')->razao_social}}
         @else
             iTURBO
         @endif
@@ -67,8 +67,8 @@
                 <div
                     class="col-lg-auto col-md-3 col-sm-4 col-6 pb-3 my-auto text-md-start text-center me-md-auto mx-md-0 mx-auto">
                     <h3 style="cursor: pointer" class="pt-4 fw-bold text-light onhov" onclick="window.location='/{{!empty(session('cd_empresa')) ? 'loja/'.session('cd_empresa') : ''}}'">
-                        @if(session('cd_empresa')) 
-                            {{session('cd_empresa')}}
+                        @if(session('empresa')) 
+                            {{session('empresa')->razao_social}}
                         @else
                             iTURBO
                         @endif
@@ -101,8 +101,13 @@
                                             </div>
                                         </div>
                                         <div class="col-8 my-auto text-start ps-0">
-                                            <a class="text-light" href="/login">Faça seu {{ __('login') }} ou
+                                            @if(session('empresa'))
+                                            <a class="text-light" href="/loja/{{session('empresa')->url_customizada}}/login">Faça seu {{ __('login') }} ou
                                                 {{ __('cadastre-se') }}</a>
+                                            @else
+                                                <a class="text-light" href="/login">Faça seu {{ __('login') }} ou
+                                                    {{ __('cadastre-se') }}</a>
+                                            @endif
                                         </div>
                                     @endif
 
@@ -279,14 +284,14 @@
                             </div>
                         </div>
                     @else
-                        @if (!Auth::user()->isAdministrator())
+                        @if (Auth::user()->isCliente())
                         <a href="/pecas-usuario">
                             <button
                                 class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
                                 Peças para seu(s) carro(s)
                             </button>
                         </a>
-                        @elseif (Auth::user()->isAdministrator())
+                        @elseif (Auth::user()->isEmpresa() || Auth::user()->isFuncionario())
                             <a href="/pecas">
                                 <button
                                     class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">

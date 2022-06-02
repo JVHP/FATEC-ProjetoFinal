@@ -23,8 +23,7 @@
                     </div>
 
                     <div class="hidden" id="banner_usuario">
-                        <div class="p-2">{{-- 
-                            <h4>
+                        <div class="p-2">{{-- <h4>
                                 Crie sua conta e utilize para comprar com todos nossos parceiros!
                             </h4> --}}
                         </div>
@@ -130,11 +129,75 @@
                     </div>
 
                     <div class=" text-center">
-                        <button onclick="irParaLogin()" class="btn btn-success rounded" type="button">Se já tiver conta, faça o login</button>
+                        <button onclick="irParaLogin()" class="btn btn-success rounded" type="button">Se já tiver conta, faça o
+                            login</button>
                     </div>
                 </div>
             </div>
         </div>
+        </div>
+    @else
+        <div class="card-display">
+            <h1 class="rounded border-bottom-orange bg-primary-dark text-white p-2 col-12">Dashboard</h1>
+            <div class="card-body row">
+                <div class="col-lg-3 col-md-6 col-12 mx-auto">
+                    <div class="card-hover p-5 m-2">
+                        <div class="col-12 d-flex justify-content-between">
+                            <div class="col-2" style="width: 30px; height: 30px">
+                                <img style="width: 30px; height: 30px" src="{{ URL::asset('icons/tool.svg') }}" alt="">
+                            </div>
+                            <div class="ms-2 my-auto py-auto col-10">
+                                <p class="my-auto">
+                                    Peças
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-12 mx-auto">
+                    <div class="card-hover p-5 m-2">
+                        <div class="col-12 d-flex justify-content-between">
+                            <div class="col-2" style="width: 30px; height: 30px">
+                                <img style="width: 30px; height: 30px" src="{{ URL::asset('icons/briefcase.svg') }}" alt="">
+                            </div>
+                            <div class="ms-2 my-auto py-auto col-10">
+                                <p class="my-auto">
+                                    Empresas
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-12 mx-auto">
+                    <div class="card-hover p-5 m-2">
+                        <div class="col-12 d-flex justify-content-between">
+                            <div class="col-2" style="width: 30px; height: 30px">
+                                <img style="width: 30px; height: 30px" src="{{ URL::asset('icons/folder.svg') }}" alt="">
+                            </div>
+                            <div class="ms-2 my-auto py-auto col-10">
+                                <p class="my-auto">
+                                    Marcas
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-12 mx-auto">
+                    <div class="card-hover p-5 m-2">
+                        <div class="col-12 d-flex justify-content-between">
+                            <div class="col-2" style="width: 30px; height: 30px">
+                                <img style="width: 30px; height: 30px" src="{{ URL::asset('icons/shopping-bag.svg') }}"
+                                    alt="">
+                            </div>
+                            <div class="ms-2 my-auto py-auto col-10">
+                                <p class="my-auto">
+                                    Pedidos
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     @endguest
 @endsection

@@ -4,8 +4,8 @@
     <div class="banner col-lg-12 col-md-12 col-sm-12 col-12" style=""></div>
 
     <h1 class="col-12 text-center mx-auto fw-bold text-white titulo-banner">
-        @if(session('cd_empresa')) 
-            {{session('cd_empresa')}}
+        @if(session('empresa')) 
+            {{session('empresa')->razao_social}}
         @else
             iTURBO
         @endif

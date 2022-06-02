@@ -10,8 +10,7 @@ class Peca extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nm_peca', 'vl_peca', 'qt_estoque', 'foto', 'id_tipo_peca', 'id_marca', 'ds_peca'];
-
+    protected $fillable = ['nm_peca', 'vl_peca', 'qt_estoque', 'foto', 'id_tipo_peca', 'id_marca', 'ds_peca', 'id_empresa'];
 
     public function carros() {
         return $this->belongsToMany(Carro::class);

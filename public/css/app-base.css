@@ -24,8 +24,27 @@
   border: 1.3px solid  #082032; /* creates padding around scroll thumb */
 }
 
-.background{
-  
+.card-hover {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: .25rem;
+  transition: all 0.6s ease;
+}
+
+.card-hover:hover {
+  box-shadow: 0 0px 10px rgb(255, 255, 255);
+  transform: scale(102%);
+  cursor: pointer;
+}
+.card-hover:active {
+  transform: scale(92%);
+  cursor: pointer;
 }
 
 .img-zoom {

@@ -16,4 +16,5 @@ class Empresa extends Model
         "url_customizada", 
         "id_responsavel"
     ];
+
 }

@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\Events\Registered;
 use phpDocumentor\Reflection\Types\Object_;
 
-class UsuarioController extends Controller
+class UsuarioClienteController extends Controller
 {
     /**
      * Display a listing of the resource.

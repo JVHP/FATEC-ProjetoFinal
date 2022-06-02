@@ -41,14 +41,20 @@ Route::get('/', function () {
     return view('welcome')/* ->with('varPeca', $pecas) */;
 });
 
-/* WELCOME */
+/* WELCOME loja */
 Route::get('/loja/{cd_empresa?}', function ($cd_empresa = null) {
     if ($cd_empresa != null){
+
         $empresa = Empresa::where('url_customizada', '=', $cd_empresa)->first();
-        echo $empresa;
-        $pecas = Peca::take(5)->inRandomOrder()->where('qt_estoque', '>', 0)->get();
-        session(['cd_empresa' => $cd_empresa]);
+
+        session(['empresa' => $empresa]);
+        
+        $pecas = Peca::take(5)->inRandomOrder()->where('qt_estoque', '>', 0)->where('id_empresa', $empresa->id)->get();
         return view('welcome-company')->with('varPeca', $pecas);
+
+        if ($empresa == null) {
+            return redirect('404');
+        }
     } else {
         return redirect('404');
     }
@@ -92,19 +98,43 @@ Route::post('/email/verification-notification', function (Request $request) {
     return $peca;
 });
  */
-Route::get('/loja/{cd_empresa}/pecas/nome/{nm_peca}', function ($nm_peca) {    
+Route::get('/loja/{cd_empresa}/pecas/nome/{nm_peca}', function ($cd_empresa, $nm_peca) {    
+    $empresa = Empresa::where('url_customizada', '=', $cd_empresa)->first();
+
+    if ($empresa == null) {
+        return redirect('404');
+    }
+
+    session(['empresa' => $empresa]);
+
     $peca = DB::table('pecas')->select(DB::raw('nm_peca, id'))->whereRaw(' UPPER(nm_peca) LIKE ? ', [strtoupper($nm_peca).'%'])->get();
     return $peca;
 });
 
-Route::get('/loja/{cd_empresa}/pecas/delete/{id}', function ($id) {
+Route::get('/loja/{cd_empresa}/pecas/delete/{id}', function ($cd_empresa, $id) {
+    $empresa = Empresa::where('url_customizada', '=', $cd_empresa)->first();
+
+    if ($empresa == null) {
+        return redirect('404');
+    }
+
+    session(['empresa' => $empresa]);
+
     $peca = Peca::find($id);
     $carros = Peca::find($peca->id)->carros()->get();
     $tipoPeca = Peca::find($peca->id)->tipoPeca()->first();
     return view('pecas.destroy')->with('peca', $peca)->with('carros', $carros)->with('tipoPeca', $tipoPeca);
 })->middleware('auth');
 
-Route::get('/loja/{cd_empresa}/pecas/todos/{nome?}/{categoria_id?}', function($nome = null){
+Route::get('/loja/{cd_empresa}/pecas/todos/{nome?}/{categoria_id?}', function($cd_empresa, $nome = null){
+    $empresa = Empresa::where('url_customizada', '=', $cd_empresa)->first();
+
+    if ($empresa == null) {
+        return redirect('404');
+    }
+
+    session(['empresa' => $empresa]);
+    
     if ($nome != null) {
         $pecas = Peca::orderBy('qt_estoque', 'DESC')->orderBy('nm_peca', 'DESC')->whereRaw(' UPPER(nm_peca) LIKE ? ', [strtoupper($nome).'%'])->paginate(15);
     }else{
@@ -113,7 +143,15 @@ Route::get('/loja/{cd_empresa}/pecas/todos/{nome?}/{categoria_id?}', function($n
     return view('pecas.lista')->with('varPeca', $pecas);
 });
 
-Route::get('/loja/{cd_empresa}/pecas-usuario', function(){
+Route::get('/loja/{cd_empresa}/pecas-usuario', function($cd_empresa){
+    $empresa = Empresa::where('url_customizada', '=', $cd_empresa)->first();
+
+    if ($empresa == null) {
+        return redirect('404');
+    }
+
+    session(['empresa' => $empresa]);
+    
     $user = Auth::user();
     
     $pecas_carro = DB::table('carro_usuarios')->select(DB::raw('pecas.*'))->distinct()->join('carro_peca', 'carro_usuarios.id_carro', '=', 'carro_peca.carro_id')
@@ -200,8 +238,12 @@ Route::get('/usuario/informacoes', function(){
     return view('usuarios.config')->with('dadosUsuario', $dadosUsuario);
 })->name('informacoes')->middleware('auth');
 
+Route::get('/loja/{cd_empresa}/login', function(){
+    return view('auth.login-loja');
+})->name('login-loja');
 
-Route::resource('/loja/{cd_empresa}/pecas', PecaController::class);
+
+Route::resource('pecas', PecaController::class);
 
 Route::resource('/loja/{cd_empresa}/pedido', PedidoController::class);
 
@@ -212,6 +254,8 @@ Route::resource('tiposcarro', TipoCarroController::class)->middleware('auth');
 Route::resource('tipospeca', TipoPecaController::class);
 
 Route::resource('usuarios', UsuarioController::class);
+
+Route::resource('cliente', UsuarioClienteController::class);
 
 Route::resource('marcas', MarcaController::class);
 
