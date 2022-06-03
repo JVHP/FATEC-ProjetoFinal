@@ -1,6 +1,14 @@
 @extends('master')
 
 @section("body")
+@php
+$paginas = collect([
+    ["link"=>"/loja/".session("empresa")->url_customizada, "nm_pag" => "Início"], 
+    ["link"=>"/pedidos", "nm_pag" => "Pagamento"],
+])->collect();
+@endphp
+
+<x-breadcrumb :paginas="$paginas" />
 
 <div class="card-display border-bottom-orange" >
     <h2 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-12">Pagamento - {{$message['titulo']}}</h2>

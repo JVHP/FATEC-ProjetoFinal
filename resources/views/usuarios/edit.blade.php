@@ -1,7 +1,16 @@
 @extends('master')
 
 @section('body')
-<div class="col-12 pt-5" style="height: 100vh;">
+@php
+$paginas = collect([
+    ["link"=>"/", "nm_pag" => "Dashboard"], 
+    ["link"=>"/usuarios", "nm_pag" => "Usuários"],
+    ["link"=>"", "nm_pag" => "Editar Usuário"],
+])->collect();
+@endphp
+
+<x-breadcrumb :paginas="$paginas" />
+<div class="col-12" style="height: 100vh;">
     <div class="card-display border-bottom-orange col-5 mx-auto">
         <h1 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-12" >Editar Usuário</h1>
         <div class="card-title p-2 mb-0">

@@ -129,8 +129,8 @@
                     </div>
 
                     <div class=" text-center">
-                        <button onclick="irParaLogin()" class="btn btn-success rounded" type="button">Se já tiver conta, faça o
-                            login</button>
+                        <a href="/login" class="btn btn-success rounded text-white" type="button">Se já tiver conta, faça o
+                            login</a>
                     </div>
                 </div>
             </div>
@@ -141,6 +141,7 @@
             <h1 class="rounded border-bottom-orange bg-primary-dark text-white p-2 col-12">Dashboard</h1>
             <div class="card-body row">
                 <div class="col-lg-3 col-md-6 col-12 mx-auto">
+                    <a href="/pecas" style="color: grey">
                     <div class="card-hover p-5 m-2">
                         <div class="col-12 d-flex justify-content-between">
                             <div class="col-2" style="width: 30px; height: 30px">
@@ -153,8 +154,10 @@
                             </div>
                         </div>
                     </div>
+                    </a>
                 </div>
                 <div class="col-lg-3 col-md-6 col-12 mx-auto">
+                    <a href="/empresas" style="color: grey">
                     <div class="card-hover p-5 m-2">
                         <div class="col-12 d-flex justify-content-between">
                             <div class="col-2" style="width: 30px; height: 30px">
@@ -167,8 +170,10 @@
                             </div>
                         </div>
                     </div>
+                    </a>
                 </div>
                 <div class="col-lg-3 col-md-6 col-12 mx-auto">
+                    <a href="/marcas" style="color: grey">
                     <div class="card-hover p-5 m-2">
                         <div class="col-12 d-flex justify-content-between">
                             <div class="col-2" style="width: 30px; height: 30px">
@@ -181,8 +186,10 @@
                             </div>
                         </div>
                     </div>
+                    </a>
                 </div>
                 <div class="col-lg-3 col-md-6 col-12 mx-auto">
+                    <a href="/pedidos" style="color: grey">
                     <div class="card-hover p-5 m-2">
                         <div class="col-12 d-flex justify-content-between">
                             <div class="col-2" style="width: 30px; height: 30px">
@@ -196,6 +203,7 @@
                             </div>
                         </div>
                     </div>
+                    </a>
                 </div>
             </div>
         </div>

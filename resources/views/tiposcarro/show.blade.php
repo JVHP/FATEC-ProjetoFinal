@@ -1,7 +1,16 @@
 @extends('master')
 
 @section("body")
-<div class="mx-auto col-4 pt-5">
+@php
+$paginas = collect([
+    ["link"=>"/", "nm_pag" => "Dashboard"], 
+    ["link"=>"/tiposcarro", "nm_pag" => "Tipos de Carro"],
+    ["link"=>"", "nm_pag" => "Visualizar Tipo de Carro"],
+])->collect();
+@endphp
+
+<x-breadcrumb :paginas="$paginas" />
+<div class="mx-auto col-4">
     <div class="card-display border-bottom-orange">
         <h2 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-12" >Visualizar Tipo de Carro</h2>
         <form action="/tiposcarro/{{$tipo->id}}" method="POST">

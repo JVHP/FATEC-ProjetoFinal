@@ -31,6 +31,7 @@ class UsuarioClienteController extends Controller
     {
         $this->middleware('user.manipulation', ['except' => ['store', 'create']]);
     }
+    
     public function index()
     {
         $usuarios = User::orderBy('id', 'ASC')->paginate(20);

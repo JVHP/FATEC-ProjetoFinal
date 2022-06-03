@@ -1,7 +1,15 @@
 @extends('master')
 
-@section("body")
-<div class="mx-auto col-4 pt-5">
+@section("body")@php
+$paginas = collect([
+    ["link"=>"/", "nm_pag" => "Dashboard"], 
+    ["link"=>"/usuarios", "nm_pag" => "Usuários"],
+    ["link"=>"", "nm_pag" => "Visualizar Usuário"],
+])->collect();
+@endphp
+
+<x-breadcrumb :paginas="$paginas" />
+<div class="mx-auto col-4">
     <div class="card-display border-bottom-orange">
         <form action="/usuarios/{{$usuario->id}}" method="POST">
             @csrf

@@ -25,6 +25,7 @@ class PecaController extends Controller
     {
         $this->middleware('auth', ['except' => ['show']]);
         $this->middleware('employee_parts.user', ['except' => ['show']]);
+        $this->middleware('verified');
     }
 
     public function index()
@@ -102,12 +103,13 @@ class PecaController extends Controller
      * @param  \App\Models\Peca  $peca
      * @return \Illuminate\Http\Response
      */
-    public function show(Peca $peca)
+    public function show(Peca $peca, $visualizacao)
     {
         $carros = Peca::find($peca->id)->carros()->get();
         $tipoPeca = Peca::find($peca->id)->tipoPeca()->first();
         $marca = Marca::whereIn('ck_categoria_marca', ['P', 'A'])->get();
-        return view('pecas.show')->with('peca', $peca)->with('carros', $carros)->with('tipoPeca', $tipoPeca)->with('marca', $marca);
+        
+        return view('pecas.showAdm')->with('peca', $peca)->with('carros', $carros)->with('tipoPeca', $tipoPeca)->with('marca', $marca);
     }
 
     /**

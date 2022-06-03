@@ -1,6 +1,15 @@
 @extends('master')
 
 @section('body')
+    @php
+        $paginas = collect([
+            ["link"=>"/", "nm_pag" => "Dashboard"], 
+            ["link"=>"", "nm_pag" => "Empresas"],
+        ])->collect();
+    @endphp
+
+    <x-breadcrumb :paginas="$paginas" />
+
 <div class="card-display border-bottom-orange">
     <div class="rounded bg-primary-dark border-bottom-orange text-white p-2 mx-auto row col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="px-0 col-lg-6 col-md-8 col-sm-12 col-12 text-lg-start text-md-start text-sm-center text-center">
@@ -16,7 +25,7 @@
     </div>
 <div class="pt-3 table-responsive p-2">
     @if(sizeof($empresas) > 0)
-    <table class="rounded table">
+    <table class="rounded table table-hover">
         <thead class="bg-primary-dark text-white">
             <tr>
                 <th class="m-0 text-center">Id</th>

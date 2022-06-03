@@ -1,9 +1,18 @@
 @extends('master')
 
 @section('body')
+@php
+$paginas = collect([
+    ["link"=>"/", "nm_pag" => "Dashboard"], 
+    ["link"=>"/marcas", "nm_pag" => "Marcas"],
+    ["link"=>"", "nm_pag" => "Editar Marca"],
+])->collect();
+@endphp
+
+<x-breadcrumb :paginas="$paginas" />
     <div class="pt-5">
         <div class="card-display border-bottom-orange col-lg-5 col-md-7 col-sm-8 col-12 mx-auto">
-            <h2 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-12">Adicionar Marca</h2>
+            <h2 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-12">Editar Marca</h2>
             <div class="card-body">
                 @if(isset($message))
                 <div class="alert alert-danger">{{$message}}</div>

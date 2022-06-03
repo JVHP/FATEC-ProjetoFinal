@@ -20,6 +20,10 @@ class ClientUser
     public function handle(Request $request, Closure $next)
     {
         if (Auth::check() && ! auth()->user()->isCliente()) {
+
+            if (session("empresa")) {
+                return redirect('/loja/'.session("empresa")->url_customizada);
+            }
             return redirect('/');
         }
         return $next($request);

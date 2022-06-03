@@ -5,11 +5,13 @@ use App\Models\User;
 use App\Models\Carro;
 use App\Models\Pedido;
 use App\Http\Controllers\PecaController;
+use App\Http\Controllers\PecaClienteController;
 use App\Http\Controllers\CarroController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\UsuarioClienteController;
 use App\Http\Controllers\TipoCarroController;
 use App\Http\Controllers\TipoPecaController;
 use App\Models\Empresa;
@@ -111,20 +113,9 @@ Route::get('/loja/{cd_empresa}/pecas/nome/{nm_peca}', function ($cd_empresa, $nm
     return $peca;
 });
 
-Route::get('/loja/{cd_empresa}/pecas/delete/{id}', function ($cd_empresa, $id) {
-    $empresa = Empresa::where('url_customizada', '=', $cd_empresa)->first();
-
-    if ($empresa == null) {
-        return redirect('404');
-    }
-
-    session(['empresa' => $empresa]);
-
-    $peca = Peca::find($id);
-    $carros = Peca::find($peca->id)->carros()->get();
-    $tipoPeca = Peca::find($peca->id)->tipoPeca()->first();
-    return view('pecas.destroy')->with('peca', $peca)->with('carros', $carros)->with('tipoPeca', $tipoPeca);
-})->middleware('auth');
+/* Route::get('/loja/{cd_empresa}/pecas/delete/{id}', function ($cd_empresa, $id) {
+    
+})->middleware('auth'); */
 
 Route::get('/loja/{cd_empresa}/pecas/todos/{nome?}/{categoria_id?}', function($cd_empresa, $nome = null){
     $empresa = Empresa::where('url_customizada', '=', $cd_empresa)->first();
@@ -244,6 +235,7 @@ Route::get('/loja/{cd_empresa}/login', function(){
 
 
 Route::resource('pecas', PecaController::class);
+Route::resource('/loja/{cd_empresa}/pecas', PecaClienteController::class);
 
 Route::resource('/loja/{cd_empresa}/pedido', PedidoController::class);
 

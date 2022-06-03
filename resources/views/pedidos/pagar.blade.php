@@ -1,7 +1,15 @@
 @extends('master')
 
 @section("body")
-<div class="col-lg-5 col-md-7 col-sm-8 col-12 mx-auto pt-5 pb-5">
+@php
+$paginas = collect([
+    ["link"=>"/loja/".session("empresa")->url_customizada, "nm_pag" => "Início"], 
+    ["link"=>"/pedidos", "nm_pag" => "Pagamento"],
+])->collect();
+@endphp
+
+<x-breadcrumb :paginas="$paginas" />
+<div class="col-lg-5 col-md-7 col-sm-8 col-12 mx-auto pb-5">
     <div class="card-display border-bottom-orange">
         <h2 class="col-12 rounded bg-primary-dark border-bottom-orange text-white p-2 col-12">
             Pagamento

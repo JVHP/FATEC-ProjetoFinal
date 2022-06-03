@@ -1,12 +1,20 @@
 @extends('master')
 
 @section("body")
+@php
+$paginas = collect([
+    ["link"=>"/loja/".session("empresa")->url_customizada, "nm_pag" => "Início"], 
+    ["link"=>"/pedidos", "nm_pag" => "Pedidos"],
+])->collect();
+@endphp
+
+<x-breadcrumb :paginas="$paginas" />
 <div class="card-display border-bottom-orange">
     <h1 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-12">Pedidos</h1>
     
     <div class="pt-3 table-responsive p-2">
         @if(sizeof($pedidos) > 0)
-        <table class="rounded table">
+        <table class="rounded table table-hover">
             <thead class="bg-primary-dark text-white">
                 <tr>
                     <th class="m-0 text-center">Id</th>

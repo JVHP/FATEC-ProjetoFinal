@@ -1,6 +1,15 @@
 @extends('master')
 
 @section('body')
+@php
+$paginas = collect([
+    ["link"=>"/", "nm_pag" => "Dashboard"], 
+    ["link"=>"/pecas", "nm_pag" => "Peças"],
+    ["link"=>"", "nm_pag" => "Adicionar Peça"],
+])->collect();
+@endphp
+
+<x-breadcrumb :paginas="$paginas" />
     <div class="pt-5">
         <div class="card-display border-bottom-orange col-12 mx-auto">
             <h2 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-12">Adicionar Peça</h2>

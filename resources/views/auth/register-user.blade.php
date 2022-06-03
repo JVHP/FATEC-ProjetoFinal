@@ -1,7 +1,15 @@
 @extends('master-start')
 
 @section('body')
-    <div class="col-12 pt-5" style="height: 100vh;">
+@php
+$paginas = collect([
+    ["link"=>"/", "nm_pag" => "Dashboard"], 
+    ["link"=>"", "nm_pag" => "Cadastro"],
+])->collect();
+@endphp
+
+<x-breadcrumb :paginas="$paginas" />
+    <div class="col-12" style="height: 100vh;">
         <div class="card-display border-bottom-orange">
             <h1 class="rounded bg-primary-dark border-bottom-orange text-white p-2">
                 Cadastro de Usuário

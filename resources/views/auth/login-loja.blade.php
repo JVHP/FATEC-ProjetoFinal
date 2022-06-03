@@ -1,7 +1,15 @@
 @extends('master')
 
 @section('body')
-    <div class="col-12 pt-5" style="height: 100vh;">
+@php
+$paginas = collect([
+    ["link"=>"/loja/".session("empresa")->url_customizada, "nm_pag" => "Início"], 
+    ["link"=>"", "nm_pag" => "Autenticação"],
+])->collect();
+@endphp
+
+<x-breadcrumb :paginas="$paginas" />
+    <div class="col-12" style="height: 100vh;">
         <div class="card-display border-bottom-orange">
             
             <h1 class="rounded bg-primary-dark border-bottom-orange text-white p-2">
