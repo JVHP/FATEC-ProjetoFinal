@@ -38,14 +38,14 @@ $paginas = collect([
                                 <div class="col-lg-4 col-12 p-2">
                                     <div class="form-floating">
                                         @if ($errors->has('nm_peca'))
-                                            <input aria-describedby="invalid-feedback" class="form-control is-invalid"
+                                            <input aria-describedby="invalid-feedback" maxlength="254" class="form-control is-invalid"
                                                 type="text" name="nm_peca" id="nm_peca" placeholder="Nome Peça"
                                                 value="{{ old('nm_peca') }}">
                                             <div class="invalid-feedback">
                                                 {{ $errors->first('nm_peca') }}
                                             </div>
                                         @else
-                                            <input class="form-control" type="text" name="nm_peca" id="nm_peca"
+                                            <input class="form-control" maxlength="254" type="text" name="nm_peca" id="nm_peca"
                                                 placeholder="Nome Peça" value="{{ old('nm_peca') }}">
                                         @endif
                                         <label for="nm_peca">Nome Peça</label>

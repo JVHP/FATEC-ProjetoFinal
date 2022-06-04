@@ -25,6 +25,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\ForceHttps::class,
         \App\Http\Middleware\RemoveCompanySession::class,
         \App\Http\Middleware\RemoveCompanyAuth::class,
+        \App\Http\Middleware\ValidateStoreRoute::class,
     ];
 
     /**
@@ -45,6 +46,7 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\ForceHttps::class,
             \App\Http\Middleware\RemoveCompanySession::class,
             \App\Http\Middleware\RemoveCompanyAuth::class,
+            \App\Http\Middleware\ValidateStoreRoute::class,
         ],
 
         'user.manipulation' => [

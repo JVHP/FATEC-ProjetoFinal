@@ -3,7 +3,7 @@
 @php
 $paginas = collect([
     ["link"=>"/loja/".session("empresa")->url_customizada, "nm_pag" => "Início"], 
-    ["link"=>"" => "Peças"],
+    ["link"=>"", "nm_pag" => "Peças"],
 ])->collect();
 @endphp
 

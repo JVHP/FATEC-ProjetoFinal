@@ -11,6 +11,7 @@ use App\Http\Controllers\CarroController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\PedidosEmpresaController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\UsuarioClienteController;
 use App\Http\Controllers\TipoCarroController;
@@ -272,7 +273,7 @@ Route::get('/loja/{cd_empresa}/login', function($cd_empresa){
 
     session(['empresa' => $empresa]);
     return view('auth.login-loja');
-})->name('login-loja');
+})->middleware(['guest'])->name('login-loja');
 
 
 Route::resource('/loja/{cd_empresa}/pedido', PedidoController::class);
@@ -294,5 +295,7 @@ Route::resource('usuarios', UsuarioController::class);
 Route::resource('marcas', MarcaController::class);
 
 Route::resource('empresas', EmpresaController::class);
+
+Route::resource('/pedidos-empresa', PedidosEmpresaController::class);
 
 Auth::routes();

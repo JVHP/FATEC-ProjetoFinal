@@ -32,7 +32,7 @@ class UsuarioRequest extends FormRequest
                 /* 'emailC'=>['required','unique:users,email', 'email' ], */
                 'dt_nasc'=>'required',
                 'cep'=>['required', 'max:8', 'min:8'],
-                'cpf'=>['required', 'max:11'],
+                'cpf'=>['required', 'max:11', 'cpf'],
                 'nm_rua'=>['required', 'max:255'],
                 'ds_bairro'=>['required', 'max:255'],
                 'nr_casa'=>['required', 'max:10'],
@@ -49,7 +49,7 @@ class UsuarioRequest extends FormRequest
                 /* 'emailC'=>['required','unique:users,email', 'email' ], */
                 'dt_nasc'=>'required',
                 'cep'=>['required', 'max:8', 'min:8'],
-                'cpf'=>['required', 'max:11'],
+                'cpf'=>['required', 'max:11', 'cpf'],
                 'nm_rua'=>['required', 'max:255'],
                 'ds_bairro'=>['required', 'max:255'],
                 'nr_casa'=>['required', 'max:10'],
@@ -75,6 +75,7 @@ class UsuarioRequest extends FormRequest
             'cd_password.required'=>'Senha é obrigatória',
             'cpf.required'=>'CPF é obrigatório',
             'cpf.max'=>'O tamanho máximo para o CPF é de 11 caracteres',
+            'cpf.cpf'=>'Insira um CPF válido',
             'nm_rua.required'=>'Rua é obrigatória',
             'nm_rua.max'=>'O tamanho máximo para o logradouro é de 255 caracteres',
             'ds_bairro.required'=>'Bairro é obrigatório',

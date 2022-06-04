@@ -30,8 +30,7 @@
             <tr>
                 <th class="m-0 text-center">Id</th>
                 <th>Nome</th>
-                {{-- <th>Categoria</th> --}}
-                <th>Descrição</th>
+                <th>Código URL</th>
                 <th class="m-0 text-center">Comandos</th>
             </tr>
         </thead>
@@ -40,7 +39,6 @@
             <tr>
                 <td class="m-0 text-center">{{$x->id}}</td>
                 <td class="m-0">{{$x->razao_social}}</td>
-                {{-- <td class="m-0">{{$x->categoria()}}</td> --}}
                 <td class="m-0" style="max-width: 165px; cursor: pointer"><p id="descricao" class="text-truncate" onclick="modificarTamanho(event)">{{$x->url_customizada}}</p></td>
                 <td class="m-0 text-center">
                     <a href="/empresas/{{$x->id}}/edit">

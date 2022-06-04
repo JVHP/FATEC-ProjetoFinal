@@ -5,7 +5,7 @@
     $paginas = collect([
         ["link"=>"/", "nm_pag" => "Dashboard"], 
         ["link"=>"/empresas", "nm_pag" => "Empresas"],
-        ["link"=>"", "nm_pag" => "Cadastro Empresarial"],
+        ["link"=>"", "nm_pag" => "Editar Empresa"],
     ])->collect();
 @endphp
 
@@ -14,15 +14,14 @@
     <div class="col-12" style="height: 100vh;">
         <div class="card-display border-bottom-orange">
             <h1 class="rounded bg-primary-dark border-bottom-orange text-white p-2">
-                Cadastro Empresarial
+                Editar Empresa
             </h1>
             <div class="card-body">
-                {{-- <div class="card-title mb-0">
-                </div> --}}
-                <form class="" action="/empresas" name="cadastro" method="POST">
+                <form class="" action="/empresas/{{$empresa->id}}" name="edit" method="POST">
                     <div class="row col-12">
+                        @method('PATCH')
                         @csrf
-                        <div class="col-lg-4 col-md-6 col-sm-12 col-12 my-auto">
+                        <div class="col-lg-4 col-md-6 col-sm-12 col-12">
                             <div class="form-floating p-1">
                                 @if (isset($errors) && $errors->has('cnpj'))
                                     <input type="text" class="form-control is-invalid" maxlength="14" id="cnpj" name="cnpj"
@@ -31,13 +30,13 @@
                                         {{ $errors->first('cnpj') }}
                                     </div>
                                 @else
-                                    <input  data-mask="00.00.00" data-mask-selectonfocus="true"  type="text" class="form-control" maxlength="14" id="cnpj" name="cnpj"
-                                        placeholder="CNPJ" value="{{ old('cnpj') }}" />
+                                    <input data-mask-selectonfocus="true"  type="text" class="form-control" maxlength="14" id="cnpj" name="cnpj"
+                                        placeholder="CNPJ" value="{{ empty(old('cnpj')) ? $empresa->cnpj : old('cnpj') }}" />
                                 @endif
                                 <label for="cnpj">CNPJ<b class="text-danger">*</b></label>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6 col-sm-12 col-12 my-auto">
+                        <div class="col-lg-4 col-md-6 col-sm-12 col-12">
                             <div class="form-floating p-1">
                                 @if (isset($errors) && $errors->has('razao_social'))
                                     <input type="text" class="form-control is-invalid" maxlength="500" id="razao_social" name="razao_social"
@@ -47,11 +46,12 @@
                                     </div>
                                 @else
                                     <input type="text" class="form-control" maxlength="14" id="razao_social" name="razao_social"
-                                        placeholder="Razão Social" value="{{ old('razao_social') }}" />
+                                        placeholder="Razão Social" value="{{ empty(old('razao_social')) ? $empresa->razao_social : old('razao_social') }}" />
                                 @endif
                                 <label for="razao_social">Razão Social<b class="text-danger">*</b></label>
                             </div>
                         </div>
+                        
                         <div class="col-lg-4 col-md-6 col-sm-12 col-12">
                             <div class="input-group p-1">
                                 @if (isset($errors) && $errors->has('url_customizada'))
@@ -64,13 +64,13 @@
                                 @else
                                     <span class="input-group-text" id="basic-addon3">{{env('APP_ENV') != 'local' ? 'https://'.$_SERVER['HTTP_HOST'].'/loja/' : 'http://'.$_SERVER['HTTP_HOST'].'/loja/'}}</span>
                                     <input type="text" class="rounded-end form-control" maxlength="20" id="url_customizada" name="url_customizada"
-                                        placeholder="Código URL*" aria-describedby="basic-addon3"style="padding: 1rem .75rem;" aria-label="Código URL*" value="{{ old('url_customizada') }}" />
+                                        placeholder="Código URL*" aria-describedby="basic-addon3"style="padding: 1rem .75rem;" aria-label="Código URL*" value="{{ empty(old('url_customizada')) ? $empresa->url_customizada : old('url_customizada') }}" />
                                 @endif
                             </div>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-12 text-end p-3 mx-auto">
-                            <button type="buttom" for="cadastro" class="btn btn-danger"> Voltar </button>
-                            <button type="submit" for="cadastro" class="btn btn-primary"> Cadastrar </button>
+                            <a href="/empresas"><button type="button" class="btn btn-danger">Voltar</button></a>
+                            <button type="submit" for="cadastro" class="btn btn-success"> Editar </button>
                         </div>
                 </form>
             </div>

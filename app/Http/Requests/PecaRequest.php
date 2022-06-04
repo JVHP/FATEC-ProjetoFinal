@@ -24,7 +24,7 @@ class PecaRequest extends FormRequest
     public function rules()
     {
         return [
-            'nm_peca'=>'required',
+            'nm_peca'=>['required', 'max:254'],
             'vl_peca'=>'required',
             'qt_estoque'=>'required',
             'id_tipo_peca'=>'required',
@@ -36,11 +36,12 @@ class PecaRequest extends FormRequest
     public function messages()
     {
         return [
-            'nm_peca.required'=>'Nome é obrigatório',
-            'vl_peca.required'=>'Valor é obrigatório',
-            'qt_estoque.required'=>'Estoque é obrigatório',
-            'id_tipo_peca.required'=>'Tipo da peça é obrigatório',
-            'id_marca.required'=>'Marca da peça é obrigatória',
+            'nm_peca.required'=>'Nome da peça é obrigatório.',
+            'nm_peca.max'=>'Tamanho máximo para o nome da peça é de 254 caracteres.',
+            'vl_peca.required'=>'Valor da peça é obrigatório.',
+            'qt_estoque.required'=>'Estoque da peça é obrigatório.',
+            'id_tipo_peca.required'=>'Tipo da peça é obrigatório.',
+            'id_marca.required'=>'Marca da peça é obrigatória.',
             'ds_peca.max'=>'Tamanho máximo para descrição é de 500 caracteres.',
         ];
     }

@@ -4,9 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class RemoveCompanySession
+class ValidateStoreRoute
 {
     /**
      * Handle an incoming request.
@@ -17,12 +16,10 @@ class RemoveCompanySession
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!$request->is('loja/*') && $next != '/login' || $request->is('/')) {
-            if (Auth::check() && Auth::user()->isCliente()) {
-                session(['empresa' => null]);
-                session()->invalidate();
-                return redirect('/');
-            } 
+        
+        
+        if (url()->previous() == '/loja/*' && $request->is('/login')) {
+            return redirect('/loja/'.session('empresa')->url_customizada);
         }
 
         return $next($request);

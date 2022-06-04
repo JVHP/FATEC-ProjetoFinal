@@ -3,14 +3,14 @@
 @section("body")
 @php
 $paginas = collect([
-    ["link"=>"/loja/".session("empresa")->url_customizada, "nm_pag" => "Início"], 
-    ["link"=>"/pedidos", "nm_pag" => "Pedidos"],
+    ["link"=>"/", "nm_pag" => "Dashboard"], 
+    ["link"=>"/pedidos", "nm_pag" => "Pedidos de suas empresas"],
 ])->collect();
 @endphp
 
 <x-breadcrumb :paginas="$paginas" />
 <div class="card-display border-bottom-orange">
-    <h1 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-12">Pedidos</h1>
+    <h1 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-12">Pedidos de suas empresas</h1>
     
     <div class="pt-3 table-responsive p-2">
         @if(sizeof($pedidos) > 0)
@@ -36,23 +36,23 @@ $paginas = collect([
                     <td class="m-0 text-center">
                         <div class="justify-content-center row col-auto">
                         @if($x->ck_finalizado == 'S' && $x->dt_pagamento == null)
-                        <a href="/loja/{{session('empresa')->url_customizada}}/pedido/pagar/{{$x->id}}" class="col-auto">
+                        <a href="#" class="col-auto">
                             <button class="btn btn-outline-info">Pagar</button>
                         </a>
                         
                         @elseif($x->ck_finalizado == 'N' && $x->dt_pagamento == null)
-                        <a href="/loja/{{session('empresa')->url_customizada}}/pedido/cancelar/{{$x->id}}" class="col-auto">
+                        <a href="#" class="col-auto">
                             <button class="btn btn-outline-warning">Cancelar</button>
                         </a>
                         @endif
                         @if(($x->ck_finalizado != 'N' && $x->dt_pagamento != null) || ($x->ck_finalizado == 'C' && $x->dt_pagamento == null))
-                        <form action="/loja/{{session('empresa')->url_customizada}}/pedido/{{$x->id}}" method="POST" class="col-auto">
+                        <form action="#" method="POST" class="col-auto">
                             @csrf
                             @METHOD('DELETE')
                             <input type="submit" class="btn btn-outline-danger" value="Excluir"/>
                         </form>
                         @endif
-                        <a href="/loja/{{session('empresa')->url_customizada}}/pedido/{{$x->id}}" class="col-auto">
+                        <a href="#" class="col-auto">
                             <button class="btn btn-outline-success">Visualizar</button>
                         </a>
                         </div>

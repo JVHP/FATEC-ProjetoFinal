@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EmpresaRequest;
 use App\Models\Empresa;
 use App\Models\User;
 use Carbon\Carbon;
@@ -53,7 +54,7 @@ class EmpresaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EmpresaRequest $request)
     {
         DB::beginTransaction();
 
@@ -104,7 +105,16 @@ class EmpresaController extends Controller
      */
     public function show(Empresa $empresa)
     {
-        //
+        $responsavel = Auth::user()->id;
+        $empresa = Empresa::find($empresa->id);
+
+        $tempValidation = DB::table('empresas_usuarios')->where('id_usuario', '=', $responsavel)->where('id_empresa', '=', $empresa->id)->get();
+
+        if ($tempValidation == null) {
+            return redirect()->back();
+        }
+
+        return view('empresas.show')->with('empresa', $empresa);
     }
 
     /**
@@ -115,7 +125,16 @@ class EmpresaController extends Controller
      */
     public function edit(Empresa $empresa)
     {
-        //
+        $responsavel = Auth::user()->id;
+        $empresa = Empresa::find($empresa->id)->first();
+
+        $tempValidation = DB::table('empresas_usuarios')->where('id_usuario', '=', $responsavel)->where('id_empresa', '=', $empresa->id)->get();
+
+        if ($tempValidation == null) {
+            return redirect()->back();
+        }
+
+        return view('empresas.edit')->with('empresa', $empresa);
     }
 
     /**
@@ -125,9 +144,11 @@ class EmpresaController extends Controller
      * @param  \App\Models\Empresa  $empresa
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Empresa $empresa)
+    public function update(EmpresaRequest $request, Empresa $empresa)
     {
-        //
+        $empresa->update($request->all());
+
+        return redirect('/empresas');
     }
 
     /**

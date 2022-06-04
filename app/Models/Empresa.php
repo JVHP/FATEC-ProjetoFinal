@@ -17,4 +17,9 @@ class Empresa extends Model
         "id_responsavel"
     ];
 
+
+    public function gerarLink() {
+        return env('APP_ENV') != 'local' ? 'https://'.$_SERVER['HTTP_HOST'].'/loja/'.$this->url_customizada : 'http://'.$_SERVER['HTTP_HOST'].'/loja/'.$this->url_customizada;
+    }
+
 }

@@ -17,6 +17,15 @@
         <div class="card-display border-bottom-orange pb-2">
             <h1 class="rounded border-bottom-orange bg-primary-dark text-white p-2 col-12">Destaques</h1>
             <div class="owl-carousel owl-theme">
+                @if($varPeca == null || sizeOf($varPeca) == 0)
+                <div class="p-2">
+                    <div class="card" style="height: 25vh;">
+                        <h1 class="m-auto my-auto">
+                            Não foram encontradas peças em nosso catálogo
+                        </h1>
+                    </div>
+                </div>
+                @else
                 @foreach($varPeca as $x)
                 <div class="item card rounded">
                     <!-- Cards para estoque disponível -->
@@ -76,6 +85,7 @@
                     @endif
                 </div>
                 @endforeach
+                @endif
             </div>
         </div>
     </div>

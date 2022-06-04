@@ -24,12 +24,18 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                if(Auth::user()->cnpj_empresa_cadastrada){
-                    $empresa = Empresa::where('cnpj', '=', Auth::user()->cnpj_empresa_cadastrada)->first();
+                if ($request->has('cd_empresa')) {
+                    $empresa = Empresa::where('url_customizada', '=', $request->cd_empresa)->first();
                     session(['empresa' => $empresa]);
-
-                    return redirect('/loja/'.session('empresa')->url_customizada);
+                    
+                    if(Auth::user()->cnpj_empresa_cadastrada){
+                        
+                        return redirect('/loja/'.session('empresa')->url_customizada);
+                    } else {
+                        return ('/login');
+                    }
                 }
+
                 return redirect('/');
             }
         }

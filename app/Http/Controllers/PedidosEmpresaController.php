@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Exception;
 
-class PedidoController extends Controller
+class PedidosEmpresaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,7 +24,13 @@ class PedidoController extends Controller
 
     public function index()
     {
-        //
+        $pedidos = DB::table('pedidos')
+            ->join('empresas_usuarios', 'empresas_usuarios.id_empresa', '=', 'pedidos.id_empresa')
+            ->select('pedidos.*')
+            ->where('empresas_usuarios.id_usuario', '=', Auth::user()->id)
+            ->paginate(10);
+
+      return view('pedidosempresa.dashboard')->with('pedidos', $pedidos);
     }
 
     /**
