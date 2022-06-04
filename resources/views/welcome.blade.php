@@ -21,13 +21,6 @@
                         </div>
                         <img class="img-fluid" src="{{ URL::asset('icons/undraw_shopping_re_hdd9.svg') }}" alt="...">
                     </div>
-
-                    {{-- <div class="hidden" id="banner_usuario">
-                        <div class="p-2">
-                        </div>
-                        <img class="img-fluid" src="{{ URL::asset('icons/undraw_creation_process_re_kqa9.svg') }}"
-                            alt="...">
-                    </div> --}}
                 </div>
             </div>
 
