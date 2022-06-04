@@ -103,7 +103,7 @@ class PecaController extends Controller
      * @param  \App\Models\Peca  $peca
      * @return \Illuminate\Http\Response
      */
-    public function show(Peca $peca, $visualizacao)
+    public function show(Peca $peca/* , $visualizacao */)
     {
         $carros = Peca::find($peca->id)->carros()->get();
         $tipoPeca = Peca::find($peca->id)->tipoPeca()->first();

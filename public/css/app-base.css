@@ -225,3 +225,8 @@ a {
   height: 0;
   width: 0;
 }
+
+.breadcrumb-item+.breadcrumb-item::before {
+  color: white;
+  font-weight: bolder;
+}

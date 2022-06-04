@@ -66,7 +66,7 @@
 
                 <div
                     class="col-lg-auto col-md-3 col-sm-4 col-6 pb-3 my-auto text-md-start text-center me-md-auto mx-md-0 mx-auto">
-                    <h3 style="cursor: pointer" class="pt-4 fw-bold text-light onhov" onclick="window.location='/{{!empty(session('cd_empresa')) ? 'loja/'.session('cd_empresa') : ''}}'">
+                    <h3 style="cursor: pointer" class="pt-4 fw-bold text-light onhov" onclick="window.location='/{{!empty(session('empresa')) ? 'loja/'.session('empresa')->url_customizada : ''}}'">
                         @if(session('empresa')) 
                             {{session('empresa')->razao_social}}
                         @else
@@ -274,12 +274,14 @@
                     <div id="flush-collapsePecas" class="accordion-collapse collapse" aria-labelledby="flush-headingPecas"
                         data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body p-0">
-                            <a href="/pecas/todos">
+                            @if(session('empresa'))
+                            <a href="'/loja/'.{{session('empresa')->url_customizada}}pecas/todos">
                                 <button
                                     class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
                                     Todas as Peças
                                 </button>
                             </a>
+                            @endif
                             @guest
                             </div>
                         </div>

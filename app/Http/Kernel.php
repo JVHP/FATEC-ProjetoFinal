@@ -24,6 +24,7 @@ class Kernel extends HttpKernel
         
         \App\Http\Middleware\ForceHttps::class,
         \App\Http\Middleware\RemoveCompanySession::class,
+        \App\Http\Middleware\RemoveCompanyAuth::class,
     ];
 
     /**
@@ -43,6 +44,7 @@ class Kernel extends HttpKernel
             
             \App\Http\Middleware\ForceHttps::class,
             \App\Http\Middleware\RemoveCompanySession::class,
+            \App\Http\Middleware\RemoveCompanyAuth::class,
         ],
 
         'user.manipulation' => [

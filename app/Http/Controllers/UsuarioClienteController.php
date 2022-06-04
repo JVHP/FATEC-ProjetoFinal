@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\TipoCadastro;
 use App\Models\User;
 use App\Models\Carro;
 
 use App\Http\Requests\UsuarioRequest;
 use App\Http\Requests\UsuarioEditRequest;
+use App\Models\Empresa;
 use App\Models\Marca;
 use DateTime;
 use Detalhes_Carro_Usuario;
@@ -43,18 +45,24 @@ class UsuarioClienteController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      */
-    public function create()
+    public function create($cd_empresa)
     {
+
+        $empresa = Empresa::where('url_customizada', '=', $cd_empresa)->first();
+        
+        if ($empresa == null) {
+            return redirect()->back();
+        }
+        
+        session(['empresa' => $empresa]);
+
         $carros = Carro::orderBy('ano', 'DESC')->orderBy('nm_carro', 'ASC')->get();
 
         $carrosGroup = $carros->groupBy('ano');
 
         $marcas = Marca::whereIn('ck_categoria_marca', ['C', 'A'])->get();
-        /* $carrosGroup = $carros->groupBy(['ano', 'id_tipo_carro']); */
 
-        /* echo '<p style="color: white">'.$carros->groupBy(['ano', 'id_tipo_carro']).'</h1>'; */
-
-        return view('auth.register-user')->with('carros', $carrosGroup)->with('marcas', $marcas);
+        return view('auth.register-user-client')->with('carros', $carrosGroup)->with('marcas', $marcas);
     }
 
     /**
@@ -63,7 +71,7 @@ class UsuarioClienteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UsuarioRequest $request)
+    public function store($cd_empresa, UsuarioRequest $request)
     {
         try {
             DB::beginTransaction();
@@ -71,8 +79,14 @@ class UsuarioClienteController extends Controller
             $senha = Hash::make($request->cd_password);
 
             $request->request->add(['password'=>$senha]);
+            
+            $empresa = Empresa::where('url_customizada', '=', $cd_empresa)->first();
 
-            $usuario = User::create($request->all());
+            $request->request->add(['ck_tipo_cadastro'=>TipoCadastro::Cliente]);
+
+            $request->request->add(['cnpj_empresa_cadastrada'=>$empresa->cnpj]);
+
+            $usuario = User::create($request->all());            
 
             if ($request->has('carros')) {
                 $carros = $request->carros;
@@ -99,7 +113,7 @@ class UsuarioClienteController extends Controller
 
             DB::commit();
             
-            return redirect('/');
+            return redirect('/loja/'.session('empresa')->url_customizada);
 
         } catch (Exception $ex) {
             DB::rollBack();
@@ -115,7 +129,7 @@ class UsuarioClienteController extends Controller
      * @param  \App\Models\Usuario  $usuario
      * @return \Illuminate\Http\Response
      */
-    public function show(User $usuario)
+    public function show($cd_empresa, User $usuario)
     {
         return view('usuarios.show')->with('usuario', $usuario);
     }
@@ -126,7 +140,7 @@ class UsuarioClienteController extends Controller
      * @param  \App\Models\Usuario  $usuario
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $usuario)
+    public function edit($cd_empresa, User $usuario)
     {   
         return view('usuarios.edit')->with('usuario', $usuario);
     }
@@ -138,7 +152,7 @@ class UsuarioClienteController extends Controller
      * @param  \App\Models\Usuario  $usuario
      * @return \Illuminate\Http\Response
      */
-    public function update(UsuarioEditRequest $request, User $usuario)
+    public function update($cd_empresa, UsuarioEditRequest $request, User $usuario)
     {
         
         Validator::make($request->rules(), [
@@ -158,7 +172,7 @@ class UsuarioClienteController extends Controller
      * @param  \App\Models\Usuario  $usuario
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $usuario)
+    public function destroy($cd_empresa, User $usuario)
     {
         $usuario->delete();
         return redirect('/usuarios');

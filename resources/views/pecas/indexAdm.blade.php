@@ -2,9 +2,8 @@
 @section('body')
     @php
     $paginas = collect([
-        ["link"=>"/loja/".session("empresa")->url_customizada, "nm_pag" => "Início"], 
-        ["link"=>"/loja/".session("empresa")->url_customizada."/pecas/", "nm_pag" => "Peças"],
-        ["link"=>"", "nm_pag" => $peca->nm_peca],
+        ["link"=>"/", "nm_pag" => "Dashboard"], 
+        ["link"=>"/pecas", "nm_pag" => "Peças"],
     ])->collect();
     @endphp
 

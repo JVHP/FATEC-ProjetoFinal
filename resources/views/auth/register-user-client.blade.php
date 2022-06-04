@@ -17,11 +17,10 @@ $paginas = collect([
             <div class="card-body">
                 {{-- <div class="card-title mb-0">
                 </div> --}}
-                <form class="" action="/usuarios" name="cadastro" method="POST">
+                <form class="" action="/loja/{{session('empresa')->url_customizada}}/cliente" name="cadastro" method="POST">
+                    @csrf
                     <div class="row col-12 mx-auto justify-content-center">
                         <div class="row col-lg-8 col-12 justify-content-lg-between justify-content-center">
-
-                            @csrf
                             <div class="col-lg-6 col-md-9 col-sm-12 col-12">
                                 <div class="form-floating p-1">
                                     @if (isset($errors) && $errors->has('nm_usuario'))

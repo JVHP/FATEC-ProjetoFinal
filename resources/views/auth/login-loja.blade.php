@@ -87,7 +87,7 @@ $paginas = collect([
                     <div class=" col-lg-6 col-md-6 col-sm-12 col-12 card-title mb-0">
                         <!-- <hr class="p-1 m-0 bg-primary col-lg-3 col-md-3 col-sm-12 col-md-6" style="opacity: 100%; padding-top: 0"> -->
                     </div>
-                    <form action="{{route('cliente.create')}}" name="cliente.create">
+                    <form action="/loja/{{session('empresa')->url_customizada}}/cliente/create" name="cliente.create">
                         <div class="col-12">
                             <div class="col-lg-9 col-md-9 col-sm-12 col-12 mx-auto">
                                 <h1 class="rounded bg-primary-dark border-bottom-orange text-white p-2">

@@ -3,7 +3,7 @@
 @section('body')
 @php
 $paginas = collect([
-    ["link"=>"/", "nm_pag" => "Início"], 
+    ["link"=>"/", "nm_pag" => "Dashboard"], 
     ["link"=>"", "nm_pag" => "Autenticação"],
 ])->collect();
 @endphp

@@ -13,13 +13,6 @@
 @endsection
 
 @section('body')
-@php
-$paginas = collect([
-    ["link"=>"/loja/".session("empresa")->url_customizada, "nm_pag" => "Início"], 
-])->collect();
-@endphp
-
-<x-breadcrumb :paginas="$paginas" />
     <div class="welcome-padding-top">
         <div class="card-display border-bottom-orange pb-2">
             <h1 class="rounded border-bottom-orange bg-primary-dark text-white p-2 col-12">Destaques</h1>

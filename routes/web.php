@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Models\Peca;
 use App\Models\User;
 use App\Models\Carro;
@@ -50,15 +51,16 @@ Route::get('/loja/{cd_empresa?}', function ($cd_empresa = null) {
         $empresa = Empresa::where('url_customizada', '=', $cd_empresa)->first();
 
         session(['empresa' => $empresa]);
+
+        if ($empresa == null) {
+            return redirect()->back();
+        }
         
         $pecas = Peca::take(5)->inRandomOrder()->where('qt_estoque', '>', 0)->where('id_empresa', $empresa->id)->get();
         return view('welcome-company')->with('varPeca', $pecas);
 
-        if ($empresa == null) {
-            return redirect('404');
-        }
     } else {
-        return redirect('404');
+        return redirect()->back();
     }
 });
 
@@ -104,7 +106,7 @@ Route::get('/loja/{cd_empresa}/pecas/nome/{nm_peca}', function ($cd_empresa, $nm
     $empresa = Empresa::where('url_customizada', '=', $cd_empresa)->first();
 
     if ($empresa == null) {
-        return redirect('404');
+        return redirect()->back();
     }
 
     session(['empresa' => $empresa]);
@@ -121,7 +123,7 @@ Route::get('/loja/{cd_empresa}/pecas/todos/{nome?}/{categoria_id?}', function($c
     $empresa = Empresa::where('url_customizada', '=', $cd_empresa)->first();
 
     if ($empresa == null) {
-        return redirect('404');
+        return redirect()->back();
     }
 
     session(['empresa' => $empresa]);
@@ -138,7 +140,7 @@ Route::get('/loja/{cd_empresa}/pecas-usuario', function($cd_empresa){
     $empresa = Empresa::where('url_customizada', '=', $cd_empresa)->first();
 
     if ($empresa == null) {
-        return redirect('404');
+        return redirect()->back();
     }
 
     session(['empresa' => $empresa]);
@@ -229,15 +231,25 @@ Route::get('/usuario/informacoes', function(){
     return view('usuarios.config')->with('dadosUsuario', $dadosUsuario);
 })->name('informacoes')->middleware('auth');
 
-Route::get('/loja/{cd_empresa}/login', function(){
+Route::get('/loja/{cd_empresa}/login', function($cd_empresa){
+    $empresa = Empresa::where('url_customizada', '=', $cd_empresa)->first();
+
+    if ($empresa == null) {
+        return redirect()->back();
+    }
+
+    session(['empresa' => $empresa]);
     return view('auth.login-loja');
 })->name('login-loja');
 
 
-Route::resource('pecas', PecaController::class);
+Route::resource('/loja/{cd_empresa}/pedido', PedidoController::class);
+
 Route::resource('/loja/{cd_empresa}/pecas', PecaClienteController::class);
 
-Route::resource('/loja/{cd_empresa}/pedido', PedidoController::class);
+Route::resource('/loja/{cd_empresa}/cliente', UsuarioClienteController::class);
+
+Route::resource('pecas', PecaController::class);
 
 Route::resource('carros', CarroController::class);
 
@@ -246,8 +258,6 @@ Route::resource('tiposcarro', TipoCarroController::class)->middleware('auth');
 Route::resource('tipospeca', TipoPecaController::class);
 
 Route::resource('usuarios', UsuarioController::class);
-
-Route::resource('cliente', UsuarioClienteController::class);
 
 Route::resource('marcas', MarcaController::class);
 

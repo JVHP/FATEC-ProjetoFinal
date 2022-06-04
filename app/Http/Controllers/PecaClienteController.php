@@ -72,17 +72,16 @@ class PecaClienteController extends Controller
     {
 
         $empresa = Empresa::where('url_customizada', '=', $cd_empresa)->first();
+        
+        if ($empresa == null || $peca->id_empresa != $empresa->id) {
+            return redirect()->back();
+        }
 
         session(['empresa' => $empresa]);
        
         $carros = Peca::find($peca->id)->carros()->get();
         $tipoPeca = Peca::find($peca->id)->tipoPeca()->first();
         $marca = Marca::whereIn('ck_categoria_marca', ['P', 'A'])->get();
-
-        
-        if ($empresa == null || $peca->id_empresa != $empresa->id) {
-            return redirect()->back();
-        }
         
         return view('pecas.show')->with('peca', $peca)->with('carros', $carros)->with('tipoPeca', $tipoPeca)->with('marca', $marca);
     }
