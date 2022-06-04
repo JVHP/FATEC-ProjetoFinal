@@ -21,10 +21,9 @@ class RemoveCompanyAuth
             $request->session()->invalidate();
         } */
 
-        if (Auth::check() && Auth::user()->isCliente() && ($request->is('/') || $request->is(''))) {
+        /* if (Auth::check() && Auth::user()->isCliente() && ($request->is('/') || $request->is(''))) {
             $request->session()->invalidate();
-        }
-
+        } */
         return $next($request);
     }
 

@@ -36,23 +36,23 @@ $paginas = collect([
                     <td class="m-0 text-center">
                         <div class="justify-content-center row col-auto">
                         @if($x->ck_finalizado == 'S' && $x->dt_pagamento == null)
-                        <a href="/pedido/pagar/{{$x->id}}" class="col-auto">
+                        <a href="/loja/{{session('empresa')->url_customizada}}/pedido/pagar/{{$x->id}}" class="col-auto">
                             <button class="btn btn-outline-info">Pagar</button>
                         </a>
                         
                         @elseif($x->ck_finalizado == 'N' && $x->dt_pagamento == null)
-                        <a href="/pedido/cancelar/{{$x->id}}" class="col-auto">
+                        <a href="/loja/{{session('empresa')->url_customizada}}/pedido/cancelar/{{$x->id}}" class="col-auto">
                             <button class="btn btn-outline-warning">Cancelar</button>
                         </a>
                         @endif
                         @if(($x->ck_finalizado != 'N' && $x->dt_pagamento != null) || ($x->ck_finalizado == 'C' && $x->dt_pagamento == null))
-                        <form action="/pedido/{{$x->id}}" method="POST" class="col-auto">
+                        <form action="/loja/{{session('empresa')->url_customizada}}/pedido/{{$x->id}}" method="POST" class="col-auto">
                             @csrf
                             @METHOD('DELETE')
                             <input type="submit" class="btn btn-outline-danger" value="Excluir"/>
                         </form>
                         @endif
-                        <a href="/pedido/{{$x->id}}" class="col-auto">
+                        <a href="/loja/{{session('empresa')->url_customizada}}/pedido/{{$x->id}}" class="col-auto">
                             <button class="btn btn-outline-success">Visualizar</button>
                         </a>
                         </div>

@@ -13,7 +13,7 @@ $paginas = collect([
 <div class="mx-auto col-lg-5 col-md-7 col-sm-8 col-12 pb-5">
     <div class="card-display border-bottom-orange">
         <h2 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-12">Visualizar Pedido</h2>
-        <form action="/pedido/{{$pedido->id}}" method="POST">
+        <form action="/loja/{{session('empresa')->url_customizada}}/pedido/{{$pedido->id}}" method="POST">
             @csrf
             @METHOD('PUT')
             <div class="card-title px-2 pt-2 mb-0">
@@ -32,7 +32,7 @@ $paginas = collect([
                 </dl>
                 <a href="/dashboard"><button type="button" class="btn btn-primary">Voltar</button></a>
                 @if(($pedido->ck_finalizado != 'N' && $pedido->dt_pagamento != null) || ($pedido->ck_finalizado == 'C' && $pedido->dt_pagamento == null))
-                    <form action="/pedido/{{$pedido->id}}" method="POST">
+                    <form action="/loja/{{session('empresa')->url_customizada}}/pedido/{{$pedido->id}}" method="POST">
                         @csrf
                         @METHOD('DELETE')
                         <input type="submit" class="btn btn-danger" value="Excluir"/>
@@ -44,12 +44,12 @@ $paginas = collect([
                 @if($pedido->ck_finalizado[0] == 'N' && $pedido->dt_pagamento == null)
                     <input class="btn btn-success col-3" type="submit" value="Finalizar">
                     
-                    <a href="/pedido/cancelar/{{$pedido->id}}">
+                    <a href="/loja/{{session('empresa')->url_customizada}}/pedido/cancelar/{{$pedido->id}}">
                         <button class="btn btn-danger" disabled>Cancelar</button>
                     </a>
                     
                 @elseif($pedido->ck_finalizado == 'S' && $pedido->dt_pagamento == null )
-                    <a href="pedido/pagar/{{$p->id}}"><button type="button" class="btn btn-info">Pagar</button></a>
+                    <a href="/loja/{{session('empresa')->url_customizada}}pedido/pagar/{{$p->id}}"><button type="button" class="btn btn-info">Pagar</button></a>
                 @endif
             </div>
         </form>

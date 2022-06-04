@@ -41,13 +41,13 @@ $paginas = collect([
                             <div class="pt-4 my-auto">
                                 @if ($peca->qt_estoque > 0)
                                     @guest
-                                        <a href="/login">
+                                        <a href="/loja/{{session('empresa')->url_customizada}}/login">
                                             <button class="btn btn-primary">
                                                 Comprar
                                             </button>
                                         </a>
                                     @else
-                                        <form class="" action="/pedido" method="POST"
+                                        <form class="" action="/loja/{{session('empresa')->url_customizada}}/pedido" method="POST"
                                             enctype="multipart/form-data">
                                             @csrf
                                             <input type="hidden" name="peca" value="{{ $peca->id }}">

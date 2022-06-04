@@ -135,10 +135,10 @@
                                         </div>
                                         <div class="col-12 text-start">
                                             @if (Auth::user()->isCliente())
-                                            <a href="{{ route('informacoes') }}" class="text-light py-1 me-1 my-2">
+                                            <a href="/loja/{{session('empresa')->url_customizada}}/usuario/informacoes" class="text-light py-1 me-1 my-2">
                                                 <img src="{{ URL::asset('icons/settings.svg') }}" alt="">
                                             </a>
-                                            <a href="{{ route('dashboard') }}" class="text-light py-1 me-2 my-2">
+                                            <a href="/loja/{{session('empresa')->url_customizada}}/usuario/pedidos" class="text-light py-1 me-2 my-2">
                                                 <img src="{{ URL::asset('icons/shopping-cart.svg') }}" alt="">
                                             </a>
                                             @elseif (Auth::user()->isEmpresa())
@@ -275,7 +275,7 @@
                         data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body p-0">
                             @if(session('empresa'))
-                            <a href="'/loja/'.{{session('empresa')->url_customizada}}pecas/todos">
+                            <a href="'/loja/'{{session('empresa')->url_customizada}}pecas/todos">
                                 <button
                                     class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
                                     Todas as Peças
@@ -287,7 +287,7 @@
                         </div>
                     @else
                         @if (Auth::user()->isCliente())
-                        <a href="/pecas-usuario">
+                        <a href="/loja/{{session('empresa')->url_customizada}}/pecas-usuario">
                             <button
                                 class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
                                 Peças para seu(s) carro(s)

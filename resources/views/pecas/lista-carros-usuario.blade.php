@@ -9,7 +9,6 @@ $paginas = collect([
 
 
 <x-breadcrumb :paginas="$paginas" />
-<div class="pt-5">
     <div class="card-display border-bottom-orange">
         <h1 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-12">Peças para seu(s) carro(s)</h1>
     <div class="p-2">
@@ -96,9 +95,8 @@ $paginas = collect([
             @endif
         </div>
     </div>
-</div>
 <div class="d-flex justify-content-center align-end pt-3">
-    {{-- {{ $varPeca->onEachSide(5)->links() }} --}}
+    {{ $varPeca->onEachSide(5)->links() }}
 </div>
 
 

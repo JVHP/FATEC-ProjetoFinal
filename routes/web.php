@@ -162,12 +162,28 @@ Route::get('/loja/{cd_empresa}/pecas-usuario', function($cd_empresa){
 })->middleware(['auth', 'verified']);
 
 /* PEDIDOS */
-Route::get('/dashboard', function(){
+Route::get('/loja/{cd_empresa}/usuario/pedidos', function($cd_empresa){
+    $empresa = Empresa::where('url_customizada', '=', $cd_empresa)->first();
+
+    if ($empresa == null) {
+        return redirect()->back();
+    }
+
+    session(['empresa' => $empresa]);
+
     $pedidos = Pedido::where('id_usuario', Auth::user()->id)->orderBy('dt_pedido', 'DESC')->get();
     return view('pedidos.dashboard')->with('pedidos', $pedidos);
 })->name('dashboard')->middleware(['auth', 'verified']);
 
-Route::get('pedido/pagar/{id}', function($id){
+Route::get('/loja/{cd_empresa}/pedido/pagar/{id}', function($cd_empresa, $id){
+    $empresa = Empresa::where('url_customizada', '=', $cd_empresa)->first();
+
+    if ($empresa == null) {
+        return redirect()->back();
+    }
+
+    session(['empresa' => $empresa]);
+    
     $pedido = Pedido::where('id_usuario', Auth::user()->id)->where('id', $id)->first();
     return view('pedidos.pagar')->with('pedido', $pedido);
 })->middleware('auth');
@@ -201,7 +217,15 @@ Route::get('pedido/cancelar/{id}', function($id){
         }
 })->middleware(['auth', 'verified']);
 
-Route::get('pedido/pagar/concluir/{id}', function($id){
+Route::get('/loja/{cd_empresa}/pedido/pagar/concluir/{id}', function($cd_empresa, $id){
+    $empresa = Empresa::where('url_customizada', '=', $cd_empresa)->first();
+
+    if ($empresa == null) {
+        return redirect()->back();
+    }
+
+    session(['empresa' => $empresa]);    
+
     $pedido = Pedido::where('id', $id)->first();
     try{
         if ($pedido->dt_pagamento != null) {
@@ -226,7 +250,15 @@ Route::get('pedido/pagar/concluir/{id}', function($id){
 }); */
 
 /* USUÁRIO */
-Route::get('/usuario/informacoes', function(){
+Route::get('/loja/{cd_empresa}/usuario/informacoes', function($cd_empresa){
+    $empresa = Empresa::where('url_customizada', '=', $cd_empresa)->first();
+
+    if ($empresa == null) {
+        return redirect()->back();
+    }
+
+    session(['empresa' => $empresa]);
+
     $dadosUsuario = Auth::user();
     return view('usuarios.config')->with('dadosUsuario', $dadosUsuario);
 })->name('informacoes')->middleware('auth');
