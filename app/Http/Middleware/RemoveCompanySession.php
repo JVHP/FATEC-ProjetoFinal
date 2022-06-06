@@ -87,9 +87,9 @@ class RemoveCompanySession
             } */
             
             if (Auth::check() && Auth::user()->isCliente()) {
+                $empresa = Empresa::firstWhere('cnpj', '=', Auth::user()->getCnpjCadastro());
+                
                 if (session('empresa') == null) {
-                    $empresa = Empresa::firstWhere('cnpj', '=', Auth::user()->getCnpjCadastro());
-
                     if ($empresa != null) {
                         session(['empresa'=>$empresa]);
 
@@ -97,8 +97,22 @@ class RemoveCompanySession
                     } else {
                         session()->invalidate();
                     }
-                }
                 
+                } else if (session('empresa') != null) {
+                    if ($request->is('') || $request->is('/') || $next == '/' || $next == '') {
+                        return redirect('/loja/'.session('empresa')->url_customizada);
+                    } else {
+                        if ($empresa->id != session('empresa')->id) {
+                            $empresaTemp = session('empresa');
+    
+                            session()->invalidate();
+    
+                            session(['empresa'=>$empresaTemp]);
+    
+                            return redirect('/loja/'.session('empresa')->url_customizada);
+                        }
+                    }
+                }                
             }
 
         return $next($request);

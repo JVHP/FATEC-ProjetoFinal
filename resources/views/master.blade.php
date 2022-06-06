@@ -131,21 +131,13 @@
                                     </div>
                                     <div class="col-8 text-start ps-0 text-truncate">
                                         <div class="col-12">
-                                            @if (session('empresa'))
                                                 <a class="text-light py-1 my-2"
-                                                    href="/loja/{{ session('empresa')->url_customizada }}/usuario/pedidos">
+                                                    href="{{ session('empresa') ? '/loja/'.session('empresa')->url_customizada.'/usuario/pedidos' : '/pedidos' }}">
                                                     <label for="" class="text-light">
                                                         Bem vindo {{ Auth::user()->firstName() }}!
                                                     </label>
                                                 </a>
-                                            @else
-                                                <a class="text-light py-1 my-2" href="">
-                                                    <label for="" class="text-light">
-                                                        Bem vindo {{ Auth::user()->firstName() }}!
-                                                    </label>
-                                                </a>
-                                            @endif
-                                        </div>
+                                            </div>
                                         <div class="col-12 text-start">
                                             @if (Auth::user()->isCliente())
                                                 <a href="/loja/{{ session('empresa')->url_customizada }}/usuario/informacoes"
