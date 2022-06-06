@@ -292,7 +292,7 @@
                         aria-labelledby="flush-headingPecas" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body p-0">
                             @if (session('empresa'))
-                                <a href="'/loja/'{{ session('empresa')->url_customizada }}pecas/todos">
+                                <a href="/loja/{{ session('empresa')->url_customizada }}/pecas/todos">
                                     <button
                                         class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
                                         Todas as Peças
