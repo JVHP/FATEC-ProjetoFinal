@@ -98,11 +98,6 @@ Route::post('/email/verification-notification', function (Request $request) {
 })->middleware(['auth', 'throttle:6,1'])->name('verification.resend');
 
 /* PEÇAS */
-/* Route::get('pecas/todos/', function($categoria_id) {
-    $peca = DB::table('pecas')->where('id_tipo_peca', '=', $categoria_id)->get();
-    return $peca;
-});
- */
 Route::get('/loja/{cd_empresa}/pecas/nome/{nm_peca}', function ($cd_empresa, $nm_peca) {    
     $empresa = Empresa::where('url_customizada', '=', $cd_empresa)->first();
 
@@ -115,10 +110,6 @@ Route::get('/loja/{cd_empresa}/pecas/nome/{nm_peca}', function ($cd_empresa, $nm
     $peca = DB::table('pecas')->select(DB::raw('nm_peca, id'))->where('id_empresa', '=', $empresa->id)->whereRaw(' UPPER(nm_peca) LIKE ? ', [strtoupper($nm_peca).'%'])->get();
     return $peca;
 });
-
-/* Route::get('/loja/{cd_empresa}/pecas/delete/{id}', function ($cd_empresa, $id) {
-    
-})->middleware('auth'); */
 
 Route::get('/loja/{cd_empresa}/pecas/todos/{nome?}/{categoria_id?}', function($cd_empresa, $nome = null){
     $empresa = Empresa::where('url_customizada', '=', $cd_empresa)->first();

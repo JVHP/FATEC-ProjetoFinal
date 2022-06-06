@@ -23,7 +23,7 @@ class PecaClienteController extends Controller
     public function __construct()
     {
         $this->middleware('auth', ['except' => ['show']]);
-        $this->middleware('client.user');
+        $this->middleware('client.user', ['except' => ['show']]);
     }
 
     public function index()

@@ -15,6 +15,10 @@ class Authenticate extends Middleware
     protected function redirectTo($request)
     {
         if (! $request->expectsJson()) {
+            if (session('empresa')) {
+                return route('login-loja', ['cd_empresa' => session('empresa')->url_customizada]);
+            }
+
             return route('login');
         }
     }

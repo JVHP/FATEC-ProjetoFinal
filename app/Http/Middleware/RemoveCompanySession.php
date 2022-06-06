@@ -113,6 +113,10 @@ class RemoveCompanySession
                         }
                     }
                 }                
+            } else {
+                if (!$request->is('/loja/*')) {
+                    session(['empresa'=>null]);
+                }
             }
 
         return $next($request);
