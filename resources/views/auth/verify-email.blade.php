@@ -11,7 +11,7 @@
     <x-breadcrumb :paginas="$paginas" />
     
         <div class="card-display border-bottom-orange pb-2">
-            <h2 class="rounded border-bottom-orange bg-primary-dark text-white p-2 col-12">Verificação de email nescessária
+            <h2 class="rounded border-bottom-orange bg-primary-dark text-white p-2 col-12">Verificação de email necessária
             </h2>
 
             <div class="card-body">
