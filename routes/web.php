@@ -112,7 +112,7 @@ Route::get('/loja/{cd_empresa}/pecas/nome/{nm_peca}', function ($cd_empresa, $nm
 
     session(['empresa' => $empresa]);
 
-    $peca = DB::table('pecas')->select(DB::raw('nm_peca, id'))->whereRaw(' UPPER(nm_peca) LIKE ? ', [strtoupper($nm_peca).'%'])->get();
+    $peca = DB::table('pecas')->select(DB::raw('nm_peca, id'))->where('id_empresa', '=', $empresa->id)->whereRaw(' UPPER(nm_peca) LIKE ? ', [strtoupper($nm_peca).'%'])->get();
     return $peca;
 });
 
@@ -130,9 +130,9 @@ Route::get('/loja/{cd_empresa}/pecas/todos/{nome?}/{categoria_id?}', function($c
     session(['empresa' => $empresa]);
     
     if ($nome != null) {
-        $pecas = Peca::orderBy('qt_estoque', 'DESC')->orderBy('nm_peca', 'DESC')->whereRaw(' UPPER(nm_peca) LIKE ? ', [strtoupper($nome).'%'])->paginate(15);
+        $pecas = Peca::orderBy('qt_estoque', 'DESC')->orderBy('nm_peca', 'DESC')->where('id_empresa', '=', $empresa->id)->whereRaw(' UPPER(nm_peca) LIKE ? ', [strtoupper($nome).'%'])->paginate(15);
     }else{
-        $pecas = Peca::orderBy('qt_estoque', 'DESC')->orderBy('nm_peca', 'DESC')->paginate(15);
+        $pecas = Peca::orderBy('qt_estoque', 'DESC')->orderBy('nm_peca', 'DESC')->where('id_empresa', '=', $empresa->id)->paginate(15);
     }
     return view('pecas.lista')->with('varPeca', $pecas);
 });
@@ -172,7 +172,9 @@ Route::get('/loja/{cd_empresa}/usuario/pedidos', function($cd_empresa){
 
     session(['empresa' => $empresa]);
 
-    $pedidos = Pedido::where('id_usuario', Auth::user()->id)->orderBy('dt_pedido', 'DESC')->get();
+    $pedidos = Pedido::where('id_usuario', Auth::user()->id)->where('id_empresa', '=', $empresa->id)->orderBy('dt_pedido', 'DESC')->paginate(10);
+
+
     return view('pedidos.dashboard')->with('pedidos', $pedidos);
 })->name('dashboard')->middleware(['auth', 'verified']);
 
@@ -189,7 +191,7 @@ Route::get('/loja/{cd_empresa}/pedido/pagar/{id}', function($cd_empresa, $id){
     return view('pedidos.pagar')->with('pedido', $pedido);
 })->middleware('auth');
 
-Route::get('pedido/cancelar/{id}', function($id){
+Route::get('/loja/{cd_empresa}/pedido/cancelar/{id}', function($id){
         try {
             $pecasQtd = DB::table('peca_pedidos')
                         ->join('pedidos', 'pedidos.id', '=', 'peca_pedidos.id_pedido')

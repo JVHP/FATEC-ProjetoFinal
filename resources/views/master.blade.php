@@ -7,8 +7,8 @@
     <!--<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">-->
 
     <title>
-        @if(session('empresa')) 
-            {{session('empresa')->razao_social}}
+        @if (session('empresa'))
+            {{ session('empresa')->razao_social }}
         @else
             iTURBO
         @endif
@@ -45,6 +45,7 @@
     <style>
         @import '/css/app-base.css';
         @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css");
+
     </style>
 </head>
 
@@ -56,40 +57,41 @@
             <div class="row col-12 m-0">
                 @guest
                 @else
-                <div class="col-lg-1 col-md-1 col-sm-1 col-1 y-auto ps-4 my-auto ">
-                    <button class="btn" type="button" data-bs-toggle="offcanvas"
-                        data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
-                        <img src="{{ URL::asset('icons/menu.svg') }}" alt="">
-                    </button>
-                </div>
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-1 y-auto ps-4 my-auto ">
+                        <button class="btn" type="button" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
+                            <img src="{{ URL::asset('icons/menu.svg') }}" alt="">
+                        </button>
+                    </div>
                 @endguest
 
                 <div
                     class="col-lg-auto col-md-3 col-sm-4 col-6 pb-3 my-auto text-md-start text-center me-md-auto mx-md-0 mx-auto">
-                    <h3 style="cursor: pointer" class="pt-4 fw-bold text-light onhov" onclick="window.location='/{{!empty(session('empresa')) ? 'loja/'.session('empresa')->url_customizada : ''}}'">
-                        @if(session('empresa')) 
-                            {{session('empresa')->razao_social}}
+                    <h3 style="cursor: pointer" class="pt-4 fw-bold text-light onhov"
+                        onclick="window.location='/{{ !empty(session('empresa')) ? 'loja/' . session('empresa')->url_customizada : '' }}'">
+                        @if (session('empresa'))
+                            {{ session('empresa')->razao_social }}
                         @else
                             iTURBO
                         @endif
                     </h3>
                 </div>
 
+                @if (session('empresa'))
+                    <div class="form-group col-xl-3 col-lg-3 col-md-4 col-sm-12 col-12 my-auto">
+                        <input list="pecasList" oninput="getPecas(event.target.value)" id="inputPeca"
+                            class=" card-search rounded-pill form-control" type="text"
+                            style="height: 50px; /* border: 2px solid #334756; border-radius: 5px; */"
+                            placeholder="Pesquisar...">
+
+                        <datalist id="pecasList" onclick="irParaPeca(event.target.value)">
+                        </datalist>
+                    </div>
+                @endif
                 @guest
-                    @if(session('cd_empresa')) 
-                        <div class="form-group col-xl-3 col-lg-3 col-md-4 col-sm-12 col-12 my-auto">
-                            <input list="pecasList" oninput="getPecas(event.target.value)" id="inputPeca"
-                                class=" card-search rounded-pill form-control" type="text"
-                                style="height: 50px; /* border: 2px solid #334756; border-radius: 5px; */"
-                                placeholder="Pesquisar...">
-        
-                            <datalist id="pecasList" onclick="irParaPeca(event.target.value)">
-                            </datalist>
-                        </div>
-                    @endif
                 @else
                 @endguest
-                
+
                 <div class="text-end col-xxl-2-custom col-lg-3 col-md-4 col-12 pt-md-0 pt-3 my-auto mx-md-0 mx-auto ">
                     <div>
                         <div class="card-login rounded-pill">
@@ -101,9 +103,11 @@
                                             </div>
                                         </div>
                                         <div class="col-8 my-auto text-start ps-0">
-                                            @if(session('empresa'))
-                                            <a class="text-light" href="/loja/{{session('empresa')->url_customizada}}/login">Faça seu {{ __('login') }} ou
-                                                {{ __('cadastre-se') }}</a>
+                                            @if (session('empresa'))
+                                                <a class="text-light"
+                                                    href="/loja/{{ session('empresa')->url_customizada }}/login">Faça seu
+                                                    {{ __('login') }} ou
+                                                    {{ __('cadastre-se') }}</a>
                                             @else
                                                 <a class="text-light" href="/login">Faça seu {{ __('login') }} ou
                                                     {{ __('cadastre-se') }}</a>
@@ -127,24 +131,35 @@
                                     </div>
                                     <div class="col-8 text-start ps-0 text-truncate">
                                         <div class="col-12">
-                                            <a class="text-light py-1 my-2" href="/dashboard">
-                                                <label for="" class="text-light">
-                                                    Bem vindo {{ Auth::user()->firstName() }}!
-                                                </label>
-                                            </a>
+                                            @if (session('empresa'))
+                                                <a class="text-light py-1 my-2"
+                                                    href="/loja/{{ session('empresa')->url_customizada }}/usuario/pedidos">
+                                                    <label for="" class="text-light">
+                                                        Bem vindo {{ Auth::user()->firstName() }}!
+                                                    </label>
+                                                </a>
+                                            @else
+                                                <a class="text-light py-1 my-2" href="">
+                                                    <label for="" class="text-light">
+                                                        Bem vindo {{ Auth::user()->firstName() }}!
+                                                    </label>
+                                                </a>
+                                            @endif
                                         </div>
                                         <div class="col-12 text-start">
                                             @if (Auth::user()->isCliente())
-                                            <a href="/loja/{{session('empresa')->url_customizada}}/usuario/informacoes" class="text-light py-1 me-1 my-2">
-                                                <img src="{{ URL::asset('icons/settings.svg') }}" alt="">
-                                            </a>
-                                            <a href="/loja/{{session('empresa')->url_customizada}}/usuario/pedidos" class="text-light py-1 me-2 my-2">
-                                                <img src="{{ URL::asset('icons/shopping-cart.svg') }}" alt="">
-                                            </a>
+                                                <a href="/loja/{{ session('empresa')->url_customizada }}/usuario/informacoes"
+                                                    class="text-light py-1 me-1 my-2">
+                                                    <img src="{{ URL::asset('icons/settings.svg') }}" alt="">
+                                                </a>
+                                                <a href="/loja/{{ session('empresa')->url_customizada }}/usuario/pedidos"
+                                                    class="text-light py-1 me-2 my-2">
+                                                    <img src="{{ URL::asset('icons/shopping-cart.svg') }}" alt="">
+                                                </a>
                                             @elseif (Auth::user()->isEmpresa())
-                                            <a href="/empresas" class="text-light py-1 me-2 my-2">
-                                                <img src="{{ URL::asset('icons/briefcase.svg') }}" alt="">
-                                            </a>
+                                                <a href="/empresas" class="text-light py-1 me-2 my-2">
+                                                    <img src="{{ URL::asset('icons/briefcase.svg') }}" alt="">
+                                                </a>
                                             @endif
                                             <a href="{{ route('logout') }}" class="text-light py-1 my-2"
                                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -199,28 +214,28 @@
                                     </a>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
                     @elseif (Auth::user()->isEmpresa() || Auth::user()->isFuncionario())
-                    <div class="accordion-item" style="border-radius: none; border: none">
-                        <h2 class="accordion-header" id="flush-headingMarcas">
-                            <button class="accordion-button collapsed bg-orange" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#flush-collapseMarcas" aria-expanded="false"
-                                aria-controls="flush-collapseMarcas">
-                                Marcas
-                            </button>
-                        </h2>
-                        <div id="flush-collapseMarcas" class="accordion-collapse collapse"
-                            aria-labelledby="flush-headingMarcas" data-bs-parent="#accordionFlushExample">
-                            <div class="accordion-body p-0">
-                                <a href="/marcas">
-                                    <button
-                                        class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
-                                        Gerenciar Marcas
-                                    </button>
-                                </a>
+                        <div class="accordion-item" style="border-radius: none; border: none">
+                            <h2 class="accordion-header" id="flush-headingMarcas">
+                                <button class="accordion-button collapsed bg-orange" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapseMarcas" aria-expanded="false"
+                                    aria-controls="flush-collapseMarcas">
+                                    Marcas
+                                </button>
+                            </h2>
+                            <div id="flush-collapseMarcas" class="accordion-collapse collapse"
+                                aria-labelledby="flush-headingMarcas" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body p-0">
+                                    <a href="/marcas">
+                                        <button
+                                            class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
+                                            Gerenciar Marcas
+                                        </button>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     @endif
                     @if (Auth::user()->isEmpresa())
                         <div class="accordion-item" style="border-radius: none; border: none">
@@ -268,32 +283,33 @@
                 <div class="accordion-item" style="border-radius: none; border: none">
                     <h2 class="accordion-header" id="flush-headingPecas">
                         <button class="accordion-button collapsed bg-orange" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#flush-collapsePecas" aria-expanded="false" aria-controls="flush-collapsePecas">
+                            data-bs-target="#flush-collapsePecas" aria-expanded="false"
+                            aria-controls="flush-collapsePecas">
                             Peças
                         </button>
                     </h2>
-                    <div id="flush-collapsePecas" class="accordion-collapse collapse" aria-labelledby="flush-headingPecas"
-                        data-bs-parent="#accordionFlushExample">
+                    <div id="flush-collapsePecas" class="accordion-collapse collapse"
+                        aria-labelledby="flush-headingPecas" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body p-0">
-                            @if(session('empresa'))
-                            <a href="'/loja/'{{session('empresa')->url_customizada}}pecas/todos">
-                                <button
-                                    class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
-                                    Todas as Peças
-                                </button>
-                            </a>
+                            @if (session('empresa'))
+                                <a href="'/loja/'{{ session('empresa')->url_customizada }}pecas/todos">
+                                    <button
+                                        class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
+                                        Todas as Peças
+                                    </button>
+                                </a>
                             @endif
                             @guest
                             </div>
                         </div>
                     @else
                         @if (Auth::user()->isCliente())
-                        <a href="/loja/{{session('empresa')->url_customizada}}/pecas-usuario">
-                            <button
-                                class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
-                                Peças para seu(s) carro(s)
-                            </button>
-                        </a>
+                            <a href="/loja/{{ session('empresa')->url_customizada }}/pecas-usuario">
+                                <button
+                                    class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
+                                    Peças para seu(s) carro(s)
+                                </button>
+                            </a>
                         @elseif (Auth::user()->isEmpresa() || Auth::user()->isFuncionario())
                             <a href="/pecas">
                                 <button
@@ -319,7 +335,8 @@
                 <div class="accordion-item" style="border-radius: 0; border: none">
                     <h2 class="accordion-header" id="flush-headingCarros">
                         <button class="accordion-button collapsed bg-orange " type="button" data-bs-toggle="collapse"
-                            data-bs-target="#flush-collapseCarros" aria-expanded="false" aria-controls="flush-collapseCarros">
+                            data-bs-target="#flush-collapseCarros" aria-expanded="false"
+                            aria-controls="flush-collapseCarros">
                             Carros
                         </button>
                     </h2>
@@ -357,9 +374,61 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
-<script src="/js/register-user/register-user.js">
-</script>
-<script src="/js/master/datalist.js">
+<script src="/js/register-user/register-user.js"></script>
+{{-- <script src="/js/master/datalist.js">
+</script> --}}
+<script>
+    let empresa = <?php echo session('empresa') ? '"' . session('empresa')->url_customizada . '"' : "''"; ?>
+
+    //Função para popular o DataList
+
+    let listaPecas = document.getElementById('pecasList');
+
+    if (listaPecas) {
+        let opcaoTodos = document.createElement('option')
+        opcaoTodos.text = "Ir para todos"
+        opcaoTodos.value = "Ir para todos"
+        opcaoTodos.id = "all"
+        listaPecas.appendChild(opcaoTodos)
+
+        function getPecas(peca) {
+            let i = 0
+            var request = $.get(`/loja/${empresa}/pecas/nome/` + peca);
+            request.then((response) => {
+                while (listaPecas.firstChild) {
+                    listaPecas.removeChild(listaPecas.lastChild)
+                }
+                var pecas = null
+                pecas = response;
+                pecas.forEach((item) => {
+                    i++
+                    let option = document.createElement('option');
+                    option.text = "Código: " + item.id
+                    option.value = item.nm_peca
+                    option.id = "peca" + i
+                    listaPecas.appendChild(option)
+                })
+            })
+        }
+
+        //Função seleção opção DataList
+        $(document).ready(function() {
+            $('#inputPeca').on('change', function() {
+                var userText = $(this).val();
+
+                $("#pecasList").find("option").each(function() {
+                    if ($(this).val() == userText) {
+                        irParaPeca($(this).text(), <?php echo session('empresa') ? '"' . session('empresa')->url_customizada . '"' : "''"; ?>);
+                    }
+                })
+            })
+        });
+
+        //Função de pesquisa
+        function irParaPeca(peca, empresa) {
+            window.location = `/loja/${empresa}/pecas/` + peca.substr(8)
+        }
+    }
 </script>
 
 <script>
@@ -397,5 +466,4 @@
         let element = event.srcElement;
         element.classList.toggle('text-truncate');
     }
-
 </script>

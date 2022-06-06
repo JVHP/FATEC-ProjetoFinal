@@ -61,10 +61,15 @@ $paginas = collect([
         {{ $tipos->onEachSide(5)->links() }}
     </div>
     @else
-    <div class="card" style="height: 25vh;">
-        <h1 class="m-auto my-auto">
-            Não contém dados
-        </h1>
+    <div class="p-2">
+        <div class="card" style="">
+            <div class="row text-center mb-4">
+                <img class="col-md-3 col-12 m-3" src="{{URL::asset('icons/undraw_not_found_-60-pq.svg')}}" class="img-fluid" alt="" style="width: 21%">
+                <h1  class="col-md-auto col-12 my-auto">
+                    Não contém dados.
+                </h1>
+            </div>
+        </div>
     </div>
     @endif
 </div>

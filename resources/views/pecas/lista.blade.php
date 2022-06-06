@@ -9,20 +9,23 @@ $paginas = collect([
 
 <x-breadcrumb :paginas="$paginas" />
 
-    <div class="pt-5">
+    <div class="">
         <div class="card-display border-bottom-orange">
             <h1 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-12">Peças</h1>
             <div class="p-2">
             </div>
             <div class="row mx-auto col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 pb-5">
                 @if (sizeOf($varPeca) == 0)
-                    <div class="p-2">
-                        <div class="card" style="height: 25vh;">
-                            <h1 class="m-auto my-auto">
-                                Não foram encontradas peças em nosso catálogo
+                <div class="p-2">
+                    <div class="card" style="">
+                        <div class="row text-center mb-4">
+                            <img class="col-md-3 col-12 m-3" src="{{URL::asset('icons/undraw_not_found_-60-pq.svg')}}" class="img-fluid" alt="" style="width: 21%">
+                            <h1  class="col-md-auto col-12 my-auto">
+                                Não contém dados.
                             </h1>
                         </div>
                     </div>
+                </div>
                 @else
                     @foreach ($varPeca as $x)
                         <div class=" pt-3 col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 mx-auto" style="width: 20.19rem;">

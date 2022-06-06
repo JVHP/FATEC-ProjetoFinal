@@ -2,9 +2,11 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Empresa;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class RemoveCompanySession
 {
@@ -17,13 +19,87 @@ class RemoveCompanySession
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!$request->is('loja/*') && $next != '/login' || $request->is('/')) {
-            if (Auth::check() && Auth::user()->isCliente()) {
+        /* if (Auth::check() && Auth::user()->isCliente()) {
+            if ($next == '/login') {
+
+                    $empresa = Empresa::firstWhere('cnpj', '=', Auth::user()->getCnpjCadastro());
+
+                    echo '<script>console.log("'.$empresa.'")</script>';
+
+                    if ($empresa != null) {
+                        session(['empresa'=>$empresa]);
+                        return redirect('/loja/'.$empresa->url_customizada);
+
+                    } else {
+                        session(['empresa' => null]);
+                        session()->invalidate();
+                    }
+
+            } else if (!$request->is('loja/*')) {
                 session(['empresa' => null]);
                 session()->invalidate();
+
                 return redirect('/');
-            } 
-        }
+            }
+
+        } */
+
+            /* if ($next == '/login' || $next == '') {
+                if (Auth::check() && Auth::user()->isCliente()) {
+                    $empresa = Empresa::firstWhere('cnpj', '=', Auth::user()->getCnpjCadastro());
+
+                    if ($empresa != null) {
+                        session(['empresa'=>$empresa]);
+
+                        return redirect('/loja/'.$empresa->url_customizada);
+
+                    } else {
+                        session(['empresa' => null]);
+                        session()->invalidate();
+
+                        return redirect('/');
+                    }
+                }
+            } */
+            /* else if ($next == '/logout') {
+                
+                    $empresa = Empresa::firstWhere('cnpj', '=', Auth::user()->getCnpjCadastro());
+
+                    if ($empresa != null) {
+                        session(['empresa'=>$empresa]);
+                        session()->invalidate();
+
+                        return redirect('/loja/'.$empresa->url_customizada);
+                    } else {
+                        session(['empresa' => null]);
+                        session()->invalidate();
+
+                        return redirect('/');
+                    }
+                
+            } else if (!$request->is('/loja/*') && $next != '/logout' && $next != '/login') {
+                if (Auth::check() && Auth::user()->isCliente()) {
+                    session(['empresa' => null]);
+                    session()->invalidate();
+
+                    return redirect('/');
+                }
+            } */
+            
+            if (Auth::check() && Auth::user()->isCliente()) {
+                if (session('empresa') == null) {
+                    $empresa = Empresa::firstWhere('cnpj', '=', Auth::user()->getCnpjCadastro());
+
+                    if ($empresa != null) {
+                        session(['empresa'=>$empresa]);
+
+                        return redirect('/loja/'.$empresa->url_customizada);
+                    } else {
+                        session()->invalidate();
+                    }
+                }
+                
+            }
 
         return $next($request);
     }

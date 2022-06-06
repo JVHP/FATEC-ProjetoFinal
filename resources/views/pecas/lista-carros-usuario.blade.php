@@ -16,15 +16,18 @@ $paginas = collect([
         <div class="row mx-auto col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 pb-5">
             @if(sizeOf($varPeca) == 0)
                 <div class="p-2">
-                    <div class="card" style="height: 25vh;">
+                    <div class="card">
                         @if($mensagem != '')
                         <h1 class="m-auto my-auto">
                             {{$mensagem}}
                         </h1>
                         @else
-                        <h3 class="m-auto my-auto">
-                            Não foram encontrados carros vinculados ao seu usuário
-                        </h3>
+                        <div class="row text-center mb-4">
+                            <img class="col-md-3 col-12 m-3" src="{{URL::asset('icons/undraw_not_found_-60-pq.svg')}}" class="img-fluid" alt="" style="width: 21%">
+                            <h1  class="col-md-auto col-12 my-auto">
+                                Não foram encontrados carros vinculados ao seu usuário
+                            </h1>
+                        </div>
                         @endif                        
                     </div>
                 </div>

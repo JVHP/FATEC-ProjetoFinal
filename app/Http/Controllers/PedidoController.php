@@ -46,11 +46,13 @@ class PedidoController extends Controller
      */
     public function store(Request $request)
     {
+        $empresa = session('empresa');
+        
         $peca = $request->peca;
 
         $peca = Peca::find($peca);
 
-        $pedidoExistente = Pedido::where('id_usuario', Auth::user()->id)->where('ck_finalizado', 'N')->where('dt_pagamento', null)->first();
+        $pedidoExistente = Pedido::where('id_usuario', Auth::user()->id)->where('ck_finalizado', 'N')->where('dt_pagamento', null)->where('id_empresa', '=', $empresa->id)->first();
 
         $quantidade = 1;
 
@@ -59,6 +61,8 @@ class PedidoController extends Controller
             $request->request->add(['dt_pedido' => Carbon::now()]);
 
             $request->request->add(['vl_preco_total' => $peca->vl_peca]);
+
+            $request->request->add(['id_empresa' => $empresa->id]);
 
             $pedido = Pedido::create($request->all());
             $peca->pedidos()->attach($pedido, ['qt_peca' => $quantidade, 'vl_total_peca' => $peca->vl_peca * $quantidade]);

@@ -16,16 +16,19 @@
     <div class="welcome-padding-top">
         <div class="card-display border-bottom-orange pb-2">
             <h1 class="rounded border-bottom-orange bg-primary-dark text-white p-2 col-12">Destaques</h1>
-            <div class="owl-carousel owl-theme">
-                @if($varPeca == null || sizeOf($varPeca) == 0)
-                <div class="p-2">
-                    <div class="card" style="height: 25vh;">
-                        <h1 class="m-auto my-auto">
+            @if($varPeca == null || sizeOf($varPeca) == 0)
+            <div class="p-2">
+                <div class="card" style="">
+                    <div class="row text-center mb-4">
+                        <img class="col-md-3 col-12 m-3" src="{{URL::asset('icons/undraw_not_found_-60-pq.svg')}}" class="img-fluid" alt="" style="width: 21%">
+                        <h1  class="col-md-auto col-12 my-auto">
                             Não foram encontradas peças em nosso catálogo
                         </h1>
                     </div>
                 </div>
-                @else
+            </div>
+            @else
+            <div class="owl-carousel owl-theme">
                 @foreach($varPeca as $x)
                 <div class="item card rounded">
                     <!-- Cards para estoque disponível -->
@@ -85,8 +88,8 @@
                     @endif
                 </div>
                 @endforeach
-                @endif
             </div>
+            @endif
         </div>
     </div>
 @endsection

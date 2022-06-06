@@ -83,6 +83,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getId() {
         return $this->id;
     }
+    
+    public function getCnpjCadastro() {
+        return $this->cnpj_empresa_cadastrada;
+    }
 
     public function firstName() {
         $fs_name  = $this->nm_usuario;
