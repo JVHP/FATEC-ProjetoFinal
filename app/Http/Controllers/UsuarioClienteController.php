@@ -36,8 +36,7 @@ class UsuarioClienteController extends Controller
     
     public function index()
     {
-        $usuarios = User::orderBy('id', 'ASC')->paginate(20);
-        return view('usuarios.index')->with('usuarios', $usuarios);
+       
     }
 
     /**

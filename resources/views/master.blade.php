@@ -207,27 +207,6 @@
                                 </div>
                             </div>
                         </div>
-                    @elseif (Auth::user()->isEmpresa() || Auth::user()->isFuncionario())
-                        <div class="accordion-item" style="border-radius: none; border: none">
-                            <h2 class="accordion-header" id="flush-headingMarcas">
-                                <button class="accordion-button collapsed bg-orange" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#flush-collapseMarcas" aria-expanded="false"
-                                    aria-controls="flush-collapseMarcas">
-                                    Marcas
-                                </button>
-                            </h2>
-                            <div id="flush-collapseMarcas" class="accordion-collapse collapse"
-                                aria-labelledby="flush-headingMarcas" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body p-0">
-                                    <a href="/marcas">
-                                        <button
-                                            class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
-                                            Gerenciar Marcas
-                                        </button>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
                     @endif
                     @if (Auth::user()->isEmpresa() || Auth::user()->isAdministrator())
                         <div class="accordion-item" style="border-radius: none; border: none">
@@ -235,7 +214,7 @@
                                 <button class="accordion-button collapsed bg-orange" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#flush-collapseEmpresas" aria-expanded="false"
                                     aria-controls="flush-collapseEmpresas">
-                                    Empresas
+                                    Filiais
                                 </button>
                             </h2>
                             @if (Auth::user()->isEmpresa())
@@ -263,6 +242,28 @@
                                     </div>
                                 </div>
                             @endif
+                        </div>
+                    @endif
+                    @if (Auth::user()->isEmpresa() || Auth::user()->isFuncionario())
+                        <div class="accordion-item" style="border-radius: none; border: none">
+                            <h2 class="accordion-header" id="flush-headingMarcas">
+                                <button class="accordion-button collapsed bg-orange" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapseMarcas" aria-expanded="false"
+                                    aria-controls="flush-collapseMarcas">
+                                    Marcas
+                                </button>
+                            </h2>
+                            <div id="flush-collapseMarcas" class="accordion-collapse collapse"
+                                aria-labelledby="flush-headingMarcas" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body p-0">
+                                    <a href="/marcas">
+                                        <button
+                                            class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
+                                            Gerenciar Marcas
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     @endif
                 @endguest

@@ -13,7 +13,7 @@ class TipoPecaController extends Controller
     * Somente Administradores podem acessar
     */
     public function __construct() {
-        $this->middleware(['auth', 'admin.user']);
+        $this->middleware(['auth', 'company.user', 'verified']);
     }
 
     /**

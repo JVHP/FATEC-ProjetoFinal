@@ -132,6 +132,66 @@
             <h1 class="rounded border-bottom-orange bg-primary-dark text-white p-2 col-12">Dashboard</h1>
             <div class="card-body row">
 
+                @if (Auth::user()->isEmpresa())
+                    <div class="col-lg-3 col-md-6 col-12 mx-auto">
+                        <a href="/filiais" style="color: grey">
+                            <div class="card-hover p-5 m-2">
+                                <div class="col-12 d-flex justify-content-between">
+                                    <div class="col-2" style="width: 30px; height: 30px">
+                                        <img style="width: 30px; height: 30px" src="{{ URL::asset('icons/briefcase.svg') }}"
+                                            alt="">
+                                    </div>
+                                    <div class="ms-2 my-auto py-auto col-10">
+                                        <p class="my-auto">
+                                            Filiais
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                @endif
+
+                @if (Auth::user()->isEmpresa() || Auth::user()->isFuncionario())
+                    <div class="col-lg-3 col-md-6 col-12 mx-auto">
+                        <a href="/marcas" style="color: grey">
+                            <div class="card-hover p-5 m-2">
+                                <div class="col-12 d-flex justify-content-between">
+                                    <div class="col-2" style="width: 30px; height: 30px">
+                                        <img style="width: 30px; height: 30px" src="{{ URL::asset('icons/folder.svg') }}"
+                                            alt="">
+                                    </div>
+                                    <div class="ms-2 my-auto py-auto col-10">
+                                        <p class="my-auto">
+                                            Marcas
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                @endif
+
+                @if (Auth::user()->isFuncionario() || Auth::user()->isEmpresa())
+                    <div class="col-lg-3 col-md-6 col-12 mx-auto">
+                        <a href="/tipospeca" style="color: grey">
+                            <div class="card-hover p-5 m-2">
+                                <div class="col-12 d-flex justify-content-between">
+                                    <div class="col-2" style="width: 30px; height: 30px">
+                                        <img style="width: 30px; height: 30px"
+                                            src="{{ URL::asset('icons/shapes-outline-green.svg') }}" alt="">
+                                    </div>
+                                    <div class="ms-2 my-auto py-auto col-10">
+                                        <p class="my-auto">
+                                            Tipos de Peça
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                @endif
+
                 @if (Auth::user()->isEmpresa() || Auth::user()->isFuncionario())
                     <div class="col-lg-3 col-md-6 col-12 mx-auto">
                         <a href="/pecas" style="color: grey">
@@ -174,26 +234,6 @@
 
                 @if (Auth::user()->isFuncionario() || Auth::user()->isEmpresa())
                     <div class="col-lg-3 col-md-6 col-12 mx-auto">
-                        <a href="/tipospeca" style="color: grey">
-                            <div class="card-hover p-5 m-2">
-                                <div class="col-12 d-flex justify-content-between">
-                                    <div class="col-2" style="width: 30px; height: 30px">
-                                        <img style="width: 30px; height: 30px"
-                                            src="{{ URL::asset('icons/shapes-outline-green.svg') }}" alt="">
-                                    </div>
-                                    <div class="ms-2 my-auto py-auto col-10">
-                                        <p class="my-auto">
-                                            Tipos de Peça
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                @endif
-
-                @if (Auth::user()->isFuncionario() || Auth::user()->isEmpresa())
-                    <div class="col-lg-3 col-md-6 col-12 mx-auto">
                         <a href="/carros" style="color: grey">
                             <div class="card-hover p-5 m-2">
                                 <div class="col-12 d-flex justify-content-between">
@@ -204,26 +244,6 @@
                                     <div class="ms-2 my-auto py-auto col-10">
                                         <p class="my-auto">
                                             Carros
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                @endif
-
-                @if (Auth::user()->isEmpresa())
-                    <div class="col-lg-3 col-md-6 col-12 mx-auto">
-                        <a href="/filiais" style="color: grey">
-                            <div class="card-hover p-5 m-2">
-                                <div class="col-12 d-flex justify-content-between">
-                                    <div class="col-2" style="width: 30px; height: 30px">
-                                        <img style="width: 30px; height: 30px" src="{{ URL::asset('icons/briefcase.svg') }}"
-                                            alt="">
-                                    </div>
-                                    <div class="ms-2 my-auto py-auto col-10">
-                                        <p class="my-auto">
-                                            Filiais
                                         </p>
                                     </div>
                                 </div>
@@ -261,26 +281,6 @@
                                     <div class="ms-2 my-auto py-auto col-10">
                                         <p class="my-auto">
                                             Usuários Cadastrados
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                @endif
-
-                @if (Auth::user()->isEmpresa() || Auth::user()->isFuncionario())
-                    <div class="col-lg-3 col-md-6 col-12 mx-auto">
-                        <a href="/marcas" style="color: grey">
-                            <div class="card-hover p-5 m-2">
-                                <div class="col-12 d-flex justify-content-between">
-                                    <div class="col-2" style="width: 30px; height: 30px">
-                                        <img style="width: 30px; height: 30px" src="{{ URL::asset('icons/folder.svg') }}"
-                                            alt="">
-                                    </div>
-                                    <div class="ms-2 my-auto py-auto col-10">
-                                        <p class="my-auto">
-                                            Marcas
                                         </p>
                                     </div>
                                 </div>
