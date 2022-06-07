@@ -4,13 +4,13 @@
 @php
 $paginas = collect([
     ["link"=>"/", "nm_pag" => "Dashboard"], 
-    ["link"=>"/pedidos", "nm_pag" => "Pedidos de suas empresas"],
+    ["link"=>"/pedidos", "nm_pag" => "Pedidos de suas filiais"],
 ])->collect();
 @endphp
 
 <x-breadcrumb :paginas="$paginas" />
 <div class="card-display border-bottom-orange">
-    <h1 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-12">Pedidos de suas empresas</h1>
+    <h1 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-12">Pedidos de suas filiais</h1>
     
     <div class="pt-3 table-responsive p-2">
         @if(sizeof($pedidos) > 0)

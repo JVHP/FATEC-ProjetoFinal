@@ -75,6 +75,12 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\Authenticate::class,
             \App\Http\Middleware\CompanyPartsUser::class
         ],
+        'company_employee.user' => [
+            \App\Http\Middleware\Authenticate::class,
+            \App\Http\Middleware\CompanyPartsUser::class,
+            \App\Http\Middleware\EmployeeUser::class,
+            \App\Http\Middleware\CompanyUser::class,
+        ],
 
     ];
 
@@ -100,5 +106,6 @@ class Kernel extends HttpKernel
         'company.user' => \App\Http\Middleware\CompanyUser::class,
         'employee.user' => \App\Http\Middleware\EmployeeUser::class,
         'employee_parts.user' => \App\Http\Middleware\CompanyPartsUser::class,
+        'company_employee.user' => \App\Http\Middleware\CompanyUser::class,
     ];
 }

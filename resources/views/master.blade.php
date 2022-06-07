@@ -131,13 +131,13 @@
                                     </div>
                                     <div class="col-8 text-start ps-0 text-truncate">
                                         <div class="col-12">
-                                                <a class="text-light py-1 my-2"
-                                                    href="{{ session('empresa') ? '/loja/'.session('empresa')->url_customizada.'/usuario/pedidos' : '/pedidos' }}">
-                                                    <label for="" class="text-light">
-                                                        Bem vindo {{ Auth::user()->firstName() }}!
-                                                    </label>
-                                                </a>
-                                            </div>
+                                            <a class="text-light py-1 my-2"
+                                                href="{{ session('empresa') ? '/loja/' . session('empresa')->url_customizada . '/usuario/pedidos' : '/pedidos' }}">
+                                                <label for="" class="text-light">
+                                                    Bem vindo {{ Auth::user()->firstName() }}!
+                                                </label>
+                                            </a>
+                                        </div>
                                         <div class="col-12 text-start">
                                             @if (Auth::user()->isCliente())
                                                 <a href="/loja/{{ session('empresa')->url_customizada }}/usuario/informacoes"
@@ -149,7 +149,7 @@
                                                     <img src="{{ URL::asset('icons/shopping-cart.svg') }}" alt="">
                                                 </a>
                                             @elseif (Auth::user()->isEmpresa())
-                                                <a href="/empresas" class="text-light py-1 me-2 my-2">
+                                                <a href="/filiais" class="text-light py-1 me-2 my-2">
                                                     <img src="{{ URL::asset('icons/briefcase.svg') }}" alt="">
                                                 </a>
                                             @endif
@@ -229,7 +229,7 @@
                             </div>
                         </div>
                     @endif
-                    @if (Auth::user()->isEmpresa())
+                    @if (Auth::user()->isEmpresa() || Auth::user()->isAdministrator())
                         <div class="accordion-item" style="border-radius: none; border: none">
                             <h2 class="accordion-header" id="flush-headingEmpresas">
                                 <button class="accordion-button collapsed bg-orange" type="button" data-bs-toggle="collapse"
@@ -238,40 +238,35 @@
                                     Empresas
                                 </button>
                             </h2>
-                            <div id="flush-collapseEmpresas" class="accordion-collapse collapse"
-                                aria-labelledby="flush-headingEmpresas" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body p-0">
-                                    <a href="/empresas">
-                                        <button
-                                            class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
-                                            Gerenciar Empresas
-                                        </button>
-                                    </a>
+                            @if (Auth::user()->isEmpresa())
+                                <div id="flush-collapseEmpresas" class="accordion-collapse collapse"
+                                    aria-labelledby="flush-headingEmpresas" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body p-0">
+                                        <a href="/filiais">
+                                            <button
+                                                class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
+                                                Gerenciar Filiais
+                                            </button>
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
+                            @elseif (Auth::user()->isAdministrator())
+                                <div id="flush-collapseEmpresas" class="accordion-collapse collapse"
+                                    aria-labelledby="flush-headingEmpresas" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body p-0">
+                                        <a href="/filiais">
+                                            <button
+                                                class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
+                                                Visualizar Empresas Cadastradas
+                                            </button>
+                                        </a>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
-                        {{-- <div class="accordion-item" style="border-radius: none; border: none">
-                            <h2 class="accordion-header" id="flush-headingMarcas">
-                                <button class="accordion-button collapsed bg-orange" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#flush-collapseMarcas" aria-expanded="false"
-                                    aria-controls="flush-collapseMarcas">
-                                    Marcas
-                                </button>
-                            </h2>
-                            <div id="flush-collapseMarcas" class="accordion-collapse collapse"
-                                aria-labelledby="flush-headingMarcas" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body p-0">
-                                    <a href="/marcas">
-                                        <button
-                                            class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
-                                            Gerenciar Marcas
-                                        </button>
-                                    </a>
-                                </div>
-                            </div>
-                        </div> --}}
                     @endif
                 @endguest
+
                 <div class="accordion-item" style="border-radius: none; border: none">
                     <h2 class="accordion-header" id="flush-headingPecas">
                         <button class="accordion-button collapsed bg-orange" type="button" data-bs-toggle="collapse"
@@ -309,7 +304,6 @@
                                     Gerenciar Peças
                                 </button>
                             </a>
-                        @elseif (Auth::user()->isAdministrator())
                             <a href="/tipospeca">
                                 <button
                                     class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
@@ -323,7 +317,7 @@
         </div>
         @guest
         @else
-            @if (Auth::user()->isAdministrator())
+            @if (Auth::user()->isEmpresa() || Auth::user()->isFuncionario())
                 <div class="accordion-item" style="border-radius: 0; border: none">
                     <h2 class="accordion-header" id="flush-headingCarros">
                         <button class="accordion-button collapsed bg-orange " type="button" data-bs-toggle="collapse"

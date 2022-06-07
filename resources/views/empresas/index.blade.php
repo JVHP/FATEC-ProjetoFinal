@@ -2,7 +2,7 @@
 
 @section('body')
     @php
-    $paginas = collect([['link' => '/', 'nm_pag' => 'Dashboard'], ['link' => '', 'nm_pag' => 'Empresas']])->collect();
+    $paginas = collect([['link' => '/', 'nm_pag' => 'Dashboard'], ['link' => '', 'nm_pag' => 'Filiais']])->collect();
     @endphp
 
     <x-breadcrumb :paginas="$paginas" />
@@ -12,12 +12,12 @@
             class="rounded bg-primary-dark border-bottom-orange text-white p-2 mx-auto row col-lg-12 col-md-12 col-sm-12 col-12">
             <div class="px-0 col-lg-6 col-md-8 col-sm-12 col-12 text-lg-start text-md-start text-sm-center text-center">
                 <h2 class="col-12">
-                    Administração de Empresas
+                    Administração de Filiais
                 </h2>
             </div>
             <div class="col-lg-6 col-md-4 col-sm-12 col-12 my-auto text-lg-end text-md-end text-sm-center text-center">
-                <a href="/empresas/create">
-                    <button class="btn btn-primary">Adicionar empresa</button>
+                <a href="/filiais/create">
+                    <button class="btn btn-primary">Adicionar Filial</button>
                 </a>
             </div>
         </div>
@@ -42,10 +42,10 @@
                                         {{ $x->url_customizada }}</p>
                                 </td>
                                 <td class="m-0 text-center">
-                                    <a href="/empresas/{{ $x->id }}/edit">
+                                    <a href="/filiais/{{ $x->id }}/edit">
                                         <button class="btn btn-outline-info">Editar</button>
                                     </a>
-                                    <a href="/empresas/{{ $x->id }}">
+                                    <a href="/filiais/{{ $x->id }}">
                                         <button class="btn btn-outline-success">Visualizar</button>
                                     </a>
                                 </td>

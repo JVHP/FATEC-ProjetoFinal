@@ -287,8 +287,8 @@ Route::resource('usuarios', UsuarioController::class);
 
 Route::resource('marcas', MarcaController::class);
 
-Route::resource('empresas', EmpresaController::class);
+Route::resource('filiais', EmpresaController::class);
 
-Route::resource('/pedidos-empresa', PedidosEmpresaController::class);
+Route::resource('/pedidos-filial', PedidosEmpresaController::class);
 
 Auth::routes();

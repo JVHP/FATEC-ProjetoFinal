@@ -4,8 +4,8 @@
     @php
     $paginas = collect([
         ['link' => '/', 'nm_pag' => 'Dashboard'],
-        ['link' => '/empresas', 'nm_pag' => 'Empresas'], 
-        ['link' => '', 'nm_pag' => 'Visualizar Empresa']
+        ['link' => '/filiais', 'nm_pag' => 'Filiais'], 
+        ['link' => '', 'nm_pag' => 'Visualizar Filial']
     ])->collect();
     @endphp
 
@@ -14,7 +14,7 @@
     <div class="col-12" style="height: 100vh;">
         <div class="card-display border-bottom-orange">
             <h1 class="rounded bg-primary-dark border-bottom-orange text-white p-2">
-                Visualizar Empresa
+                Visualizar Filial
             </h1>
             <div class="">
                 <div class="card-body d-flex justify-content-center">
@@ -25,8 +25,8 @@
                     </dl>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-12 text-end p-3 mx-auto">
-                    <a href="/empresas"><button type="button" class="btn btn-primary">Voltar</button></a>
-                    <a href="/empresas/{{$empresa->id}}/edit"><button type="button" class="btn btn-info">Ir para Edição</button></a>
+                    <a href="/filiais"><button type="button" class="btn btn-primary">Voltar</button></a>
+                    <a href="/filiais/{{$empresa->id}}/edit"><button type="button" class="btn btn-info">Ir para Edição</button></a>
                 </div>
             </div>
         </div>

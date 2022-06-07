@@ -4,8 +4,8 @@
 @php
     $paginas = collect([
         ["link"=>"/", "nm_pag" => "Dashboard"], 
-        ["link"=>"/empresas", "nm_pag" => "Empresas"],
-        ["link"=>"", "nm_pag" => "Editar Empresa"],
+        ["link"=>"/filiais", "nm_pag" => "Filiais"],
+        ["link"=>"", "nm_pag" => "Editar Filial"],
     ])->collect();
 @endphp
 
@@ -14,10 +14,10 @@
     <div class="col-12" style="height: 100vh;">
         <div class="card-display border-bottom-orange">
             <h1 class="rounded bg-primary-dark border-bottom-orange text-white p-2">
-                Editar Empresa
+                Editar Filial
             </h1>
             <div class="card-body">
-                <form class="" action="/empresas/{{$empresa->id}}" name="edit" method="POST">
+                <form class="" action="/filiais/{{$empresa->id}}" name="edit" method="POST">
                     <div class="row col-12">
                         @method('PATCH')
                         @csrf
@@ -45,7 +45,7 @@
                                         {{ $errors->first('razao_social') }}
                                     </div>
                                 @else
-                                    <input type="text" class="form-control" maxlength="14" id="razao_social" name="razao_social"
+                                    <input type="text" class="form-control" maxlength="500" id="razao_social" name="razao_social"
                                         placeholder="Razão Social" value="{{ empty(old('razao_social')) ? $empresa->razao_social : old('razao_social') }}" />
                                 @endif
                                 <label for="razao_social">Razão Social<b class="text-danger">*</b></label>
@@ -69,7 +69,7 @@
                             </div>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-12 text-end p-3 mx-auto">
-                            <a href="/empresas"><button type="button" class="btn btn-danger">Voltar</button></a>
+                            <a href="/filiais"><button type="button" class="btn btn-danger">Voltar</button></a>
                             <button type="submit" for="cadastro" class="btn btn-success"> Editar </button>
                         </div>
                 </form>

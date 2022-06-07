@@ -82,7 +82,7 @@ class EmpresaController extends Controller
         DB::commit();
 
 
-        return redirect('/empresas');
+        return redirect('/filiais');
     }
 
     function Mask($mask,$str){
@@ -148,7 +148,7 @@ class EmpresaController extends Controller
     {
         $empresa->update($request->all());
 
-        return redirect('/empresas');
+        return redirect('/filiais');
     }
 
     /**
