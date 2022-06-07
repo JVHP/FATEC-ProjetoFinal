@@ -31,7 +31,7 @@
                             <th class="m-0 text-center">Id</th>
                             <th>Nome</th>
                             <th>Marca</th>
-                            <th>Empresa</th>
+                            <th>Filial</th>
                             <th>Categoria</th>
                             <th class="m-0 text-center">Valor</th>
                             <th class="m-0 text-center">Estoque</th>

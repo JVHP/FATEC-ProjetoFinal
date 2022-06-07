@@ -18,7 +18,7 @@ class CarroController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth', 'admin.user']);
+        $this->middleware(['auth', 'company.user', 'verified']);
     }
 
     public function index()

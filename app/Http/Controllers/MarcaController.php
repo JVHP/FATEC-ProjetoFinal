@@ -14,7 +14,7 @@ class MarcaController extends Controller
 {
 
     public function __construct() {
-        $this->middleware(['auth', 'company.user']);
+        $this->middleware(['auth', 'company.user', 'verified']);
     }
 
     /**

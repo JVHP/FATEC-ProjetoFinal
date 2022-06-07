@@ -85,7 +85,7 @@ $paginas = collect([
                                 <div class="col-lg-4 col-12 p-2">
                                     <div class="form-floating">
                                         @if ($errors->has('id_empresa'))
-                                            <select aria-placeholder="Empresa" id="id_empresa" class="form-select is-invalid"
+                                            <select aria-placeholder="Filial" id="id_empresa" class="form-select is-invalid"
                                                 name="id_marca" value="{{ old('id_empresa') }}">
                                                 <option value="" selected="{{ old('id_empresa') != null ? false : true }}"
                                                     disabled>Selecione...</option>
@@ -102,7 +102,7 @@ $paginas = collect([
                                                 {{ $errors->first('id_empresa') }}
                                             </div>
                                         @else
-                                            <select aria-placeholder="Empresa" id="id_empresa" class="form-select"
+                                            <select aria-placeholder="Filial" id="id_empresa" class="form-select"
                                                 name="id_empresa">
                                                 <option value="" selected disabled>Selecione...</option>
                                                 @foreach ($empresas as $cmp)
@@ -110,7 +110,7 @@ $paginas = collect([
                                                 @endforeach
                                             </select>
                                         @endif
-                                        <label for="id_marca">Empresa</label>
+                                        <label for="id_marca">Filial</label>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-12  p-2">

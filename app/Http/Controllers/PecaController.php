@@ -23,9 +23,7 @@ class PecaController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['show']]);
-        $this->middleware('employee_parts.user', ['except' => ['show']]);
-        $this->middleware('verified');
+        $this->middleware(['auth', 'employee_parts.user', 'verified']);
     }
 
     public function index()

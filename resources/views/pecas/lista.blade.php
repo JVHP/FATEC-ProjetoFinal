@@ -57,6 +57,20 @@ $paginas = collect([
                                         </dl>
                                     </div>
                                     <div class="card-footer bg-white text-center" style="border: none;">
+                                        @if(session('empresa'))
+                                        <a href="/loja/{{session('empresa')->url_customizada}}/pecas/{{$x->id}}">
+                                            <button type="button" class=" col-12 btn btn-outline-primary">
+                                                <div class="row col-12 justify-content-between fw-bolder">
+                                                    <div class="col-2">
+                                                        <i class="bi bi-cart"></i>
+                                                    </div>
+                                                    <div class="col-10 text-center">
+                                                        Visualizar
+                                                    </div>
+                                                </div>
+                                            </button>
+                                        </a>
+                                        @else
                                         <a href="/pecas/{{ $x->id }}">
                                             <button type="button" class=" col-12 btn btn-outline-primary">
                                                 <div class="row col-12 justify-content-between fw-bolder">
@@ -64,11 +78,12 @@ $paginas = collect([
                                                         <i class="bi bi-cart"></i>
                                                     </div>
                                                     <div class="col-10 text-center">
-                                                        Comprar
+                                                        Visualizar
                                                     </div>
                                                 </div>
                                             </button>
                                         </a>
+                                        @endif
                                     </div>
                                 @else
                                     @if ($x->foto)
