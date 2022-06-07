@@ -182,8 +182,16 @@ Route::get('/loja/{cd_empresa}/pedido/pagar/{id}', function($cd_empresa, $id){
     return view('pedidos.pagar')->with('pedido', $pedido);
 })->middleware('auth');
 
-Route::get('/loja/{cd_empresa}/pedido/cancelar/{id}', function($id){
+Route::get('/loja/{cd_empresa}/pedido/cancelar/{id}', function($cd_empresa, $id){
         try {
+            $empresa = Empresa::where('url_customizada', '=', $cd_empresa)->first();
+
+            if ($empresa == null) {
+                return redirect()->back();
+            }
+
+            session(['empresa' => $empresa]);
+
             $pecasQtd = DB::table('peca_pedidos')
                         ->join('pedidos', 'pedidos.id', '=', 'peca_pedidos.id_pedido')
                         ->join('pecas', 'pecas.id', '=', 'peca_pedidos.id_peca')
@@ -205,7 +213,7 @@ Route::get('/loja/{cd_empresa}/pedido/cancelar/{id}', function($id){
                 ->limit(1)
                 ->update(array('ck_finalizado' => 'C'));
 
-            return redirect('/dashboard');
+            return redirect('/loja/'.$cd_empresa.'/usuario/pedidos');
         } catch (Exception $ex) {
             return $ex;
         }
