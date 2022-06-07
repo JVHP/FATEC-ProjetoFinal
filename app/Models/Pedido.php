@@ -9,7 +9,7 @@ class Pedido extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id_usuario', 'vl_preco_total', 'dt_pedido', 'dt_pagamento', 'ck_finalizado'];
+    protected $fillable = ['id_usuario', 'vl_preco_total', 'dt_pedido', 'dt_pagamento', 'ck_finalizado', 'id_empresa'];
 
     public function pecas() {
         return $this->belongsToMany(Peca::class, 'peca_pedidos', 'id_pedido','id_peca');

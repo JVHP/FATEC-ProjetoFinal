@@ -44,9 +44,10 @@ class PedidoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($cd_empresa, Request $request)
     {
-        $empresa = session('empresa');
+     
+        $empresa = Empresa::where('url_customizada', '=', $cd_empresa)->first();
         
         $peca = $request->peca;
 
@@ -132,7 +133,7 @@ class PedidoController extends Controller
      * @param  \App\Models\Pedido  $pedido
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pedido $pedido)
+    public function destroy($cd_empresa, Pedido $pedido)
     {        
         $pedido->pecas()-> detach();
         $pedido->delete();
