@@ -113,7 +113,7 @@ class UsuarioClienteController extends Controller
 
             DB::commit();
             
-            return redirect('/loja/'.session('empresa')->url_customizada);
+            return redirect('/loja/'.$cd_empresa);
 
         } catch (Exception $ex) {
             DB::rollBack();
