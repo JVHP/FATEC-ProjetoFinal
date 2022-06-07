@@ -30,7 +30,7 @@ $paginas = collect([
                     <hr>
                     <dd class="h4">Valor total: R$ {{number_format($pedido->vl_preco_total, 2, ',')}}</dd>
                 </dl>
-                <a href="/dashboard"><button type="button" class="btn btn-primary">Voltar</button></a>
+                <a href="/loja/{{session('empresa')->url_customizada}}/pedido/"><button type="button" class="btn btn-primary">Voltar</button></a>
                 @if(($pedido->ck_finalizado != 'N' && $pedido->dt_pagamento != null) || ($pedido->ck_finalizado == 'C' && $pedido->dt_pagamento == null))
                     <form action="/loja/{{session('empresa')->url_customizada}}/pedido/{{$pedido->id}}" method="POST">
                         @csrf
@@ -49,7 +49,7 @@ $paginas = collect([
                     </a>
                     
                 @elseif($pedido->ck_finalizado == 'S' && $pedido->dt_pagamento == null )
-                    <a href="/loja/{{session('empresa')->url_customizada}}pedido/pagar/{{$p->id}}"><button type="button" class="btn btn-info">Pagar</button></a>
+                    <a href="/loja/{{session('empresa')->url_customizada}}/pedido/pagar/{{$p->id}}"><button type="button" class="btn btn-info">Pagar</button></a>
                 @endif
             </div>
         </form>
