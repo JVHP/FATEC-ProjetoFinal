@@ -58,13 +58,11 @@ class EmpresaController extends Controller
     {
         DB::beginTransaction();
 
-        
         //TODO testar pegar ID com Auth::id();
         $id_criador = Auth::user()->id;
 
         $request->request->add(["cnpj_mascara" => $this->Mask("##.###.###/####-##", $request->cnpj)]);
        /*  $request->request->add(["id_responsavel" => $responsavel->id]); */
-        
 
         $empresa = Empresa::create($request->all());
 
@@ -103,10 +101,10 @@ class EmpresaController extends Controller
      * @param  \App\Models\Empresa  $empresa
      * @return \Illuminate\Http\Response
      */
-    public function show(Empresa $empresa)
+    public function show(Empresa $filiai)
     {
         $responsavel = Auth::user()->id;
-        $empresa = Empresa::find($empresa->id);
+        $empresa = Empresa::find($filiai->id);
 
         $tempValidation = DB::table('empresas_usuarios')->where('id_usuario', '=', $responsavel)->where('id_empresa', '=', $empresa->id)->get();
 
@@ -123,10 +121,10 @@ class EmpresaController extends Controller
      * @param  \App\Models\Empresa  $empresa
      * @return \Illuminate\Http\Response
      */
-    public function edit(Empresa $empresa)
+    public function edit(Empresa $filiai)
     {
         $responsavel = Auth::user()->id;
-        $empresa = Empresa::find($empresa->id)->first();
+        $empresa = Empresa::find($filiai->id)->first();
 
         $tempValidation = DB::table('empresas_usuarios')->where('id_usuario', '=', $responsavel)->where('id_empresa', '=', $empresa->id)->get();
 
@@ -144,9 +142,11 @@ class EmpresaController extends Controller
      * @param  \App\Models\Empresa  $empresa
      * @return \Illuminate\Http\Response
      */
-    public function update(EmpresaRequest $request, Empresa $empresa)
+    public function update(EmpresaRequest $request, Empresa $filiai)
     {
-        $empresa->update($request->all());
+
+        $request->request->add(["cnpj_mascara" => $this->Mask("##.###.###/####-##", $request->cnpj)]);
+        $filiai->update($request->all());
 
         return redirect('/filiais');
     }
@@ -157,7 +157,7 @@ class EmpresaController extends Controller
      * @param  \App\Models\Empresa  $empresa
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Empresa $empresa)
+    public function destroy(Empresa $filiai)
     {
         //
     }
