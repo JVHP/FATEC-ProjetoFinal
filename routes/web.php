@@ -8,6 +8,7 @@ use App\Models\Pedido;
 use App\Http\Controllers\PecaController;
 use App\Http\Controllers\PecaClienteController;
 use App\Http\Controllers\CarroController;
+use App\Http\Controllers\EmpresaAdminController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\PedidoController;
@@ -154,6 +155,27 @@ Route::get('/loja/{cd_empresa}/pecas-usuario', function($cd_empresa){
 })->middleware(['auth', 'verified']);
 
 /* PEDIDOS */
+Route::put('/pedidos-filial/enviar/{id}', function($id){
+
+    $user = Auth::user();
+
+    $consultaVinculoPedido = DB::table('pedidos')
+    ->join('empresas', 'empresas.id', '=', 'pedidos.id_empresa')
+    ->join('empresas_usuarios', 'empresas_usuarios.id_empresa', '=', 'empresas.id')
+    ->where('empresas_usuarios.id_usuario', '=', $user->id);
+
+    if ($consultaVinculoPedido == null) {
+        return redirect()->back();
+    }
+
+    DB::table('pedidos')
+    ->where('id', '=', $id)
+    ->update(['ck_finalizado' => 'E']);
+    
+    return redirect('/pedidos-filial/');
+})->middleware(['auth', 'company.user', 'verified']);
+
+
 Route::get('/loja/{cd_empresa}/usuario/pedidos', function($cd_empresa){
     $empresa = Empresa::where('url_customizada', '=', $cd_empresa)->first();
 
@@ -298,5 +320,7 @@ Route::resource('marcas', MarcaController::class);
 Route::resource('filiais', EmpresaController::class);
 
 Route::resource('/pedidos-filial', PedidosEmpresaController::class);
+
+Route::resource('/gerenciamento-empresas', EmpresaAdminController::class);
 
 Auth::routes();

@@ -59,10 +59,10 @@ class PedidosEmpresaController extends Controller
      * @param  \App\Models\Pedido  $pedido
      * @return \Illuminate\Http\Response
      */
-    public function show(Pedido $pedido)
+    public function show(Pedido $pedidos_filial)
     {
-        $pecas = Pedido::find($pedido->id)->pecas()->orderBy('nm_peca', 'ASC')->get();
-        return view('pedidos.show')->with('pedido', $pedido)->with('pecas', $pecas);
+        $pecas = Pedido::find($pedidos_filial->id)->pecas()->orderBy('nm_peca', 'ASC')->get();
+        return view('pedidosempresa.show')->with('pedido', $pedidos_filial)->with('pecas', $pecas);
     }
 
     /**
@@ -71,7 +71,7 @@ class PedidosEmpresaController extends Controller
      * @param  \App\Models\Pedido  $pedido
      * @return \Illuminate\Http\Response
      */
-    public function edit(Pedido $pedido)
+    public function edit(Pedido $pedidos_filial)
     {
         //Mesma página do show.blade
     }
@@ -83,11 +83,11 @@ class PedidosEmpresaController extends Controller
      * @param  \App\Models\Pedido  $pedido
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Pedido $pedido)
+    public function update(Request $request, Pedido $pedidos_filial)
     {
         $request->request->add(['ck_finalizado' => 'S']);
-        $pedido->update($request->all());
-        return view('pedidos.pagar')->with('pedido', $pedido);
+        $pedidos_filial->update($request->all());
+        return view('pedidosempresa.pagar')->with('pedido', $pedidos_filial);
     }
 
     /**
@@ -96,11 +96,7 @@ class PedidosEmpresaController extends Controller
      * @param  \App\Models\Pedido  $pedido
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pedido $pedido)
-    {        
-        $pedido->pecas()-> detach();
-        $pedido->delete();
-        
-        return redirect('/dashboard');
+    public function destroy(Pedido $pedidos_filial)
+    {
     }
 }

@@ -254,7 +254,7 @@
 
                 @if (Auth::user()->isAdministrator())
                     <div class="col-lg-3 col-md-6 col-12 mx-auto">
-                        <a href="/filiais" style="color: grey">
+                        <a href="/gerenciamento-empresas" style="color: grey">
                             <div class="card-hover p-5 m-2">
                                 <div class="col-12 d-flex justify-content-between">
                                     <div class="col-2" style="width: 30px; height: 30px">
@@ -263,7 +263,7 @@
                                     </div>
                                     <div class="ms-2 my-auto py-auto col-10">
                                         <p class="my-auto">
-                                            Empresas Cadastradas
+                                            Filiais Cadastradas
                                         </p>
                                     </div>
                                 </div>

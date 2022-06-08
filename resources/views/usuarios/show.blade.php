@@ -20,7 +20,7 @@ $paginas = collect([
                 <dl class="">
                     <dd class="h3 fw-bolder">{{$usuario->nm_usuario}}</dd>
                     <dd class="h5">Email: {{$usuario->email}}</dd>
-                    <dd class="h5">Data de nascimento: {{$usuario->dt_nasc}}</dd>
+                    <dd class="h5">Data de nascimento: {{date('d/m/Y', strtotime($usuario->dt_nasc))}}</dd>
                     <dd class="h5">CEP: {{$usuario->cep}}</dd>
                 </dl>
                 <a href="/usuarios"><button type="button" class="btn btn-primary">Voltar</button></a>

@@ -233,10 +233,10 @@
                                 <div id="flush-collapseEmpresas" class="accordion-collapse collapse"
                                     aria-labelledby="flush-headingEmpresas" data-bs-parent="#accordionFlushExample">
                                     <div class="accordion-body p-0">
-                                        <a href="/filiais">
+                                        <a href="/gerenciamento-empresas">
                                             <button
                                                 class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
-                                                Visualizar Empresas Cadastradas
+                                                Visualizar Filiais Cadastradas
                                             </button>
                                         </a>
                                     </div>

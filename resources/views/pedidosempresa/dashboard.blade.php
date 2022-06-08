@@ -29,32 +29,26 @@ $paginas = collect([
                 @foreach($pedidos as $x)
                 <tr>
                     <td class="m-0 text-center">{{$x->id}}</td>
-                    <td class="m-0 text-center">{{$x->dt_pedido}}</td>
+                    <td class="m-0 text-center">{{$x->dt_pedido == null ? '' : date('d/m/Y', strtotime($x->dt_pedido))}}</td>
                     <td class="m-0 text-center">R$ {{number_format($x->vl_preco_total, 2, ',')}}</td>
-                    <td class="m-0 text-center">{{$x->ck_finalizado == 'S' ? 'Finalizado' : ($x->ck_finalizado == 'N' ? 'Não Finalizado' : ($x->ck_finalizado == 'C' ? 'Cancelado' : ''))}}</td>
-                    <td class="m-0 text-center">{{$x->dt_pagamento}}</td>
+                    <td class="m-0 text-center">{{$x->ck_finalizado == 'S' ? 'Finalizado' : ($x->ck_finalizado == 'N' ? 'Não Finalizado' : ($x->ck_finalizado == 'C' ? 'Cancelado' : ($x->ck_finalizado == 'E' ? 'Enviado' : '')))}}</td>
+                    <td class="m-0 text-center">{{$x->dt_pagamento == null ? '' : date('d/m/Y', strtotime($x->dt_pagamento))}}</td>
                     <td class="m-0 text-center">
-                        <div class="justify-content-center row col-auto">
-                        @if($x->ck_finalizado == 'S' && $x->dt_pagamento == null)
-                        <a href="#" class="col-auto">
-                            <button class="btn btn-outline-info">Pagar</button>
-                        </a>
-                        
-                        @elseif($x->ck_finalizado == 'N' && $x->dt_pagamento == null)
-                        <a href="#" class="col-auto">
-                            <button class="btn btn-outline-warning">Cancelar</button>
-                        </a>
-                        @endif
-                        @if(($x->ck_finalizado != 'N' && $x->dt_pagamento != null) || ($x->ck_finalizado == 'C' && $x->dt_pagamento == null))
-                        <form action="#" method="POST" class="col-auto">
+                        <div class="justify-content-center row col-auto">                        
+                        @if($x->ck_finalizado == 'S' && $x->dt_pagamento != null)
+                        <form action="/pedidos-filial/enviar/{{$x->id}}" method="POST" class="col-auto">
+                            @method("PUT")
                             @csrf
-                            @METHOD('DELETE')
-                            <input type="submit" class="btn btn-outline-danger" value="Excluir"/>
-                        </form>
+                            <input type="submit" class="btn btn-outline-info" value="Enviar"/>
+                        </form>                                  
+                        {{-- @elseif($x->ck_finalizado == 'N' && $x->dt_pagamento == null)
+                        <a href="/pedidos-filial/{{$x->id}}" class="col-auto">
+                            <button class="btn btn-outline-warning">Cancelar</button>
+                        </a> --}}
                         @endif
-                        <a href="#" class="col-auto">
-                            <button class="btn btn-outline-success">Visualizar</button>
-                        </a>
+                            <a href="/pedidos-filial/{{$x->id}}" class="col-auto">
+                                <button class="btn btn-outline-success">Visualizar</button>
+                            </a>
                         </div>
                     </td>
                 </tr>

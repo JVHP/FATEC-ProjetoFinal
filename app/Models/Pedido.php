@@ -19,4 +19,12 @@ class Pedido extends Model
     {
         return $this->hasOne(User::class, 'id_usuario');
     }
+
+    public function formatarData() {
+        if ($this->dt_pagamento == null) {
+            return null;
+        }
+
+        return $this->dt_pagamento->format('d/m/Y');
+    }
 }

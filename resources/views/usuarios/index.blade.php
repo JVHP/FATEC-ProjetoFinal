@@ -18,9 +18,9 @@ $paginas = collect([
         </div>
         @if(Auth::user()->isAdministrator())
         <div class="col-lg-6 col-md-4 col-sm-12 col-12 my-auto text-lg-end text-md-end text-sm-center text-center">
-            <a href="/usuarios/create">
+           {{--  <a href="/usuarios/create">
                 <button class="btn btn-primary">Adicionar usuário interno</button>
-            </a>
+            </a> --}}
         </div>
         @endif
     </div>
@@ -43,7 +43,7 @@ $paginas = collect([
             <tr>
                 <td class="m-0 text-center">{{$x->id}}</td>
                 <td class="m-0">{{$x->nm_usuario}}</td>
-                <td class="m-0 text-center">{{$x->dt_nasc}}</td>
+                <td class="m-0 text-center">{{date('d/m/Y', strtotime($x->dt_nasc))}}</td>
                 <td class="m-0 text-center">{{$x->email}}</td>
                 <td class="m-0 text-center">{{$x->cep}}</td>
                 <td class="m-0 text-center">
