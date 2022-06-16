@@ -7,6 +7,8 @@ use App\Models\TipoCarro;
 use App\Models\Marca;
 use Illuminate\Http\Request;
 use App\Http\Requests\CarroRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class CarroController extends Controller
 {
@@ -34,9 +36,15 @@ class CarroController extends Controller
      */
     public function create()
     {
+        $empresas = DB::table("empresas")
+            ->join("empresas_usuarios", 'empresas_usuarios.id_empresa', '=', 'empresas.id')
+            ->where('empresas_usuarios.id_usuario', '=', Auth::user()->id)
+            ->select('empresas.*')
+            ->get();    
+            
         $tiposCarro = TipoCarro::all();
         $marcas = Marca::whereIn('ck_categoria_marca', ['C', 'A'])->get();
-        return view('carros.create')->with('tipos', $tiposCarro)->with('marcas', $marcas);
+        return view('carros.create')->with('tipos', $tiposCarro)->with('marcas', $marcas)->with("empresas", $empresas);
     }
 
     /**
@@ -47,6 +55,7 @@ class CarroController extends Controller
      */
     public function store(CarroRequest $request)
     {
+        echo $request;
         Carro::create($request->all());
         return redirect('/carros');
     }
@@ -72,11 +81,17 @@ class CarroController extends Controller
      */
     public function edit(Carro $carro)
     {
-        $tipo = TipoCarro::all();
-        $marcas = Marca::whereIn('ck_categoria_marca', ['C', 'A'])->get();
+        $empresas = DB::table("empresas")
+            ->join("empresas_usuarios", 'empresas_usuarios.id_empresa', '=', 'empresas.id')
+            ->where('empresas_usuarios.id_usuario', '=', Auth::user()->id)
+            ->select('empresas.*')
+            ->get();    
+
+        $tipo = TipoCarro::where('id_empresa', '=', $carro->id_empresa)->get();
+        $marcas = Marca::whereIn('ck_categoria_marca', ['C', 'A'])->where('id_empresa', '=', $carro->id_empresa)->get();
         $marcaCarro = $carro->marca()->first();
        
-        return view('carros.edit')->with('carro', $carro)->with('tipo', $tipo)->with('marcas', $marcas)->with('marcaCarro', $marcaCarro);
+        return view('carros.edit')->with('carro', $carro)->with('tipo', $tipo)->with('marcas', $marcas)->with('marcaCarro', $marcaCarro)->with("empresas", $empresas);
     }
 
     /**

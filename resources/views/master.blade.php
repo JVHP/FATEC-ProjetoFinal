@@ -362,6 +362,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
 <script src="/js/register-user/register-user.js"></script>
+<script src="/js/creates/carros.js"></script>
+<script src="/js/creates/pecas.js"></script>
 {{-- <script src="/js/master/datalist.js">
 </script> --}}
 <script>

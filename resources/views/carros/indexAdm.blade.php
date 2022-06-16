@@ -30,6 +30,7 @@ $paginas = collect([
                 <th class="m-0 text-center">Id</th>
                 <th>Nome</th>
                 <th>Ano</th>
+                <th>Filial</th>
                 <th>Marca</th>
                 <th>Categoria</th>
                 <th class="m-0 text-center">Ações</th>
@@ -41,6 +42,7 @@ $paginas = collect([
                 <td class="m-0 text-center">{{$x->id}}</td>
                 <td class="m-0">{{$x->nm_carro}}</td>
                 <td class="m-0">{{$x->ano}}</td>
+                <td class="m-0">{{$x->filial()->first()->razao_social}}</td>
                 <td class="m-0">{{$x->marca()->first()->nm_marca}}</td>
                 <td class="m-0">{{$x->tipoCarro()->first()->nm_tipo}}</td>
                 <td class="m-0 text-center">

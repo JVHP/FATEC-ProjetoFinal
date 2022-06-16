@@ -124,7 +124,7 @@ class EmpresaController extends Controller
     public function edit(Empresa $filiai)
     {
         $responsavel = Auth::user()->id;
-        $empresa = Empresa::find($filiai->id)->first();
+        $empresa = Empresa::find($filiai->id);
 
         $tempValidation = DB::table('empresas_usuarios')->where('id_usuario', '=', $responsavel)->where('id_empresa', '=', $empresa->id)->get();
 

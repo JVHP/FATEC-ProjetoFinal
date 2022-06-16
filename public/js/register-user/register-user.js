@@ -24,15 +24,16 @@ function getCEPInfos(event) {
     }
 }
 
-function getCars() {
+function getCars(empresa = "") {
     let formCadastro = document.forms.cadastro
     let marca = formCadastro.id_marca
     let ano = formCadastro.ano_carro
 
     let div = document.querySelector("#accordionExample");
 
-    axios.get(`/carros-registro/${ano.value}/${marca.value}`)
+    axios.get(`/carros-registro/${empresa}/${ano.value}/${marca.value}`)
     .then(resp => {
+            console.log(resp.data)
             div.innerHTML = "";
 
             if (resp.data.length == 0) {

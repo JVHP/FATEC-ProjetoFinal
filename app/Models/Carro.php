@@ -9,10 +9,14 @@ class Carro extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nm_carro', 'id_tipo_carro', 'ano', 'id_marca'];
+    protected $fillable = ['nm_carro', 'id_tipo_carro', 'ano', 'id_marca', 'id_empresa'];
 
     public function pecas(){
         return $this->belongsToMany(Peca::class);
+    }
+
+    public function filial() {
+        return $this->hasOne(Empresa::class, 'id', 'id_empresa');
     }
     
     public function marca(){

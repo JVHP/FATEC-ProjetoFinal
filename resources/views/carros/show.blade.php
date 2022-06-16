@@ -27,6 +27,7 @@ $paginas = collect([
                                     <dd class="h5">Categoria: {{ $x->nm_tipo }}</dd>
                                 @endif
                             @endforeach
+                            <dd class="h5">Filial: {{ $carro->filial()->first()->razao_social }}</dd>
                             <dd class="h5">Marca: {{ $carro->marca()->first()->nm_marca }}</td>
                             <dd class="h5">Ano: {{ $carro->ano }}</dd>
                         </dl>

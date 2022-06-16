@@ -218,7 +218,7 @@ $paginas = collect([
                                     </div>
                                 </div>
                                 <div class="col-2 my-auto">
-                                    <button type="button" onclick="getCars()"
+                                    <button type="button" onclick="getCars('{{session('empresa')->url_customizada}}')"
                                         class="btn btn-primary p-2 rounded-circle"><img class="m-0 p-0"
                                             src="{{ URL::asset('icons/search-white.svg') }}" alt=""></button>
                                 </div>

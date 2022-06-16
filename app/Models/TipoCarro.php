@@ -9,5 +9,5 @@ class TipoCarro extends Model
 {
     use HasFactory;
     
-    protected $fillable = ['nm_tipo'];
+    protected $fillable = ['nm_tipo', 'id_empresa'];
 }

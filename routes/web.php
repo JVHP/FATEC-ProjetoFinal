@@ -18,6 +18,8 @@ use App\Http\Controllers\UsuarioClienteController;
 use App\Http\Controllers\TipoCarroController;
 use App\Http\Controllers\TipoPecaController;
 use App\Models\Empresa;
+use App\Models\Marca;
+use App\Models\TipoCarro;
 use App\Models\TipoPeca;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -67,18 +69,26 @@ Route::get('/loja/{cd_empresa?}', function ($cd_empresa = null) {
 });
 
 /* Carros */
-Route::get('/carros-registro/{ano}/{id_marca}', function ($ano, $id_marca) {
+Route::get('/carros-registro/{cd_empresa}/{ano}/{id_marca}', function ($cd_empresa, $ano, $id_marca) {
+
+    $empresa = Empresa::where('url_customizada', '=', $cd_empresa)->first();
+
     $carros = Carro::join('tipo_carros', 'tipo_carros.id', '=', 'carros.id_tipo_carro')
                     ->where('ano', $ano)
                     ->where('id_marca', $id_marca)
+                    ->where('carros.id_empresa', $empresa->id)
                     ->orderBy('ano', 'DESC')
                     ->orderBy('nm_carro', 'ASC')
                     ->select('carros.nm_carro', 'carros.id', 'tipo_carros.nm_tipo')
                     ->get();
 
-    $carrosGroup = $carros->groupBy('nm_tipo');
+    if (sizeof($carros) > 0) {
+        $carrosGroup = $carros->groupBy('nm_tipo');
 
-    return $carrosGroup;
+        return $carrosGroup;
+    }
+
+    return $carros;
 });
 
 /* EMAIL */
@@ -297,6 +307,35 @@ Route::get('/loja/{cd_empresa}/login', function($cd_empresa){
     session(['empresa' => $empresa]);
     return view('auth.login-loja');
 })->middleware(['guest'])->name('login-loja');
+
+
+/* TIPOS CARRO */
+Route::get('/tipos-carro-filial/{id_empresa}', function($id_empresa){
+    $tiposCarro = TipoCarro::where('id_empresa', '=', $id_empresa)->get();
+    
+    return $tiposCarro;
+});
+
+/* TIPOS PEÇA */
+Route::get('/tipos-peca-filial/{id_empresa}', function($id_empresa){
+    $tiposPeca = TipoPeca::where('id_empresa', '=', $id_empresa)->where('ck_ativo', '=', 1)->get();
+    
+    return $tiposPeca;
+});
+
+/* MARCAS CARRO */
+Route::get('/marcas-carro-filial/{id_empresa}', function($id_empresa){
+    $marcas = Marca::whereIn('ck_categoria_marca', ['C', 'A'])->where('id_empresa', '=', $id_empresa)->get();
+    
+    return $marcas;
+});
+
+/* MARCAS PEÇA */
+Route::get('/marcas-peca-filial/{id_empresa}', function($id_empresa){
+    $marcas = Marca::whereIn('ck_categoria_marca', ['P', 'A'])->where('id_empresa', '=', $id_empresa)->get();
+    
+    return $marcas;
+});
 
 
 Route::resource('/loja/{cd_empresa}/pedido', PedidoController::class);

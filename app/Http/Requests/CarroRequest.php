@@ -28,6 +28,7 @@ class CarroRequest extends FormRequest
             'id_marca'=>['required'],
             'id_tipo_carro'=>['required'],
             'ano'=>['required', 'max:4'],
+            'id_empresa'=>['required'],
         ];
     }
 
@@ -39,7 +40,8 @@ class CarroRequest extends FormRequest
             'id_marca.required'=>'Marca é obrigatória.',
             'id_tipo_carro.required'=>'Tipo do carro é obrigatório.',
             'ano.required'=>'Ano é obrigatório.',
-            'ano.max'=>'Tamanho máximo para o ano é de 4 caracteres',
+            'ano.max'=>'Tamanho máximo para o ano é de 4 caracteres.',
+            'id_empresa.required'=>'Escolha uma de suas filiais.',
         ];
     }
 }

@@ -25,6 +25,7 @@ class TipoPecaRequest extends FormRequest
     {
         return [
             'nm_tipo' => 'required',
+            'id_empresa' => '.required',
         ];
     }
 
@@ -32,6 +33,7 @@ class TipoPecaRequest extends FormRequest
     {
         return [
             'nm_tipo.required'=>'Nome é obrigatório',
+            'id_empresa.required'=>'Escolha uma de suas filiais.',
         ];
     }
 }

@@ -55,13 +55,13 @@ class UsuarioClienteController extends Controller
         
         session(['empresa' => $empresa]);
 
-        $carros = Carro::orderBy('ano', 'DESC')->orderBy('nm_carro', 'ASC')->get();
+        /* $carros = Carro::orderBy('ano', 'DESC')->orderBy('nm_carro', 'ASC')->where('id_empresa', '=', $empresa->id)->get();
 
-        $carrosGroup = $carros->groupBy('ano');
+        $carrosGroup = $carros->groupBy('ano'); */
 
-        $marcas = Marca::whereIn('ck_categoria_marca', ['C', 'A'])->get();
+        $marcas = Marca::whereIn('ck_categoria_marca', ['C', 'A'])->where('id_empresa', '=', $empresa->id)->get();
 
-        return view('auth.register-user-client')->with('carros', $carrosGroup)->with('marcas', $marcas);
+        return view('auth.register-user-client')/* ->with('carros', $carrosGroup) */->with('marcas', $marcas);
     }
 
     /**

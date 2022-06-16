@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\TipoCarro;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class TipoCarroController extends Controller
 {
@@ -29,8 +31,14 @@ class TipoCarroController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('tiposcarro.create');
+    {        
+        $empresas = DB::table("empresas")
+            ->join("empresas_usuarios", 'empresas_usuarios.id_empresa', '=', 'empresas.id')
+            ->where('empresas_usuarios.id_usuario', '=', Auth::user()->id)
+            ->select('empresas.*')
+            ->get();    
+
+        return view('tiposcarro.create')->with("empresas", $empresas);
     }
 
     /**
@@ -66,7 +74,14 @@ class TipoCarroController extends Controller
     public function edit($id)
     {
         $tipo = TipoCarro::findOrFail($id);
-        return view('tiposcarro.edit')->with('tipo', $tipo);
+        
+        $empresas = DB::table("empresas")
+            ->join("empresas_usuarios", 'empresas_usuarios.id_empresa', '=', 'empresas.id')
+            ->where('empresas_usuarios.id_usuario', '=', Auth::user()->id)
+            ->select('empresas.*')
+            ->get();    
+
+        return view('tiposcarro.edit')->with('tipo', $tipo)->with("empresas", $empresas);;
     }
 
     /**

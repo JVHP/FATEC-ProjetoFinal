@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\TipoPeca;
 use Illuminate\Http\Request;
 use App\Http\Requests\TipoPecaRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class TipoPecaController extends Controller
 {
@@ -34,7 +36,13 @@ class TipoPecaController extends Controller
      */
     public function create()
     {
-        return view('tipospeca.create');
+        $empresas = DB::table("empresas")
+            ->join("empresas_usuarios", 'empresas_usuarios.id_empresa', '=', 'empresas.id')
+            ->where('empresas_usuarios.id_usuario', '=', Auth::user()->id)
+            ->select('empresas.*')
+            ->get();    
+            
+        return view('tipospeca.create')->with('empresas', $empresas);
     }
 
     /**
@@ -76,7 +84,13 @@ class TipoPecaController extends Controller
     public function edit($id)
     {
         $tipoPeca = TipoPeca::findOrFail($id);
-        return view('tipospeca.edit')->with('tipo', $tipoPeca);
+        $empresas = DB::table("empresas")
+            ->join("empresas_usuarios", 'empresas_usuarios.id_empresa', '=', 'empresas.id')
+            ->where('empresas_usuarios.id_usuario', '=', Auth::user()->id)
+            ->select('empresas.*')
+            ->get();    
+
+        return view('tipospeca.edit')->with('tipo', $tipoPeca)->with('empresas', $empresas);
     }
 
     /**

@@ -27,6 +27,7 @@ class MarcaRequest extends FormRequest
             'nm_marca'=>['required', 'max:255'/* , 'unique:marcas' Movida para o controller de marcas */],
             'ck_categoria_marca'=>['required'],
             'ds_marca'=>['max:350'],
+            'id_empresa'=>['required'],
         ];
     }
     
@@ -43,6 +44,7 @@ class MarcaRequest extends FormRequest
             'nm_marca.unique'=>'Já existe uma marca com este nome',
             'ck_categoria_marca.required'=>'Selecione um categoria.',
             'ds_marca.max'=>'Tamanho máximo para a descrição é de 350 caracteres.',
+            'id_empresa.required'=>'Escolha uma de suas filiais.',
         ];
     }
 
