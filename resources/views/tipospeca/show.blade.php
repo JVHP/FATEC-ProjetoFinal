@@ -22,6 +22,7 @@ $paginas = collect([
             <div class="card-body">
                 <dl class="">
                     <dd class="h3 fw-bolder">{{$tipo->nm_tipo}}</dd>
+                    <dd class="h3 fw-bolder">Filial:{{$x->filial()->first()->razao_social}}</dd>
                     <dd class="h3 fw-bolder">{{$tipo->ck_ativo == '1' ? 'Ativo' : 'Inativo'}}</dd>
                 </dl>
                 <a href="/tipospeca"><button type="button" class="btn btn-primary">Voltar</button></a>

@@ -7,6 +7,7 @@ use App\Models\TipoCarro;
 use App\Models\Marca;
 use Illuminate\Http\Request;
 use App\Http\Requests\CarroRequest;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -25,7 +26,11 @@ class CarroController extends Controller
 
     public function index()
     {
-        $carros = Carro::orderBy('id', 'ASC')->paginate(10);
+
+        $empresas_usuario = User::find(Auth::user()->id)->empresas()->get()->toArray();
+
+        $carros = Carro::whereIn('carros.id_empresa', (array_column($empresas_usuario, 'id')))->paginate(10);
+        
         return view('carros.indexAdm')->with('carros', $carros);
     }
 

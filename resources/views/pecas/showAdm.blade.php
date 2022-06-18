@@ -31,7 +31,7 @@ $paginas = collect([
                     </div>
                     <div class="col-lg-8 col-12">
                         <div class="row">
-                            <div class="col-lg-6 col-12 p-2">
+                            <div class="col-lg-4 col-12 p-2">
                                 <input type="hidden" name="id_peca" value="{{ $peca->id }}">
                                 <div class="form-floating">
                                     <input disabled class="form-control" type="text" name="nm_peca" id="nm_peca"
@@ -39,11 +39,27 @@ $paginas = collect([
                                     <label for="nm_peca">Nome Peça</label>
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-12 p-2">
+                            <div class="col-lg-4 col-12 p-2">
+                                <div class="form-floating">
+                                    <input disabled class="form-control" type="text" name="id_tipo" id="id_tipo"
+                                        placeholder="Estoque"
+                                        value="{{ $peca->filial()->first()->razao_social }}">
+                                    <label for="id_tipo_peca">Filial</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-12 p-2">
                                 <div class="form-floating">
                                     <input disabled class="form-select" aria-placeholder="Marca" id="id_marca" 
                                     type="text" value="{{$peca->marca()->first()->nm_marca}}" placeholder="Marca">
                                     <label for="id_marca">Marca</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-12 p-2">
+                                <div class="form-floating">
+                                    <input disabled class="form-control" type="text" name="id_tipo" id="id_tipo"
+                                        placeholder="Estoque"
+                                        value="{{ $tipoPeca->nm_tipo }}">
+                                    <label for="id_tipo_peca">Tipo peça</label>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-12 p-2">
@@ -60,14 +76,6 @@ $paginas = collect([
                                         placeholder="Estoque"
                                         value="{{ $peca->qt_estoque }}">
                                     <label for="qt_estoque">Estoque</label>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-12 p-2">
-                                <div class="form-floating">
-                                    <input disabled class="form-control" type="text" name="id_tipo" id="id_tipo"
-                                        placeholder="Estoque"
-                                        value="{{ $tipoPeca->nm_tipo }}">
-                                    <label for="id_tipo_peca">Tipo peça</label>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-12 p-2">

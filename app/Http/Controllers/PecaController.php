@@ -11,6 +11,7 @@ use App\Http\Requests\PecaRequest;
 use App\Models\Empresa;
 use App\Models\TipoPeca;
 use App\Models\Marca;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class PecaController extends Controller
@@ -55,7 +56,10 @@ class PecaController extends Controller
      */
     public function create()
     {
-        $carros = Carro::all();
+        $empresas_usuario = User::find(Auth::user()->id)->empresas()->get()->toArray();
+
+        $carros = Carro::whereIn('carros.id_empresa', (array_column($empresas_usuario, 'id')))->get();
+
         $tipos = TipoPeca::where('ck_ativo', '=', '1')->get();
         $marcas = Marca::whereIn('ck_categoria_marca', ['P', 'A'])->get();
         $empresas = DB::table("empresas")
@@ -118,7 +122,9 @@ class PecaController extends Controller
      */
     public function edit(Peca $peca)
     {
-        $carros = Carro::all();
+        $empresas_usuario = User::find(Auth::user()->id)->empresas()->get()->toArray();
+
+        $carros = Carro::whereIn('carros.id_empresa', (array_column($empresas_usuario, 'id')))->get();
         $carrosPeca = Peca::find($peca->id)->carros()->get();
 
         $tipos = TipoPeca::where('ck_ativo', '=', '1')->get();

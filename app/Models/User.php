@@ -56,6 +56,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    public function empresas() {
+        return $this->belongsToMany(Empresa::class, 'empresas_usuarios', 'id_usuario', 'id_empresa');
+    }
+
     public function pedidos() {
         return $this->hasMany(Pedido::class, 'id_usuario');
     }

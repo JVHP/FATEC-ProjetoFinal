@@ -169,7 +169,7 @@ function tiposNaoEncontrados() {
     optionDefault.setAttribute("value", "");
     optionDefault.setAttribute("disabled", "true");
     optionDefault.setAttribute("selected", "true");
-    optionDefault.innerHTML = "Filial não contém tipos de carro cadastrados";
+    optionDefault.innerHTML = "Filial não contém categorias de carro cadastradas";
     selectTipos.appendChild(optionDefault)
 }
 
@@ -195,7 +195,7 @@ function erroEncontrarTipos() {
     optionDefault.setAttribute("value", "");
     optionDefault.setAttribute("disabled", "true");
     optionDefault.setAttribute("selected", "true");
-    optionDefault.innerHTML = "Ocorreu um erro ao pesquisar tipos";
+    optionDefault.innerHTML = "Ocorreu um erro ao pesquisar categorias";
     selectTipos.appendChild(optionDefault)
 }
 

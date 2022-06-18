@@ -30,6 +30,7 @@ $paginas = collect([
                 <th class="m-0 text-center">Id</th>
                 <th>Nome</th>
                 <th>Categoria</th>
+                <th>Filial</th>
                 <th>Descrição</th>
                 <th class="m-0 text-center">Comandos</th>
             </tr>
@@ -40,6 +41,7 @@ $paginas = collect([
                 <td class="m-0 text-center">{{$x->id}}</td>
                 <td class="m-0">{{$x->nm_marca}}</td>
                 <td class="m-0">{{$x->categoria()}}</td>
+                <td class="m-0">{{$x->filial()->first()->razao_social}}</td>
                 <td class="m-0" style="max-width: 165px; cursor: pointer"><p id="descricao" class="text-truncate" onclick="modificarTamanho(event)">{{$x->ds_marca}}</p></td>
                 <td class="m-0 text-center">
                     <a href="/marcas/{{$x->id}}/edit">

@@ -22,6 +22,7 @@ $paginas = collect([
             <div class="card-body">
                 <dl class="">
                     <dd class="h3 fw-bolder">{{$tipo->nm_tipo}}</dd>
+                    <dd class="h3 fw-bolder">Filial: {{$tipo->filial()->first()->razao_social}}</dd>
                 </dl>
                 <a href="/tiposcarro"><button type="button" class="btn btn-primary">Voltar</button></a>
                 <input class="btn btn-danger col-3" type="submit" value="Excluir">

@@ -12,6 +12,10 @@ class Peca extends Model
 
     protected $fillable = ['nm_peca', 'vl_peca', 'qt_estoque', 'foto', 'id_tipo_peca', 'id_marca', 'ds_peca', 'id_empresa'];
 
+    public function filial() {
+        return $this->hasOne(Empresa::class, 'id', 'id_empresa');
+    }
+    
     public function carros() {
         return $this->belongsToMany(Carro::class);
     }

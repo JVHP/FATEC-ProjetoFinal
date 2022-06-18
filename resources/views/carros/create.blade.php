@@ -30,7 +30,7 @@ $paginas = collect([
                         @else
                         <input class="form-control" type="text" name="nm_carro" id="nm_carro" placeholder="Nome Peça" value="{{old('nm_carro')}}">
                         @endif
-                        <label for="nm_carro">Nome do Carro</label>
+                        <label for="nm_carro">Nome do Carro<b class="text-danger">*</b></label>
                     </div>
                 </div>
                 <div class="p-2">
@@ -43,7 +43,7 @@ $paginas = collect([
                         @else
                         <input class="form-control" type="number" name="ano" id="ano" placeholder="Ano do Carro" value="{{old('ano')}}">
                         @endif
-                        <label for="ano">Ano do Carro</label>
+                        <label for="ano">Ano do Carro<b class="text-danger">*</b></label>
                     </div>
                 </div>
 
@@ -72,7 +72,7 @@ $paginas = collect([
                                 @endforeach
                             </select>
                             @endif
-                            <label for="id_empresa">Filial</label>
+                            <label for="id_empresa">Filial<b class="text-danger">*</b></label>
                         </div>
                     </div>
                     <div class="col-2 my-auto text-end">
@@ -104,7 +104,7 @@ $paginas = collect([
                             
                         </select>
                         @endif
-                        <label for="id_marca">Marca</label>
+                        <label for="id_marca">Marca<b class="text-danger">*</b></label>
                     </div>
                 </div>
 
@@ -116,7 +116,7 @@ $paginas = collect([
                             <option value="{{$x->id}}">{{$x->nm_tipo}}</option>
                             @endforeach
                         </select>
-                        <label for="id_tipo_carro">Categoria do Carro</label>
+                        <label for="id_tipo_carro">Categoria do Carro<b class="text-danger">*</b></label>
                     </div>
                 </div>
                     <div class="text-end p-2">

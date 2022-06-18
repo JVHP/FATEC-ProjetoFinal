@@ -23,6 +23,7 @@ $paginas = collect([
                 <dl class="">
                     <dd class="h4 fw-bolder">{{$marca->nm_marca}}</dd>
                     <dd class="h5 fw-bolder">{{$marca->categoria()}}</dd>
+                    <dd class="h5 fw-bolder">Filial: {{ $marca->filial()->first()->razao_social }}</td>
                     <textarea class="form-control" disabled style="background-color: white; height: 160px;">{{empty($marca->ds_marca) ? 'Marca não contém detalhes' : $marca->ds_marca}}</textarea>
                 </dl>
                 <a href="/marcas"><button type="button" class="btn btn-primary">Voltar</button></a>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\TipoPeca;
 use Illuminate\Http\Request;
 use App\Http\Requests\TipoPecaRequest;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -25,7 +26,9 @@ class TipoPecaController extends Controller
      */
     public function index()
     {
-        $tipos = TipoPeca::orderBy('id', 'ASC')->paginate(10);
+        $empresas_usuario = User::find(Auth::user()->id)->empresas()->get()->toArray();
+
+        $tipos = TipoPeca::whereIn('tipo_pecas.id_empresa', (array_column($empresas_usuario, 'id')))->paginate(15);
         return view('tipospeca.indexAdm')->with('tipos', $tipos);
     }
 
@@ -36,13 +39,9 @@ class TipoPecaController extends Controller
      */
     public function create()
     {
-        $empresas = DB::table("empresas")
-            ->join("empresas_usuarios", 'empresas_usuarios.id_empresa', '=', 'empresas.id')
-            ->where('empresas_usuarios.id_usuario', '=', Auth::user()->id)
-            ->select('empresas.*')
-            ->get();    
+        $empresas_usuario = User::find(Auth::user()->id)->empresas()->get()->toArray();
             
-        return view('tipospeca.create')->with('empresas', $empresas);
+        return view('tipospeca.create')->with('empresas', $empresas_usuario);
     }
 
     /**
@@ -138,7 +137,7 @@ class TipoPecaController extends Controller
         if (sizeof($pecas) > 0) {
             return TipoPeca::show($tipoPeca)->with('message', "Não é possível excluír o tipo pois existem peças vinculadas.");
         } else {
-            $tipo->delete();
+            $tipoPeca->delete();
         }
 
         return redirect('/tipospeca');

@@ -29,6 +29,7 @@ $paginas = collect([
             <tr>
                 <th class="m-0 text-center">Id</th>
                 <th>Nome</th>
+                <th>Filial</th>
                 <th class="m-0 text-center">Ações</th>
             </tr>
         </thead>
@@ -37,6 +38,7 @@ $paginas = collect([
             <tr>
                 <td class="m-0 text-center">{{$x->id}}</td>
                 <td class="m-0">{{$x->nm_tipo}}</td>
+                <td class="m-0">{{$x->filial()->first()->razao_social}}</td>
                 <td class="m-0 text-center">
                     <a href="/tiposcarro/{{$x->id}}/edit">
                         <button class="btn btn-outline-info">Editar</button>
