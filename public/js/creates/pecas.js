@@ -23,7 +23,7 @@ function pesquisarInfosFilialPeca() {
         let id_empresa = inputFilial.value;
 
         this.pesquisarMarcas(id_empresa)
-        this.limparTiposPeca(id_empresa)
+        this.pesquisarTipos(id_empresa)
 
     }
     
