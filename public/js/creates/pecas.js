@@ -14,7 +14,7 @@ function pesquisarInfosFilialPeca() {
         pesquisado.value = "false"
 
         this.limparMarcas(id_empresa)
-        this.limparTipos(id_empresa)
+        this.limparTiposPeca(id_empresa)
 
     } else {
       
@@ -23,7 +23,7 @@ function pesquisarInfosFilialPeca() {
         let id_empresa = inputFilial.value;
 
         this.pesquisarMarcas(id_empresa)
-        this.pesquisarTipos(id_empresa)
+        this.limparTiposPeca(id_empresa)
 
     }
     
@@ -83,7 +83,7 @@ function pesquisarTipos(id_empresa) {
 function montarSelectTipos(tipos) {
     let selectTipos = document.querySelector('#id_tipo_peca');
 
-    this.limparTipos()
+    this.limparTiposPeca()
 
     tipos.map(x => {
         let option = document.createElement('option')
@@ -134,7 +134,7 @@ function limparMarcas() {
     selectMarcas.appendChild(optionDefault)
 }
 
-function limparTipos() {
+function limparTiposPeca() {
     let selectTipos = document.querySelector('#id_tipo_peca');
     selectTipos.innerHTML = ""
     selectTipos.value = ""
@@ -224,5 +224,5 @@ function limparPesquisaPeca() {
     btnFilial.classList.add('btn-primary')
     
     this.limparMarcas(id_empresa)
-    this.limparTipos(id_empresa)
+    this.limparTiposPeca(id_empresa)
 }
