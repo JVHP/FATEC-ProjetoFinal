@@ -1,7 +1,15 @@
 @extends('master')
 
 @section('body')
-    <div class="col-12 pt-5" style="height: 100vh;">
+@php
+$paginas = collect([
+    ["link"=>"/", "nm_pag" => "Dashboard"], 
+    ["link"=>"", "nm_pag" => "Autenticação"],
+])->collect();
+@endphp
+
+<x-breadcrumb :paginas="$paginas" />
+    <div class="col-12" style="height: 100vh;">
         <div class="card-display border-bottom-orange">
             
             <h1 class="rounded bg-primary-dark border-bottom-orange text-white p-2">
@@ -83,7 +91,7 @@
                         <div class="col-12">
                             <div class="col-lg-9 col-md-9 col-sm-12 col-12 mx-auto">
                                 <h1 class="rounded bg-primary-dark border-bottom-orange text-white p-2">
-                                    Cadastro
+                                    Cadastro de Usuário
                                 </h1>
                                 <div class="form-floating p-1">
                                     @if ($errors->has('nm_usuario'))

@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Marca;
 use App\Http\Requests\MarcaRequest;
+use App\Models\User;
 use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Nette\Utils\Arrays;
@@ -14,7 +16,7 @@ class MarcaController extends Controller
 {
 
     public function __construct() {
-        $this->middleware(['auth', 'admin.user']);
+        $this->middleware(['auth', 'company.user', 'verified']);
     }
 
     /**
@@ -24,7 +26,10 @@ class MarcaController extends Controller
      */
     public function index()
     {
-        $marcas = Marca::orderBy('id', 'asc')->paginate(15);
+        $empresas_usuario = User::find(Auth::user()->id)->empresas()->get()->toArray();
+
+        $marcas = Marca::whereIn('marcas.id_empresa', (array_column($empresas_usuario, 'id')))->paginate(15);
+        
         return view('marcas.indexAdm')->with('marcas', $marcas);
     }
 
@@ -35,7 +40,9 @@ class MarcaController extends Controller
      */
     public function create()
     {
-        return view('marcas.create');
+        $empresas_usuario = User::find(Auth::user()->id)->empresas()->get();
+        
+        return view('marcas.create')->with('empresas', $empresas_usuario);
     }
 
     /**
@@ -70,7 +77,8 @@ class MarcaController extends Controller
      */
     public function edit(Marca $marca)
     {
-        return view('marcas.edit')->with('marca', $marca);
+        $empresas_usuario = User::find(Auth::user()->id)->empresas()->get();
+        return view('marcas.edit')->with('marca', $marca)->with('empresas', $empresas_usuario);
     }
 
     /**

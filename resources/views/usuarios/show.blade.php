@@ -1,7 +1,15 @@
 @extends('master')
 
-@section("body")
-<div class="mx-auto col-4 pt-5">
+@section("body")@php
+$paginas = collect([
+    ["link"=>"/", "nm_pag" => "Dashboard"], 
+    ["link"=>"/usuarios", "nm_pag" => "Usuários"],
+    ["link"=>"", "nm_pag" => "Visualizar Usuário"],
+])->collect();
+@endphp
+
+<x-breadcrumb :paginas="$paginas" />
+<div class="mx-auto col-4">
     <div class="card-display border-bottom-orange">
         <form action="/usuarios/{{$usuario->id}}" method="POST">
             @csrf
@@ -12,7 +20,7 @@
                 <dl class="">
                     <dd class="h3 fw-bolder">{{$usuario->nm_usuario}}</dd>
                     <dd class="h5">Email: {{$usuario->email}}</dd>
-                    <dd class="h5">Data de nascimento: {{$usuario->dt_nasc}}</dd>
+                    <dd class="h5">Data de nascimento: {{date('d/m/Y', strtotime($usuario->dt_nasc))}}</dd>
                     <dd class="h5">CEP: {{$usuario->cep}}</dd>
                 </dl>
                 <a href="/usuarios"><button type="button" class="btn btn-primary">Voltar</button></a>

@@ -1,7 +1,15 @@
 @extends('master')
 
-@section('body')
-    <div class="mx-auto col-lg-5 col-md-7 col-sm-8 col-12 pt-5">
+@section('body')@php
+$paginas = collect([
+    ["link"=>"/", "nm_pag" => "Dashboard"], 
+    ["link"=>"/carros", "nm_pag" => "Carros"],
+    ["link"=>"", "nm_pag" => "Visualizar Carro"],
+])->collect();
+@endphp
+
+<x-breadcrumb :paginas="$paginas" />
+    <div class="mx-auto col-lg-5 col-md-7 col-sm-8 col-12">
         <div class="card-display border-bottom-orange">
             <h2 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-12">Visualizar Carro</h2>
             <div class="p-3">
@@ -19,6 +27,7 @@
                                     <dd class="h5">Categoria: {{ $x->nm_tipo }}</dd>
                                 @endif
                             @endforeach
+                            <dd class="h5">Filial: {{ $carro->filial()->first()->razao_social }}</dd>
                             <dd class="h5">Marca: {{ $carro->marca()->first()->nm_marca }}</td>
                             <dd class="h5">Ano: {{ $carro->ano }}</dd>
                         </dl>

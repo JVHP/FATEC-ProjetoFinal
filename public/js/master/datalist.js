@@ -10,10 +10,9 @@
     opcaoTodos.id = "all"
     listaPecas.appendChild(opcaoTodos)
 
-
-    function getPecas(peca) {
+    function getPecas(peca, empresa) {
         let i = 0
-        var request = $.get('/pecas/nome/' + peca);
+        var request = $.get(`/loja/${empresa}/pecas/nome/` + peca);
         request.then((response) => {
             while (listaPecas.firstChild) {
                 listaPecas.removeChild(listaPecas.lastChild)
@@ -45,6 +44,6 @@
     });
 
     //Função de pesquisa
-    function irParaPeca(peca) {
-        window.location = '/pecas/' + peca.substr(8)
+    function irParaPeca(peca, empresa) {
+        window.location = `/loja/${empresa}/pecas/` + peca.substr(8)
     }

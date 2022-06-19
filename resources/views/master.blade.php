@@ -6,7 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">-->
 
-    <title>iTURBO</title>
+    <title>
+        @if (session('empresa'))
+            {{ session('empresa')->razao_social }}
+        @else
+            iTURBO
+        @endif
+    </title>
 
     <script src="https://kit.fontawesome.com/dce65dbbad.js" crossorigin="anonymous"></script>
 
@@ -21,7 +27,6 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
         import "bootstrap-icons/font/bootstrap-icons.css"
@@ -37,6 +42,10 @@
         })
     </script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.js"
+        integrity="sha512-5m2r+g00HDHnhXQDbRLAfZBwPpPCaK+wPLV6lm8VQ+09ilGdHfXV7IVyKPkLOTfi4vTTUVJnz7ELs7cA87/GMA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <style>
         @import '/css/app-base.css';
         @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css");
@@ -49,29 +58,42 @@
     <div class="p-3">
         <div class="mx-auto container-xxl">
             <div class="row col-12 m-0">
-                <div class="col-lg-1 col-md-1 col-sm-1 col-1 y-auto ps-4 my-auto ">
-                    <button class="btn" type="button" data-bs-toggle="offcanvas"
-                        data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
-                        <img src="{{ URL::asset('icons/menu.svg') }}" alt="">
-                    </button>
-                </div>
+                @guest
+                @else
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-1 y-auto ps-4 my-auto ">
+                        <button class="btn" type="button" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
+                            <img src="{{ URL::asset('icons/menu.svg') }}" alt="">
+                        </button>
+                    </div>
+                @endguest
 
                 <div
                     class="col-lg-auto col-md-3 col-sm-4 col-6 pb-3 my-auto text-md-start text-center me-md-auto mx-md-0 mx-auto">
-                    <h3 style="cursor: pointer" class="pt-4 fw-bold text-light onhov" onclick="window.location='/'">
-                        iTURBO
+                    <h3 style="cursor: pointer" class="pt-4 fw-bold text-light onhov"
+                        onclick="window.location='/{{ !empty(session('empresa')) ? 'loja/' . session('empresa')->url_customizada : '' }}'">
+                        @if (session('empresa'))
+                            {{ session('empresa')->razao_social }}
+                        @else
+                            iTURBO
+                        @endif
                     </h3>
                 </div>
 
-                <div class="form-group col-xl-3 col-lg-3 col-md-4 col-sm-12 col-12 my-auto">
-                    <input list="pecasList" oninput="getPecas(event.target.value)" id="inputPeca"
-                        class=" card-search rounded-pill form-control" type="text"
-                        style="height: 50px; /* border: 2px solid #334756; border-radius: 5px; */"
-                        placeholder="Pesquisar...">
+                @if (session('empresa'))
+                    <div class="form-group col-xl-3 col-lg-3 col-md-4 col-sm-12 col-12 my-auto">
+                        <input list="pecasList" oninput="getPecas(event.target.value)" id="inputPeca"
+                            class=" card-search rounded-pill form-control" type="text"
+                            style="height: 50px; /* border: 2px solid #334756; border-radius: 5px; */"
+                            placeholder="Pesquisar...">
 
-                    <datalist id="pecasList" onclick="irParaPeca(event.target.value)">
-                    </datalist>
-                </div>
+                        <datalist id="pecasList" onclick="irParaPeca(event.target.value)">
+                        </datalist>
+                    </div>
+                @endif
+                @guest
+                @else
+                @endguest
 
                 <div class="text-end col-xxl-2-custom col-lg-3 col-md-4 col-12 pt-md-0 pt-3 my-auto mx-md-0 mx-auto ">
                     <div>
@@ -84,8 +106,15 @@
                                             </div>
                                         </div>
                                         <div class="col-8 my-auto text-start ps-0">
-                                            <a class="text-light" href="/login">Faça seu {{ __('login') }} ou
-                                                {{ __('cadastre-se') }}</a>
+                                            @if (session('empresa'))
+                                                <a class="text-light"
+                                                    href="/loja/{{ session('empresa')->url_customizada }}/login">Faça seu
+                                                    {{ __('login') }} ou
+                                                    {{ __('cadastre-se') }}</a>
+                                            @else
+                                                <a class="text-light" href="/login">Faça seu {{ __('login') }} ou
+                                                    {{ __('cadastre-se') }}</a>
+                                            @endif
                                         </div>
                                     @endif
 
@@ -105,19 +134,29 @@
                                     </div>
                                     <div class="col-8 text-start ps-0 text-truncate">
                                         <div class="col-12">
-                                            <a class="text-light py-1 my-2" href="/dashboard">
+                                            <a class="text-light py-1 my-2"
+                                                href="{{ session('empresa') ? '/loja/' . session('empresa')->url_customizada . '/usuario/pedidos' : '/pedidos' }}">
                                                 <label for="" class="text-light">
                                                     Bem vindo {{ Auth::user()->firstName() }}!
                                                 </label>
                                             </a>
                                         </div>
                                         <div class="col-12 text-start">
-                                            <a href="{{ route('informacoes') }}" class="text-light py-1 me-1 my-2">
-                                                <img src="{{ URL::asset('icons/settings.svg') }}" alt="">
-                                            </a>
-                                            <a href="{{ route('dashboard') }}" class="text-light py-1 me-2 my-2">
-                                                <img src="{{ URL::asset('icons/shopping-cart.svg') }}" alt="">
-                                            </a>
+                                            @if (Auth::user()->isCliente())
+                                                <a href="/loja/{{ session('empresa')->url_customizada }}/usuario/informacoes"
+                                                    class="text-light py-1 me-1 my-2">
+                                                    <img src="{{ URL::asset('icons/settings.svg') }}" alt="">
+                                                </a>
+                                                <a href="/loja/{{ session('empresa')->url_customizada }}/usuario/pedidos"
+                                                    class="text-light py-1 me-2 my-2">
+                                                    <img src="{{ URL::asset('icons/shopping-cart.svg') }}"
+                                                        alt="">
+                                                </a>
+                                            @elseif (Auth::user()->isEmpresa())
+                                                <a href="/filiais" class="text-light py-1 me-2 my-2">
+                                                    <img src="{{ URL::asset('icons/briefcase.svg') }}" alt="">
+                                                </a>
+                                            @endif
                                             <a href="{{ route('logout') }}" class="text-light py-1 my-2"
                                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                                 <img src="{{ URL::asset('icons/log-out.svg') }}" alt="">
@@ -154,9 +193,9 @@
                     @if (Auth::user()->isAdministrator())
                         <div class="accordion-item" style="border-radius: none; border: none">
                             <h2 class="accordion-header" id="flush-headingUsuarios">
-                                <button class="accordion-button collapsed bg-orange" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#flush-collapseUsuarios" aria-expanded="false"
-                                    aria-controls="flush-collapseUsuarios">
+                                <button class="accordion-button collapsed bg-orange" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#flush-collapseUsuarios"
+                                    aria-expanded="false" aria-controls="flush-collapseUsuarios">
                                     Usuários
                                 </button>
                             </h2>
@@ -172,11 +211,49 @@
                                 </div>
                             </div>
                         </div>
+                    @endif
+                    @if (Auth::user()->isEmpresa() || Auth::user()->isAdministrator())
+                        <div class="accordion-item" style="border-radius: none; border: none">
+                            <h2 class="accordion-header" id="flush-headingEmpresas">
+                                <button class="accordion-button collapsed bg-orange" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#flush-collapseEmpresas"
+                                    aria-expanded="false" aria-controls="flush-collapseEmpresas">
+                                    Filiais
+                                </button>
+                            </h2>
+                            @if (Auth::user()->isEmpresa())
+                                <div id="flush-collapseEmpresas" class="accordion-collapse collapse"
+                                    aria-labelledby="flush-headingEmpresas" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body p-0">
+                                        <a href="/filiais">
+                                            <button
+                                                class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
+                                                Gerenciar Filiais
+                                            </button>
+                                        </a>
+                                    </div>
+                                </div>
+                            @elseif (Auth::user()->isAdministrator())
+                                <div id="flush-collapseEmpresas" class="accordion-collapse collapse"
+                                    aria-labelledby="flush-headingEmpresas" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body p-0">
+                                        <a href="/gerenciamento-empresas">
+                                            <button
+                                                class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
+                                                Visualizar Filiais Cadastradas
+                                            </button>
+                                        </a>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                    @endif
+                    @if (Auth::user()->isEmpresa() || Auth::user()->isFuncionario())
                         <div class="accordion-item" style="border-radius: none; border: none">
                             <h2 class="accordion-header" id="flush-headingMarcas">
-                                <button class="accordion-button collapsed bg-orange" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#flush-collapseMarcas" aria-expanded="false"
-                                    aria-controls="flush-collapseMarcas">
+                                <button class="accordion-button collapsed bg-orange" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#flush-collapseMarcas"
+                                    aria-expanded="false" aria-controls="flush-collapseMarcas">
                                     Marcas
                                 </button>
                             </h2>
@@ -194,34 +271,38 @@
                         </div>
                     @endif
                 @endguest
+
                 <div class="accordion-item" style="border-radius: none; border: none">
                     <h2 class="accordion-header" id="flush-headingPecas">
                         <button class="accordion-button collapsed bg-orange" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#flush-collapsePecas" aria-expanded="false" aria-controls="flush-collapsePecas">
+                            data-bs-target="#flush-collapsePecas" aria-expanded="false"
+                            aria-controls="flush-collapsePecas">
                             Peças
                         </button>
                     </h2>
-                    <div id="flush-collapsePecas" class="accordion-collapse collapse" aria-labelledby="flush-headingPecas"
-                        data-bs-parent="#accordionFlushExample">
+                    <div id="flush-collapsePecas" class="accordion-collapse collapse"
+                        aria-labelledby="flush-headingPecas" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body p-0">
-                            <a href="/pecas/todos">
-                                <button
-                                    class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
-                                    Todas as Peças
-                                </button>
-                            </a>
+                            @if (session('empresa'))
+                                <a href="/loja/{{ session('empresa')->url_customizada }}/pecas/todos">
+                                    <button
+                                        class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
+                                        Todas as Peças
+                                    </button>
+                                </a>
+                            @endif
                             @guest
                             </div>
                         </div>
                     @else
-                        @if (!Auth::user()->isAdministrator())
-                        <a href="/pecas-usuario">
-                            <button
-                                class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
-                                Peças para seu(s) carro(s)
-                            </button>
-                        </a>
-                        @elseif (Auth::user()->isAdministrator())
+                        @if (Auth::user()->isCliente())
+                            <a href="/loja/{{ session('empresa')->url_customizada }}/pecas-usuario">
+                                <button
+                                    class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
+                                    Peças para seu(s) carro(s)
+                                </button>
+                            </a>
+                        @elseif (Auth::user()->isEmpresa() || Auth::user()->isFuncionario())
                             <a href="/pecas">
                                 <button
                                     class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
@@ -241,16 +322,17 @@
         </div>
         @guest
         @else
-            @if (Auth::user()->isAdministrator())
+            @if (Auth::user()->isEmpresa() || Auth::user()->isFuncionario())
                 <div class="accordion-item" style="border-radius: 0; border: none">
                     <h2 class="accordion-header" id="flush-headingCarros">
                         <button class="accordion-button collapsed bg-orange " type="button" data-bs-toggle="collapse"
-                            data-bs-target="#flush-collapseCarros" aria-expanded="false" aria-controls="flush-collapseCarros">
+                            data-bs-target="#flush-collapseCarros" aria-expanded="false"
+                            aria-controls="flush-collapseCarros">
                             Carros
                         </button>
                     </h2>
-                    <div id="flush-collapseCarros" class="accordion-collapse collapse" aria-labelledby="flush-headingCarros"
-                        data-bs-parent="#accordionFlushExample">
+                    <div id="flush-collapseCarros" class="accordion-collapse collapse"
+                        aria-labelledby="flush-headingCarros" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body p-0">
                             <a href="/carros">
                                 <button
@@ -283,9 +365,63 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
-<script src="/js/register-user/register-user.js">
-</script>
-<script src="/js/master/datalist.js">
+<script src="/js/register-user/register-user.js"></script>
+<script src="/js/creates/carros.js"></script>
+<script src="/js/creates/pecas.js"></script>
+{{-- <script src="/js/master/datalist.js">
+</script> --}}
+<script>
+    let empresa = <?php echo session('empresa') ? '"' . session('empresa')->url_customizada . '"' : "''"; ?>
+
+    //Função para popular o DataList
+
+    let listaPecas = document.getElementById('pecasList');
+
+    if (listaPecas) {
+        let opcaoTodos = document.createElement('option')
+        opcaoTodos.text = "Ir para todos"
+        opcaoTodos.value = "Ir para todos"
+        opcaoTodos.id = "all"
+        listaPecas.appendChild(opcaoTodos)
+
+        function getPecas(peca) {
+            let i = 0
+            var request = $.get(`/loja/${empresa}/pecas/nome/` + peca);
+            request.then((response) => {
+                while (listaPecas.firstChild) {
+                    listaPecas.removeChild(listaPecas.lastChild)
+                }
+                var pecas = null
+                pecas = response;
+                pecas.forEach((item) => {
+                    i++
+                    let option = document.createElement('option');
+                    option.text = "Código: " + item.id
+                    option.value = item.nm_peca
+                    option.id = "peca" + i
+                    listaPecas.appendChild(option)
+                })
+            })
+        }
+
+        //Função seleção opção DataList
+        $(document).ready(function() {
+            $('#inputPeca').on('change', function() {
+                var userText = $(this).val();
+
+                $("#pecasList").find("option").each(function() {
+                    if ($(this).val() == userText) {
+                        irParaPeca($(this).text(), <?php echo session('empresa') ? '"' . session('empresa')->url_customizada . '"' : "''"; ?>);
+                    }
+                })
+            })
+        });
+
+        //Função de pesquisa
+        function irParaPeca(peca, empresa) {
+            window.location = `/loja/${empresa}/pecas/` + peca.substr(8)
+        }
+    }
 </script>
 
 <script>
@@ -323,5 +459,4 @@
         let element = event.srcElement;
         element.classList.toggle('text-truncate');
     }
-
 </script>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Empresa;
 use App\Models\Pedido;
 use App\Models\Peca;
 use Illuminate\Http\Request;
@@ -43,14 +44,16 @@ class PedidoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($cd_empresa, Request $request)
     {
-
+     
+        $empresa = Empresa::where('url_customizada', '=', $cd_empresa)->first();
+        
         $peca = $request->peca;
 
         $peca = Peca::find($peca);
 
-        $pedidoExistente = Pedido::where('id_usuario', Auth::user()->id)->where('ck_finalizado', 'N')->where('dt_pagamento', null)->first();
+        $pedidoExistente = Pedido::where('id_usuario', Auth::user()->id)->where('ck_finalizado', 'N')->where('dt_pagamento', null)->where('id_empresa', '=', $empresa->id)->first();
 
         $quantidade = 1;
 
@@ -60,12 +63,14 @@ class PedidoController extends Controller
 
             $request->request->add(['vl_preco_total' => $peca->vl_peca]);
 
+            $request->request->add(['id_empresa' => $empresa->id]);
+
             $pedido = Pedido::create($request->all());
             $peca->pedidos()->attach($pedido, ['qt_peca' => $quantidade, 'vl_total_peca' => $peca->vl_peca * $quantidade]);
 
             $peca->retirarDoEstoque($peca->id);
 
-            return redirect('/pedido/' . $pedido->id);
+            return redirect('/loja/'.session('empresa')->url_customizada.'/pedido/'.$pedido->id);
         } else {
             $peca->pedidos()->attach($pedidoExistente->id, ['qt_peca' => $quantidade, 'vl_total_peca' => $peca->vl_peca * $quantidade]);
             $pedidoExistente->vl_preco_total =  $pedidoExistente->vl_preco_total + $peca->vl_peca * $quantidade;
@@ -73,7 +78,7 @@ class PedidoController extends Controller
 
             $peca->retirarDoEstoque($peca->id);
 
-            return redirect('/pedido/' . $pedidoExistente->id);
+            return redirect('/loja/'.session('empresa')->url_customizada.'/pedido/'.$pedidoExistente->id);
         }
     }
 
@@ -83,8 +88,16 @@ class PedidoController extends Controller
      * @param  \App\Models\Pedido  $pedido
      * @return \Illuminate\Http\Response
      */
-    public function show(Pedido $pedido)
+    public function show($cd_empresa, Pedido $pedido)
     {
+        $empresa = Empresa::where('url_customizada', '=', $cd_empresa)->first();
+
+        if ($empresa == null) {
+            return redirect()->back();
+        }
+
+        session(['empresa' => $empresa]);
+
         $pecas = Pedido::find($pedido->id)->pecas()->orderBy('nm_peca', 'ASC')->get();
         return view('pedidos.show')->with('pedido', $pedido)->with('pecas', $pecas);
     }
@@ -107,7 +120,7 @@ class PedidoController extends Controller
      * @param  \App\Models\Pedido  $pedido
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Pedido $pedido)
+    public function update($cd_empresa, Request $request, Pedido $pedido)
     {
         $request->request->add(['ck_finalizado' => 'S']);
         $pedido->update($request->all());
@@ -120,7 +133,7 @@ class PedidoController extends Controller
      * @param  \App\Models\Pedido  $pedido
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pedido $pedido)
+    public function destroy($cd_empresa, Pedido $pedido)
     {        
         $pedido->pecas()-> detach();
         $pedido->delete();

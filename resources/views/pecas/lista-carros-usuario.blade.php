@@ -1,7 +1,14 @@
 @extends('master')
 @section('body')
+@php
+$paginas = collect([
+    ["link"=>"/", "nm_pag" => "Início"], 
+    ["link"=>"", "nm_pag" => "Peças para seu(s) carro(s)"],
+])->collect();
+@endphp
 
-<div class="pt-5">
+
+<x-breadcrumb :paginas="$paginas" />
     <div class="card-display border-bottom-orange">
         <h1 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-12">Peças para seu(s) carro(s)</h1>
     <div class="p-2">
@@ -9,15 +16,18 @@
         <div class="row mx-auto col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 pb-5">
             @if(sizeOf($varPeca) == 0)
                 <div class="p-2">
-                    <div class="card" style="height: 25vh;">
+                    <div class="card">
                         @if($mensagem != '')
                         <h1 class="m-auto my-auto">
                             {{$mensagem}}
                         </h1>
                         @else
-                        <h3 class="m-auto my-auto">
-                            Não foram encontrados carros vinculados ao seu usuário
-                        </h3>
+                        <div class="row text-center mb-4">
+                            <img class="col-md-3 col-12 m-3" src="{{URL::asset('icons/undraw_not_found_-60-pq.svg')}}" class="img-fluid" alt="" style="width: 21%">
+                            <h1  class="col-md-auto col-12 my-auto">
+                                Não foram encontrados carros vinculados ao seu usuário
+                            </h1>
+                        </div>
                         @endif                        
                     </div>
                 </div>
@@ -47,14 +57,14 @@
                         </dl>
                     </div>
                     <div class="card-footer bg-white text-center" style="border: none;">
-                        <a href="/pecas/{{$x->id}}">
+                        <a href="/loja/{{session('empresa')->url_customizada}}/pecas/{{$x->id}}">
                             <button type="button" class=" col-12 btn btn-outline-primary">
                                 <div class="row col-12 justify-content-between fw-bolder">
                                     <div class="col-2">
                                         <i class="bi bi-cart"></i>        
                                     </div>
                                     <div class="col-10 text-center">
-                                        Comprar        
+                                        Visualizar        
                                     </div>
                                 </div>
                             </button>
@@ -88,9 +98,8 @@
             @endif
         </div>
     </div>
-</div>
 <div class="d-flex justify-content-center align-end pt-3">
-    {{-- {{ $varPeca->onEachSide(5)->links() }} --}}
+    {{ $varPeca->onEachSide(5)->links() }}
 </div>
 
 

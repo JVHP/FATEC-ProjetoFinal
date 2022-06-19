@@ -1,20 +1,31 @@
 @extends('master')
 @section('body')
+@php
+$paginas = collect([
+    ["link"=>"/loja/".session("empresa")->url_customizada, "nm_pag" => "Início"], 
+    ["link"=>"", "nm_pag" => "Peças"],
+])->collect();
+@endphp
 
-    <div class="pt-5">
+<x-breadcrumb :paginas="$paginas" />
+
+    <div class="">
         <div class="card-display border-bottom-orange">
             <h1 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-12">Peças</h1>
             <div class="p-2">
             </div>
             <div class="row mx-auto col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 pb-5">
                 @if (sizeOf($varPeca) == 0)
-                    <div class="p-2">
-                        <div class="card" style="height: 25vh;">
-                            <h1 class="m-auto my-auto">
-                                Não foram encontradas peças em nosso catálogo
+                <div class="p-2">
+                    <div class="card" style="">
+                        <div class="row text-center mb-4">
+                            <img class="col-md-3 col-12 m-3" src="{{URL::asset('icons/undraw_not_found_-60-pq.svg')}}" class="img-fluid" alt="" style="width: 21%">
+                            <h1  class="col-md-auto col-12 my-auto">
+                                Não contém dados.
                             </h1>
                         </div>
                     </div>
+                </div>
                 @else
                     @foreach ($varPeca as $x)
                         <div class=" pt-3 col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 mx-auto" style="width: 20.19rem;">
@@ -46,6 +57,20 @@
                                         </dl>
                                     </div>
                                     <div class="card-footer bg-white text-center" style="border: none;">
+                                        @if(session('empresa'))
+                                        <a href="/loja/{{session('empresa')->url_customizada}}/pecas/{{$x->id}}">
+                                            <button type="button" class=" col-12 btn btn-outline-primary">
+                                                <div class="row col-12 justify-content-between fw-bolder">
+                                                    <div class="col-2">
+                                                        <i class="bi bi-cart"></i>
+                                                    </div>
+                                                    <div class="col-10 text-center">
+                                                        Visualizar
+                                                    </div>
+                                                </div>
+                                            </button>
+                                        </a>
+                                        @else
                                         <a href="/pecas/{{ $x->id }}">
                                             <button type="button" class=" col-12 btn btn-outline-primary">
                                                 <div class="row col-12 justify-content-between fw-bolder">
@@ -53,11 +78,12 @@
                                                         <i class="bi bi-cart"></i>
                                                     </div>
                                                     <div class="col-10 text-center">
-                                                        Comprar
+                                                        Visualizar
                                                     </div>
                                                 </div>
                                             </button>
                                         </a>
+                                        @endif
                                     </div>
                                 @else
                                     @if ($x->foto)

@@ -24,14 +24,16 @@ class TipoPecaRequest extends FormRequest
     public function rules()
     {
         return [
-            'nm_tipo' => 'required'
+            'nm_tipo' => 'required',
+            'id_empresa'=>'required',
         ];
     }
 
     public function messages()
     {
         return [
-            'nm_tipo.required'=>'Nome é obrigatório'
+            'nm_tipo.required'=>'Nome é obrigatório',
+            'id_empresa.required'=>'Escolha uma de suas filiais.',
         ];
     }
 }

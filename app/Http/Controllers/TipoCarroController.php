@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TipoCarroRequest;
 use App\Models\TipoCarro;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class TipoCarroController extends Controller
 {
@@ -14,12 +18,14 @@ class TipoCarroController extends Controller
      */
 
     public function __construct() {
-        $this->middleware(['auth', 'admin.user']);
+        $this->middleware(['auth', 'company.user', 'verified']);
     }
 
     public function index()
     {
-        $tipos = TipoCarro::orderBy('id', 'ASC')->paginate(10);
+        $empresas_usuario = User::find(Auth::user()->id)->empresas()->get()->toArray();
+
+        $tipos = TipoCarro::whereIn('tipo_carros.id_empresa', (array_column($empresas_usuario, 'id')))->paginate(15);
         return view('tiposcarro.indexAdm')->with('tipos', $tipos);
     }
 
@@ -29,8 +35,10 @@ class TipoCarroController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('tiposcarro.create');
+    {        
+        $empresas_usuario = User::find(Auth::user()->id)->empresas()->get();
+
+        return view('tiposcarro.create')->with("empresas", $empresas_usuario);
     }
 
     /**
@@ -39,7 +47,7 @@ class TipoCarroController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TipoCarroRequest $request)
     {
         TipoCarro::create($request->all());
         return redirect('/tiposcarro');
@@ -66,7 +74,10 @@ class TipoCarroController extends Controller
     public function edit($id)
     {
         $tipo = TipoCarro::findOrFail($id);
-        return view('tiposcarro.edit')->with('tipo', $tipo);
+        
+        $empresas_usuario = User::find(Auth::user()->id)->empresas()->get();
+
+        return view('tiposcarro.edit')->with('tipo', $tipo)->with("empresas", $empresas_usuario);
     }
 
     /**
@@ -76,7 +87,7 @@ class TipoCarroController extends Controller
      * @param  \App\Models\TipoCarro  $tipoCarro
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(TipoCarroRequest $request, $id)
     {
         $tipoCarro = TipoCarro::findOrFail($id);
         $tipoCarro->update($request->all());

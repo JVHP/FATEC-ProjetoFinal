@@ -23,6 +23,9 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         
         \App\Http\Middleware\ForceHttps::class,
+        \App\Http\Middleware\RemoveCompanySession::class,
+        \App\Http\Middleware\RemoveCompanyAuth::class,
+        \App\Http\Middleware\ValidateStoreRoute::class,
     ];
 
     /**
@@ -41,6 +44,9 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             
             \App\Http\Middleware\ForceHttps::class,
+            \App\Http\Middleware\RemoveCompanySession::class,
+            \App\Http\Middleware\RemoveCompanyAuth::class,
+            \App\Http\Middleware\ValidateStoreRoute::class,
         ],
 
         'user.manipulation' => [
@@ -53,6 +59,29 @@ class Kernel extends HttpKernel
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
+        'client.user' => [
+            \App\Http\Middleware\Authenticate::class,
+            \App\Http\Middleware\ClientUser::class
+        ],
+        'company.user' => [
+            \App\Http\Middleware\Authenticate::class,
+            \App\Http\Middleware\CompanyUser::class
+        ],
+        'employee.user' => [
+            \App\Http\Middleware\Authenticate::class,
+            \App\Http\Middleware\EmployeeUser::class
+        ],
+        'employee_parts.user' => [
+            \App\Http\Middleware\Authenticate::class,
+            \App\Http\Middleware\CompanyPartsUser::class
+        ],
+        'company_employee.user' => [
+            \App\Http\Middleware\Authenticate::class,
+            \App\Http\Middleware\CompanyPartsUser::class,
+            \App\Http\Middleware\EmployeeUser::class,
+            \App\Http\Middleware\CompanyUser::class,
+        ],
+
     ];
 
     /**
@@ -72,6 +101,11 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'admin.user' => \App\Http\Middleware\AdminUser::class
+        'admin.user' => \App\Http\Middleware\AdminUser::class,
+        'client.user' => \App\Http\Middleware\ClientUser::class,
+        'company.user' => \App\Http\Middleware\CompanyUser::class,
+        'employee.user' => \App\Http\Middleware\EmployeeUser::class,
+        'employee_parts.user' => \App\Http\Middleware\CompanyPartsUser::class,
+        'company_employee.user' => \App\Http\Middleware\CompanyUser::class,
     ];
 }

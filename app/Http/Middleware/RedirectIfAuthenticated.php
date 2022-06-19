@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Empresa;
 use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
@@ -23,6 +24,18 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
+                if ($request->has('cd_empresa')) {
+                    $empresa = Empresa::where('url_customizada', '=', $request->cd_empresa)->first();
+                    session(['empresa' => $empresa]);
+                    
+                    if(Auth::user()->cnpj_empresa_cadastrada){
+                        
+                        return redirect('/loja/'.session('empresa')->url_customizada);
+                    } else {
+                        return ('/login');
+                    }
+                }
+
                 return redirect('/');
             }
         }

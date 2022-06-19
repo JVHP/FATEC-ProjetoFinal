@@ -1,47 +1,43 @@
-@extends('layouts.app')
+@extends('master')
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
+@section('body')
+    @php
+    $paginas = collect([['link' => '/', 'nm_pag' => 'Dashboard'], ['link' => '/login', 'nm_pag' => 'Autenticação'], ['link' => '', 'nm_pag' => 'Esqueci a senha']])->collect();
+    @endphp
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+    <x-breadcrumb :paginas="$paginas" />
+    <div class="col-12" style="height: 100vh;">
+        <div class="card-display border-bottom-orange">
+            <h1 class="rounded bg-primary-dark border-bottom-orange text-white p-2">
+                Esqueci a senha
+            </h1>
+
+            <div class="card-body">
+                @if (session('status'))
+                    <div class="alert alert-success" role="alert">
+                        {{ session('status') }}
+                    </div>
+                @endif
+
+                <form method="POST" action="{{ route('password.email') }}">
+                    @csrf
+                    <div class="col-6 mx-auto">
+                        <div class="input-group form-floating mb-3">
+                            <input type="text" class="form-control @error('email') is-invalid @enderror"
+                                value="{{ old('email') }}" placeholder="E-mail" aria-label="Example text with button addon"
+                                aria-describedby="button-addon1" name="email" id="email" required autocomplete="email">
+                                <label for="email">E-mail</label>
+                            @error('email')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                            
+                            <button class="btn btn-primary" type="submit" id="button-addon1">Enviar solicitação</button>
                         </div>
-                    @endif
-
-                    <form method="POST" action="{{ route('password.email') }}">
-                        @csrf
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Send Password Reset Link') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-</div>
 @endsection

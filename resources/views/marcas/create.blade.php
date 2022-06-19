@@ -1,7 +1,16 @@
 @extends('master')
 
 @section('body')
-    <div class="pt-5">
+@php
+$paginas = collect([
+    ["link"=>"/", "nm_pag" => "Dashboard"], 
+    ["link"=>"/marcas", "nm_pag" => "Marcas"],
+    ["link"=>"", "nm_pag" => "Adicionar Marca"],
+])->collect();
+@endphp
+
+<x-breadcrumb :paginas="$paginas" />
+    <div class="">
         <div class="card-display border-bottom-orange col-lg-5 col-md-7 col-sm-8 col-12 mx-auto">
             <h2 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-12">Adicionar Marca</h2>
             <div class="card-body">
@@ -34,12 +43,45 @@
                                 </div>
                             </div>
                             @if($errors->has('ck_categoria_marca'))
-                            <div class="invalid-feedback">
+                            <div class="text-danger">
                                 {{ $errors->first('ck_categoria_marca') }}
                             </div>
                             @endif
                         </div>
                     </div>
+
+                    <div class="p-2">
+                        <div class="form-floating">
+                            @if ($errors->has('id_empresa'))
+                                <select aria-placeholder="Filial" id="id_empresa" class="form-select is-invalid"
+                                    name="id_marca" value="{{ old('id_empresa') }}">
+                                    <option value="" selected="{{ old('id_empresa') != null ? false : true }}"
+                                        disabled>Selecione...</option>
+                                    @foreach ($empresas as $cmp)
+                                        @if ($cmp->id == old('id_empresa'))
+                                            <option selected value="{{ $cmp->id }}">{{ $cmp->razao_social }}
+                                            </option>
+                                        @else
+                                            <option value="{{ $cmp->id }}">{{ $cmp->razao_social }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('id_empresa') }}
+                                </div>
+                            @else
+                                <select aria-placeholder="Filial" id="id_empresa" class="form-select"
+                                    name="id_empresa">
+                                    <option value="" selected disabled>Selecione...</option>
+                                    @foreach ($empresas as $cmp)
+                                        <option value="{{ $cmp->id }}">{{ $cmp->razao_social }}</option>
+                                    @endforeach
+                                </select>
+                            @endif
+                            <label for="id_marca">Filial<b class="text-danger">*</b></label>
+                        </div>
+                    </div>
+
                     <div class="p-2">
                         <div class="form-floating">
                             @if($errors->has('ds_marca'))
@@ -53,6 +95,8 @@
                             <label for="ds_marca">Descrição da Marca</label>
                         </div>
                     </div>
+
+
                     <div class="p-2">
                         <input class="btn btn-success" type="submit" value="Salvar">
                         <a href="/marcas">

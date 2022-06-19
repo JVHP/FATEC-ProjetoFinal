@@ -9,5 +9,9 @@ class TipoCarro extends Model
 {
     use HasFactory;
     
-    protected $fillable = ['nm_tipo'];
+    protected $fillable = ['nm_tipo', 'id_empresa'];
+    
+    public function filial() {
+        return $this->hasOne(Empresa::class, 'id', 'id_empresa');
+    }
 }

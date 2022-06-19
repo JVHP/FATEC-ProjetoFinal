@@ -7,7 +7,10 @@ use App\Models\Carro;
 
 use App\Http\Requests\UsuarioRequest;
 use App\Http\Requests\UsuarioEditRequest;
-
+use App\Models\Marca;
+use DateTime;
+use Detalhes_Carro_Usuario;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
@@ -15,7 +18,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Auth\Events\Registered;
-
+use phpDocumentor\Reflection\Types\Object_;
+use App\Enums\TipoCadastro;
 
 class UsuarioController extends Controller
 {
@@ -41,14 +45,7 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-        $carros = Carro::orderBy('ano', 'DESC')->orderBy('nm_carro', 'ASC')->get();
-
-        $carrosGroup = $carros->groupBy('ano');
-        /* $carrosGroup = $carros->groupBy(['ano', 'id_tipo_carro']); */
-
-        /* echo '<p style="color: white">'.$carros->groupBy(['ano', 'id_tipo_carro']).'</h1>'; */
-
-        return view('auth.register-user')->with('carros', $carrosGroup);
+        return view('auth.register-user');
     }
 
     /**
@@ -66,16 +63,9 @@ class UsuarioController extends Controller
 
             $request->request->add(['password'=>$senha]);
 
-            $usuario = User::create($request->all());
+            $request->request->add(['ck_tipo_cadastro'=>TipoCadastro::Empresa]);
 
-            if ($request->has('carros')) {
-                $carros = $request->carros;
-                
-                
-                foreach($carros as $carro_id){
-                    Carro::find($carro_id)->usuarios()->save($usuario);
-                } 
-            }
+            $usuario = User::create($request->all());
                 
             event(new Registered($usuario));
 

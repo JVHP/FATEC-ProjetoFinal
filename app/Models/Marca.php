@@ -10,7 +10,11 @@ class Marca extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nm_marca', 'ck_categoria_marca'/* Carro - C; Peça - P */, 'ds_marca'];
+    protected $fillable = ['nm_marca', 'ck_categoria_marca'/* Carro - C; Peça - P */, 'ds_marca', 'id_empresa'];
+
+    public function filial() {
+        return $this->hasOne(Empresa::class, 'id', 'id_empresa');
+    }
 
     public function categoria() {
         if ($this->ck_categoria_marca == 'P') return 'Marca de Peças';
