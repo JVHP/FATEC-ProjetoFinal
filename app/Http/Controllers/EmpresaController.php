@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\EmpresaRequest;
 use App\Models\Empresa;
+use App\Models\Faturamento;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -112,7 +113,9 @@ class EmpresaController extends Controller
             return redirect()->back();
         }
 
-        return view('empresas.show')->with('empresa', $empresa);
+        $faturamento = Faturamento::where('id_empresa', '=', $filiai->id)->first();
+
+        return view('empresas.show')->with('empresa', $empresa)->with('faturamento', $faturamento);
     }
 
     /**

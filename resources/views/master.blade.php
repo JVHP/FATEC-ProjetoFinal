@@ -42,10 +42,13 @@
         })
     </script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.js"
+        integrity="sha512-5m2r+g00HDHnhXQDbRLAfZBwPpPCaK+wPLV6lm8VQ+09ilGdHfXV7IVyKPkLOTfi4vTTUVJnz7ELs7cA87/GMA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <style>
         @import '/css/app-base.css';
         @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css");
-
     </style>
 </head>
 
@@ -146,7 +149,8 @@
                                                 </a>
                                                 <a href="/loja/{{ session('empresa')->url_customizada }}/usuario/pedidos"
                                                     class="text-light py-1 me-2 my-2">
-                                                    <img src="{{ URL::asset('icons/shopping-cart.svg') }}" alt="">
+                                                    <img src="{{ URL::asset('icons/shopping-cart.svg') }}"
+                                                        alt="">
                                                 </a>
                                             @elseif (Auth::user()->isEmpresa())
                                                 <a href="/filiais" class="text-light py-1 me-2 my-2">
@@ -189,9 +193,9 @@
                     @if (Auth::user()->isAdministrator())
                         <div class="accordion-item" style="border-radius: none; border: none">
                             <h2 class="accordion-header" id="flush-headingUsuarios">
-                                <button class="accordion-button collapsed bg-orange" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#flush-collapseUsuarios" aria-expanded="false"
-                                    aria-controls="flush-collapseUsuarios">
+                                <button class="accordion-button collapsed bg-orange" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#flush-collapseUsuarios"
+                                    aria-expanded="false" aria-controls="flush-collapseUsuarios">
                                     Usuários
                                 </button>
                             </h2>
@@ -211,9 +215,9 @@
                     @if (Auth::user()->isEmpresa() || Auth::user()->isAdministrator())
                         <div class="accordion-item" style="border-radius: none; border: none">
                             <h2 class="accordion-header" id="flush-headingEmpresas">
-                                <button class="accordion-button collapsed bg-orange" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#flush-collapseEmpresas" aria-expanded="false"
-                                    aria-controls="flush-collapseEmpresas">
+                                <button class="accordion-button collapsed bg-orange" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#flush-collapseEmpresas"
+                                    aria-expanded="false" aria-controls="flush-collapseEmpresas">
                                     Filiais
                                 </button>
                             </h2>
@@ -247,9 +251,9 @@
                     @if (Auth::user()->isEmpresa() || Auth::user()->isFuncionario())
                         <div class="accordion-item" style="border-radius: none; border: none">
                             <h2 class="accordion-header" id="flush-headingMarcas">
-                                <button class="accordion-button collapsed bg-orange" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#flush-collapseMarcas" aria-expanded="false"
-                                    aria-controls="flush-collapseMarcas">
+                                <button class="accordion-button collapsed bg-orange" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#flush-collapseMarcas"
+                                    aria-expanded="false" aria-controls="flush-collapseMarcas">
                                     Marcas
                                 </button>
                             </h2>
@@ -327,8 +331,8 @@
                             Carros
                         </button>
                     </h2>
-                    <div id="flush-collapseCarros" class="accordion-collapse collapse" aria-labelledby="flush-headingCarros"
-                        data-bs-parent="#accordionFlushExample">
+                    <div id="flush-collapseCarros" class="accordion-collapse collapse"
+                        aria-labelledby="flush-headingCarros" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body p-0">
                             <a href="/carros">
                                 <button
