@@ -39,7 +39,7 @@ class TipoPecaController extends Controller
      */
     public function create()
     {
-        $empresas_usuario = User::find(Auth::user()->id)->empresas()->get()->toArray();
+        $empresas_usuario = User::find(Auth::user()->id)->empresas()->get();
             
         return view('tipospeca.create')->with('empresas', $empresas_usuario);
     }
@@ -83,13 +83,10 @@ class TipoPecaController extends Controller
     public function edit($id)
     {
         $tipoPeca = TipoPeca::findOrFail($id);
-        $empresas = DB::table("empresas")
-            ->join("empresas_usuarios", 'empresas_usuarios.id_empresa', '=', 'empresas.id')
-            ->where('empresas_usuarios.id_usuario', '=', Auth::user()->id)
-            ->select('empresas.*')
-            ->get();    
 
-        return view('tipospeca.edit')->with('tipo', $tipoPeca)->with('empresas', $empresas);
+        $empresas_usuario = User::find(Auth::user()->id)->empresas()->get();
+
+        return view('tipospeca.edit')->with('tipo', $tipoPeca)->with('empresas', $empresas_usuario);
     }
 
     /**
