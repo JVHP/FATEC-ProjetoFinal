@@ -8,12 +8,12 @@ function pesquisarInfosFilialPeca() {
         return null;   
     }
 
-    habilitarDesabilitarBtn(pesquisado.value)
+    habilitarDesabilitarBtnPeca(pesquisado.value)
 
     if (pesquisado.value == "true") {
         pesquisado.value = "false"
 
-        this.limparMarcas(id_empresa)
+        this.limparMarcasPeca(id_empresa)
         this.limparTiposPeca(id_empresa)
 
     } else {
@@ -30,25 +30,25 @@ function pesquisarInfosFilialPeca() {
 }
 
 function pesquisarMarcasPeca(id_empresa) {
-    this.carregandoOpcoesMarcas()
+    this.carregandoOpcoesMarcasPeca()
 
     axios.get(`/marcas-peca-filial/${id_empresa}`)
     .then(resp => {
         if (resp.data.length == 0) {
-            return this.marcasNaoEncontradas()
+            return this.marcasNaoEncontradasPeca()
         }
 
-        this.montarSelectMarcas(resp.data)
+        this.montarSelectMarcasPeca(resp.data)
     })
     .catch(ex => {
-        this.erroEncontrarMarcas()
+        this.erroEncontrarMarcasPeca()
     })
 }
 
-function montarSelectMarcas(marcas) {
+function montarSelectMarcasPeca(marcas) {
     let selectMarcas = document.querySelector('#id_marca');
     
-    this.limparMarcas()
+    this.limparMarcasPeca()
 
     marcas.map(x => {
         let option = document.createElement('option')
@@ -63,24 +63,24 @@ function montarSelectMarcas(marcas) {
 }
 
 function pesquisarTiposPeca(id_empresa) {
-    this.carregandoOpcoesTipos()
+    this.carregandoOpcoesTiposPeca()
 
     axios.get(`/tipos-peca-filial/${id_empresa}`)
     .then(resp => {
 
         if (resp.data.length == 0) {
-            return this.tiposNaoEncontrados()
+            return this.tiposNaoEncontradosPeca()
         }
         
-        this.montarSelectTipos(resp.data)
+        this.montarSelectTiposPeca(resp.data)
     })
     .catch(ex => {
-        this.erroEncontrarTipos()
+        this.erroEncontrarTiposPeca()
     })
 
 }
 
-function montarSelectTipos(tipos) {
+function montarSelectTiposPeca(tipos) {
     let selectTipos = document.querySelector('#id_tipo_peca');
 
     this.limparTiposPeca()
@@ -97,7 +97,7 @@ function montarSelectTipos(tipos) {
     selectTipos.removeAttribute('disabled')
 }
 
-function carregandoOpcoesMarcas() {
+function carregandoOpcoesMarcasPeca() {
     let selectMarcas = document.querySelector('#id_marca');
     selectMarcas.innerHTML = ""
     selectMarcas.setAttribute("disabled", "true");
@@ -109,7 +109,7 @@ function carregandoOpcoesMarcas() {
     selectMarcas.appendChild(optionDefault)
 }
 
-function carregandoOpcoesTipos() {
+function carregandoOpcoesTiposPeca() {
     let selectTipos = document.querySelector('#id_tipo_peca');
     selectTipos.innerHTML = ""
     selectTipos.setAttribute("disabled", "true");
@@ -121,7 +121,7 @@ function carregandoOpcoesTipos() {
     selectTipos.appendChild(optionDefault)
 }
 
-function limparMarcas() {
+function limparMarcasPeca() {
     let selectMarcas = document.querySelector('#id_marca');
     selectMarcas.innerHTML = ""
     selectMarcas.value = ""
@@ -147,7 +147,7 @@ function limparTiposPeca() {
     selectTipos.appendChild(optionDefault)
 }
 
-function marcasNaoEncontradas() {
+function marcasNaoEncontradasPeca() {
     let selectMarcas = document.querySelector('#id_marca');
     selectMarcas.innerHTML = ""
     selectMarcas.value = ""
@@ -160,7 +160,7 @@ function marcasNaoEncontradas() {
     selectMarcas.appendChild(optionDefault)
 }
 
-function tiposNaoEncontrados() {
+function tiposNaoEncontradosPeca() {
     let selectTipos = document.querySelector('#id_tipo_peca');
     selectTipos.innerHTML = ""
     selectTipos.value = ""
@@ -173,7 +173,7 @@ function tiposNaoEncontrados() {
     selectTipos.appendChild(optionDefault)
 }
 
-function erroEncontrarMarcas() {
+function erroEncontrarMarcasPeca() {
     let selectMarcas = document.querySelector('#id_marca');
     selectMarcas.innerHTML = ""
     selectMarcas.value = ""
@@ -186,7 +186,7 @@ function erroEncontrarMarcas() {
     selectMarcas.appendChild(optionDefault)
 }
 
-function erroEncontrarTipos() {
+function erroEncontrarTiposPeca() {
     let selectTipos = document.querySelector('#id_tipo_peca');
     selectTipos.innerHTML = ""
     selectTipos.value = ""
@@ -199,7 +199,7 @@ function erroEncontrarTipos() {
     selectTipos.appendChild(optionDefault)
 }
 
-function habilitarDesabilitarBtn(pesquisado) {
+function habilitarDesabilitarBtnPeca(pesquisado) {
     let btnFilial = document.querySelector('#btn_empresa');
 
     if (pesquisado == "true") {
@@ -223,6 +223,6 @@ function limparPesquisaPeca() {
     btnFilial.classList.remove('btn-danger')
     btnFilial.classList.add('btn-primary')
     
-    this.limparMarcas(id_empresa)
+    this.limparMarcasPeca(id_empresa)
     this.limparTiposPeca(id_empresa)
 }
