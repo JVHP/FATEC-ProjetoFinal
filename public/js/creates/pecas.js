@@ -22,14 +22,14 @@ function pesquisarInfosFilialPeca() {
 
         let id_empresa = inputFilial.value;
 
-        this.pesquisarMarcas(id_empresa)
-        this.pesquisarTipos(id_empresa)
+        this.pesquisarMarcasPeca(id_empresa)
+        this.pesquisarTiposPeca(id_empresa)
 
     }
     
 }
 
-function pesquisarMarcas(id_empresa) {
+function pesquisarMarcasPeca(id_empresa) {
     this.carregandoOpcoesMarcas()
 
     axios.get(`/marcas-peca-filial/${id_empresa}`)
@@ -62,7 +62,7 @@ function montarSelectMarcas(marcas) {
     selectMarcas.removeAttribute('disabled')
 }
 
-function pesquisarTipos(id_empresa) {
+function pesquisarTiposPeca(id_empresa) {
     this.carregandoOpcoesTipos()
 
     axios.get(`/tipos-peca-filial/${id_empresa}`)
