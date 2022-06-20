@@ -11,6 +11,7 @@ $paginas = collect([
 
 <x-breadcrumb :paginas="$paginas" />
 <div class="">
+    <script src="/js/creates/carros.js"></script>
     <div class="card-display border-bottom-orange col-lg-5 col-md-7 col-sm-8 col-12 mx-auto">
         <h2 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-12" >Editar Carro</h2>
         <div class="pt-3 card-body">

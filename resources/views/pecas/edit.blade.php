@@ -9,6 +9,7 @@
     <x-breadcrumb :paginas="$paginas" />
 
     <div class="">
+        <script src="/js/creates/pecas.js"></script>
         <div class="card-display border-bottom-orange col-12 mx-auto">
             <h2 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-12">Editar Peça - {{ $peca->nm_peca }}
             </h2>

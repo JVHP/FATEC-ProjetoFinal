@@ -7,6 +7,7 @@
 
     <x-breadcrumb :paginas="$paginas" />
     <div class="">
+        <script src="/js/creates/pecas.js"></script>
         <div class="card-display border-bottom-orange col-12 mx-auto">
             <h2 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-12">Adicionar Peça</h2>
             <div class="p-2 card-title mb-0">
