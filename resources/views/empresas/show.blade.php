@@ -37,28 +37,28 @@
                         Pedidos
                     </h3>
                         <div class="row col-12 justify-content-evenly">
-                            <div class="col-md-8 col-12 my-auto text-center">
+                            <div class="col-md-auto col-12 my-auto text-center">
                                 <div class="text-start">
                                     <dl class="">
                                         <dd class="h5">Total em pedidos:
                                             <span class="fw-bolder">
-                                                R$ {{ $faturamento->formatarValor($faturamento->total_pedidos) }}
+                                                {{ $faturamento->formatarValor($faturamento->total_pedidos) }}
                                             </span>
                                         </dd>
                                         <dd class="h5">Total concluídos: <span class="fw-bolder">
-                                                R$ {{ $faturamento->formatarValor($faturamento->total_concluido) }}
+                                                {{ $faturamento->formatarValor($faturamento->total_concluido) }}
                                             </span>
                                         </dd>
                                         <dd class="h5">Total cancelados:
                                             <span class="fw-bolder">
-                                                R$ {{ $faturamento->formatarValor($faturamento->total_cancelado) }}</span>
+                                                {{ $faturamento->formatarValor($faturamento->total_cancelado) }}</span>
                                         <dd class="h5">Total não concluídos:
                                             <span class="fw-bolder">
-                                                R$ {{ $faturamento->formatarValor($faturamento->total_nao_finalizados) }}
+                                                {{ $faturamento->formatarValor($faturamento->total_nao_finalizados) }}
                                             </span>
                                         <dd class="h5">Parte do iTURBO:
                                             <span class="fw-bolder">
-                                                R$ {{ $faturamento->formatarValor($faturamento->total_iturbo) }}
+                                                {{ $faturamento->formatarValor($faturamento->total_iturbo) }}
                                             </span>
                                     </dl>
                                 </div>
@@ -72,26 +72,23 @@
                                         type: 'doughnut',
                                         data: {
                                             labels: ['Pedidos concluídos', 'Pedidos cancelados',
-                                                'Pedidos não concluídos', 'iTURBO'
+                                                'Pedidos não concluídos'
                                             ],
                                             datasets: [{
                                                 label: '# of Votes',
                                                 data: [{{ $faturamento->porcentagem_concluido }},
                                                     {{ $faturamento->porcentagem_cancelado }},
-                                                    {{ $faturamento->porcentagem_nao_finalizados }},
-                                                    15
+                                                    {{ $faturamento->porcentagem_nao_finalizados }}
                                                 ],
                                                 backgroundColor: [
                                                     'rgba(75, 192, 192)',
                                                     'rgba(255, 99, 132)',
                                                     '#ffc107',
-                                                    '#334756',
                                                 ],
                                                 borderColor: [
                                                     'rgba(75, 192, 192, 1)',
                                                     'rgba(255, 99, 132, 1)',
                                                     '#ffc107',
-                                                    '#334756',
                                                 ],
                                                 borderWidth: 1
                                             }]

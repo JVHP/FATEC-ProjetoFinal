@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Empresa;
 use App\Models\Pedido;
 use App\Models\Peca;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -24,10 +26,11 @@ class PedidosEmpresaController extends Controller
 
     public function index()
     {
-        $pedidos = DB::table('pedidos')
-            ->join('empresas_usuarios', 'empresas_usuarios.id_empresa', '=', 'pedidos.id_empresa')
-            ->select('pedidos.*')
-            ->where('empresas_usuarios.id_usuario', '=', Auth::user()->id)
+
+        $empresas_usuario = User::find(Auth::user()->id)->empresas()->get()->toArray();
+
+        $pedidos = Pedido::whereIn('id_empresa', (array_column($empresas_usuario, 'id')))
+            ->orderByDesc('pedidos.id')
             ->paginate(10);
 
       return view('pedidosempresa.dashboard')->with('pedidos', $pedidos);

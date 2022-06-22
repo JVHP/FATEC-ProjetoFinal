@@ -16,7 +16,7 @@ $paginas = collect([
         <div class="row mx-auto col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 pb-5">
             @if(sizeOf($varPeca) == 0)
                 <div class="p-2">
-                    <div class="card">
+                    <div class="card p-3">
                         @if($mensagem != '')
                         <h1 class="m-auto my-auto">
                             {{$mensagem}}

@@ -26,9 +26,9 @@ class Faturamento extends Model
 
     public function formatarValor($valor) {
         if ($valor == 0) {
-            return 'Não tiveram vendas.';
+            return '---';
         }
-        return number_format($valor, 2, ',');
+        return 'R$ '.number_format($valor, 2, ',');
     }
 
 }

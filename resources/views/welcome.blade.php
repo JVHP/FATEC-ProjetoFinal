@@ -136,12 +136,12 @@
                     <div class="col-lg-3 col-md-6 col-12 mx-auto">
                         <a href="/filiais" style="color: grey">
                             <div class="card-hover p-5 m-2">
-                                <div class="col-12 d-flex justify-content-between">
+                                <div class="col-12 d-flex justify-content-center">
                                     <div class="col-2" style="width: 30px; height: 30px">
                                         <img style="width: 30px; height: 30px" src="{{ URL::asset('icons/briefcase.svg') }}"
                                             alt="">
                                     </div>
-                                    <div class="ms-2 my-auto py-auto col-10">
+                                    <div class="m-1 my-auto py-auto col-auto">
                                         <p class="my-auto">
                                             Filiais
                                         </p>
@@ -154,14 +154,34 @@
 
                 @if (Auth::user()->isEmpresa() || Auth::user()->isFuncionario())
                     <div class="col-lg-3 col-md-6 col-12 mx-auto">
+                        <a href="/pedidos-filial" style="color: grey">
+                            <div class="card-hover p-5 m-2">
+                                <div class="col-12 d-flex justify-content-center">
+                                    <div class="col-2" style="width: 30px; height: 30px">
+                                        <img style="width: 30px; height: 30px"
+                                            src="{{ URL::asset('icons/shopping-bag.svg') }}" alt="">
+                                    </div>
+                                    <div class="m-1 my-auto py-auto col-auto">
+                                        <p class="my-auto">
+                                            Pedidos
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                @endif
+
+                @if (Auth::user()->isEmpresa() || Auth::user()->isFuncionario())
+                    <div class="col-lg-3 col-md-6 col-12 mx-auto">
                         <a href="/marcas" style="color: grey">
                             <div class="card-hover p-5 m-2">
-                                <div class="col-12 d-flex justify-content-between">
+                                <div class="col-12 d-flex justify-content-center">
                                     <div class="col-2" style="width: 30px; height: 30px">
                                         <img style="width: 30px; height: 30px" src="{{ URL::asset('icons/folder.svg') }}"
                                             alt="">
                                     </div>
-                                    <div class="ms-2 my-auto py-auto col-10">
+                                    <div class="m-1 my-auto py-auto col-auto">
                                         <p class="my-auto">
                                             Marcas
                                         </p>
@@ -176,12 +196,12 @@
                     <div class="col-lg-3 col-md-6 col-12 mx-auto">
                         <a href="/tipospeca" style="color: grey">
                             <div class="card-hover p-5 m-2">
-                                <div class="col-12 d-flex justify-content-between">
+                                <div class="col-12 d-flex justify-content-center">
                                     <div class="col-2" style="width: 30px; height: 30px">
                                         <img style="width: 30px; height: 30px"
                                             src="{{ URL::asset('icons/shapes-outline-green.svg') }}" alt="">
                                     </div>
-                                    <div class="ms-2 my-auto py-auto col-10">
+                                    <div class="m-1 my-auto py-auto col-auto">
                                         <p class="my-auto">
                                             Tipos de Peça
                                         </p>
@@ -196,12 +216,12 @@
                     <div class="col-lg-3 col-md-6 col-12 mx-auto">
                         <a href="/pecas" style="color: grey">
                             <div class="card-hover p-5 m-2">
-                                <div class="col-12 d-flex justify-content-between">
+                                <div class="col-12 d-flex justify-content-center">
                                     <div class="col-2" style="width: 30px; height: 30px">
                                         <img style="width: 30px; height: 30px" src="{{ URL::asset('icons/tool.svg') }}"
                                             alt="">
                                     </div>
-                                    <div class="ms-2 my-auto py-auto col-10">
+                                    <div class="m-1 my-auto py-auto col-auto">
                                         <p class="my-auto">
                                             Peças
                                         </p>
@@ -216,12 +236,12 @@
                     <div class="col-lg-3 col-md-6 col-12 mx-auto">
                         <a href="/tiposcarro" style="color: grey">
                             <div class="card-hover p-5 m-2">
-                                <div class="col-12 d-flex justify-content-between">
+                                <div class="col-12 d-flex justify-content-center">
                                     <div class="col-2" style="width: 30px; height: 30px">
                                         <img style="width: 30px; height: 30px"
                                             src="{{ URL::asset('icons/shapes-outline.svg') }}" alt="">
                                     </div>
-                                    <div class="ms-2 my-auto py-auto col-10">
+                                    <div class="m-1 my-auto py-auto col-auto">
                                         <p class="my-auto">
                                             Tipos de Carro
                                         </p>
@@ -236,12 +256,12 @@
                     <div class="col-lg-3 col-md-6 col-12 mx-auto">
                         <a href="/carros" style="color: grey">
                             <div class="card-hover p-5 m-2">
-                                <div class="col-12 d-flex justify-content-between">
+                                <div class="col-12 d-flex justify-content-center">
                                     <div class="col-2" style="width: 30px; height: 30px">
                                         <img style="width: 30px; height: 30px"
                                             src="{{ URL::asset('icons/car-outline.svg') }}" alt="">
                                     </div>
-                                    <div class="ms-2 my-auto py-auto col-10">
+                                    <div class="m-1 my-auto py-auto col-auto">
                                         <p class="my-auto">
                                             Carros
                                         </p>
@@ -256,12 +276,12 @@
                     <div class="col-lg-3 col-md-6 col-12 mx-auto">
                         <a href="/gerenciamento-empresas" style="color: grey">
                             <div class="card-hover p-5 m-2">
-                                <div class="col-12 d-flex justify-content-between">
+                                <div class="col-12 d-flex justify-content-center">
                                     <div class="col-2" style="width: 30px; height: 30px">
                                         <img style="width: 30px; height: 30px" src="{{ URL::asset('icons/briefcase.svg') }}"
                                             alt="">
                                     </div>
-                                    <div class="ms-2 my-auto py-auto col-10">
+                                    <div class="m-1 my-auto py-auto col-auto">
                                         <p class="my-auto">
                                             Filiais Cadastradas
                                         </p>
@@ -273,34 +293,14 @@
                     <div class="col-lg-3 col-md-6 col-12 mx-auto">
                         <a href="/usuarios" style="color: grey">
                             <div class="card-hover p-5 m-2">
-                                <div class="col-12 d-flex justify-content-between">
+                                <div class="col-12 d-flex justify-content-center">
                                     <div class="col-2" style="width: 30px; height: 30px">
                                         <img style="width: 30px; height: 30px" src="{{ URL::asset('icons/user.svg') }}"
                                             alt="">
                                     </div>
-                                    <div class="ms-2 my-auto py-auto col-10">
+                                    <div class="m-1 my-auto py-auto col-auto">
                                         <p class="my-auto">
                                             Usuários Cadastrados
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                @endif
-
-                @if (Auth::user()->isEmpresa() || Auth::user()->isFuncionario())
-                    <div class="col-lg-3 col-md-6 col-12 mx-auto">
-                        <a href="/pedidos-filial" style="color: grey">
-                            <div class="card-hover p-5 m-2">
-                                <div class="col-12 d-flex justify-content-between">
-                                    <div class="col-2" style="width: 30px; height: 30px">
-                                        <img style="width: 30px; height: 30px"
-                                            src="{{ URL::asset('icons/shopping-bag.svg') }}" alt="">
-                                    </div>
-                                    <div class="ms-2 my-auto py-auto col-10">
-                                        <p class="my-auto">
-                                            Pedidos
                                         </p>
                                     </div>
                                 </div>

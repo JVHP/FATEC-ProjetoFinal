@@ -18,6 +18,7 @@ $paginas = collect([
             <thead class="bg-primary-dark text-white">
                 <tr>
                     <th class="m-0 text-center">Id</th>
+                    <th class="m-0 text-center">Filial</th>
                     <th class="m-0 text-center">Data do Pedido</th>
                     <th class="m-0 text-center">Total</th>
                     <th class="m-0 text-center">Status</th>
@@ -29,6 +30,7 @@ $paginas = collect([
                 @foreach($pedidos as $x)
                 <tr>
                     <td class="m-0 text-center">{{$x->id}}</td>
+                    <td class="m-0 text-center">{{$x->filial()->first()->razao_social}}</td>
                     <td class="m-0 text-center">{{$x->dt_pedido == null ? '' : date('d/m/Y', strtotime($x->dt_pedido))}}</td>
                     <td class="m-0 text-center">R$ {{number_format($x->vl_preco_total, 2, ',')}}</td>
                     <td class="m-0 text-center">{{$x->ck_finalizado == 'S' ? 'Finalizado' : ($x->ck_finalizado == 'N' ? 'Não Finalizado' : ($x->ck_finalizado == 'C' ? 'Cancelado' : ($x->ck_finalizado == 'E' ? 'Enviado' : '')))}}</td>

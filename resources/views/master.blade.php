@@ -232,6 +232,14 @@
                                             </button>
                                         </a>
                                     </div>
+                                    <div class="accordion-body p-0">
+                                        <a href="/pedidos-filial">
+                                            <button
+                                                class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
+                                                Pedidos
+                                            </button>
+                                        </a>
+                                    </div>
                                 </div>
                             @elseif (Auth::user()->isAdministrator())
                                 <div id="flush-collapseEmpresas" class="accordion-collapse collapse"
@@ -303,16 +311,16 @@
                                 </button>
                             </a>
                         @elseif (Auth::user()->isEmpresa() || Auth::user()->isFuncionario())
-                            <a href="/pecas">
-                                <button
-                                    class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
-                                    Gerenciar Peças
-                                </button>
-                            </a>
                             <a href="/tipospeca">
                                 <button
                                     class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
                                     Gerenciar Tipos de Peça
+                                </button>
+                            </a>
+                            <a href="/pecas">
+                                <button
+                                    class="accordion-button accordion-button-remove-i bg-primary-dark collapsed ps-5 text-white">
+                                    Gerenciar Peças
                                 </button>
                             </a>
                         @endif
@@ -334,16 +342,16 @@
                     <div id="flush-collapseCarros" class="accordion-collapse collapse"
                         aria-labelledby="flush-headingCarros" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body p-0">
-                            <a href="/carros">
-                                <button
-                                    class="accordion-button accordion-button-remove-i collapsed bg-primary-dark ps-5 text-white">
-                                    Gerenciar Carros
-                                </button>
-                            </a>
                             <a href="/tiposcarro">
                                 <button
                                     class="accordion-button accordion-button-remove-i collapsed bg-primary-dark ps-5 text-white">
                                     Gerenciar Tipos de Carro
+                                </button>
+                            </a>
+                            <a href="/carros">
+                                <button
+                                    class="accordion-button accordion-button-remove-i collapsed bg-primary-dark ps-5 text-white">
+                                    Gerenciar Carros
                                 </button>
                             </a>
                         </div>
