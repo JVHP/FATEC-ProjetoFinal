@@ -14,7 +14,7 @@
             <h2 class="rounded border-bottom-orange bg-primary-dark text-white p-2 col-12">Verificação de email necessária
             </h2>
 
-            <div class="card-body">
+            <div class="card m-2">
                 @if (session('message'))
                     <div class="alert alert-success" role="alert">
                         {{ __('Um novo link de verificação foi enviado para seu email.') }}

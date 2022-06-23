@@ -13,7 +13,7 @@ $paginas = collect([
 <div class="card-display border-bottom-orange" >
     <h2 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-12">Pagamento - {{$message['titulo']}}</h2>
     <div class="card-body  p-3">
-        <div>
+        <div class="card m-2 p-2">
             @if($message['titulo'] == "Sucesso")
             <div class="text-center mb-4">
                 <img src="{{URL::asset('icons/undraw_successful_purchase_re_mpig.svg')}}" class="img-fluid" alt="" style="width: 21%">
