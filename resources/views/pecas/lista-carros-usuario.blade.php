@@ -50,7 +50,7 @@ $paginas = collect([
                         <div class="card-title">
                             <h5 class="fw-bold col-auto text-truncate mb-0" data-bs-toggle="tooltip" data-bs-placement="right" title="{{$x->nm_peca}}">{{ $x->nm_peca }}</h5> 
                             <div class="d-flex gap-1 text-truncate" z-index="4" id="carrosPeca{{$x->id}}" onclick="exibirTodosCarrosPeca({{$x->id}})">
-                                @foreach($varCarros as $carro)
+                                @foreach($varCarro as $carro)
                                     @if($carro->peca_id == $x->id)
                                         <span class="badge rounded-pill bg-secondary">{{$carro->nm_carro.'-'.$carro->ano}}</span>
                                     @endif
