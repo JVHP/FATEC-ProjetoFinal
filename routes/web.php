@@ -17,6 +17,7 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\UsuarioClienteController;
 use App\Http\Controllers\TipoCarroController;
 use App\Http\Controllers\TipoPecaController;
+use App\Models\Carro_Usuario;
 use App\Models\Empresa;
 use App\Models\Marca;
 use App\Models\TipoCarro;
@@ -151,17 +152,22 @@ Route::get('/loja/{cd_empresa}/pecas-usuario', function($cd_empresa){
     $user = Auth::user();
     
     $pecas_carro = DB::table('carro_usuarios')->select(DB::raw('pecas.*'))->distinct()->join('carro_peca', 'carro_usuarios.id_carro', '=', 'carro_peca.carro_id')
-    ->join('pecas', 'carro_peca.peca_id', '=', 'pecas.id')->where('carro_usuarios.id_usuario', '=', $user->id)->orderBy('qt_estoque', 'DESC')->orderBy('nm_peca', 'DESC')->paginate(15);
+    ->join('pecas', 'carro_peca.peca_id', '=', 'pecas.id')->where('carro_usuarios.id_usuario', '=', $user->id)
+    ->where('pecas.id_empresa', '=', session('empresa')->id)
+    ->orderBy('qt_estoque', 'DESC')->orderBy('nm_peca', 'DESC')->paginate(15);
+
+    $carro_peca = DB::table('carro_usuarios')->join('carro_peca', 'carro_usuarios.id_carro', '=', 'carro_peca.carro_id')
+    ->join('carros', 'carro_peca.carro_id', '=', 'carros.id')->join('pecas', 'carro_peca.peca_id', '=', 'pecas.id')
+    ->where('carro_usuarios.id_usuario', '=', $user->id)->select('carros.*', 'carro_peca.peca_id')->distinct()->paginate(15);
 
     $mensagem = '';
 
     if (sizeof($user->carros()->get()) == 0) {
         $mensagem = 'Não foram encontrados carros vinculados ao seu usuário';
-    } else
-    if (sizeof($pecas_carro) == 0) {
+    } else if (sizeof($pecas_carro) == 0) {
         $mensagem = 'Não foram encontradas peças para seu(s) carro(s) em nosos catálogo';
     }    
-    return view('pecas.lista-carros-usuario')->with('varPeca', $pecas_carro)->with('mensagem', $mensagem);
+    return view('pecas.lista-carros-usuario')->with('varPeca', $pecas_carro)->with('varCarro', $carro_peca)->with('mensagem', $mensagem);
 })->middleware(['auth', 'verified']);
 
 /* PEDIDOS */

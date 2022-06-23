@@ -59,6 +59,14 @@
         <div class="mx-auto container-xxl">
             <div class="row col-12 m-0">
                 @guest
+                @if (session('empresa'))
+                <div class="col-lg-1 col-md-1 col-sm-1 col-1 y-auto ps-4 my-auto ">
+                    <button class="btn" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
+                        <img src="{{ URL::asset('icons/menu.svg') }}" alt="">
+                    </button>
+                </div>
+                @endif
                 @else
                     <div class="col-lg-1 col-md-1 col-sm-1 col-1 y-auto ps-4 my-auto ">
                         <button class="btn" type="button" data-bs-toggle="offcanvas"
@@ -374,6 +382,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
 <script src="/js/register-user/register-user.js"></script>
+<script src="/js/master/show-utils.js"></script>
 {{-- <script src="/js/master/datalist.js">
 </script> --}}
 <script>

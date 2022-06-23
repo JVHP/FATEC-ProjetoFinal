@@ -12,7 +12,7 @@ class Carro extends Model
     protected $fillable = ['nm_carro', 'id_tipo_carro', 'ano', 'id_marca', 'id_empresa'];
 
     public function pecas(){
-        return $this->belongsToMany(Peca::class);
+        return $this->belongsToMany(Peca::class, 'carro_peca', 'carro_id', 'peca_id');
     }
 
     public function filial() {

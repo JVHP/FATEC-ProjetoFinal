@@ -11,20 +11,21 @@ $paginas = collect([
 <x-breadcrumb :paginas="$paginas" />
     <div class="card-display border-bottom-orange">
         <h1 class="rounded bg-primary-dark border-bottom-orange text-white p-2 col-12">Peças para seu(s) carro(s)</h1>
-    <div class="p-2">
-    </div>
-        <div class="row mx-auto col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 pb-5">
+        <div class="row mx-auto col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-2">
             @if(sizeOf($varPeca) == 0)
                 <div class="p-2">
                     <div class="card p-3">
                         @if($mensagem != '')
-                        <h1 class="m-auto my-auto">
-                            {{$mensagem}}
-                        </h1>
+                        <div class="row text-center mb-4">
+                            <img class="col-md-3 col-12 m-3" src="{{URL::asset('icons/undraw_not_found_-60-pq.svg')}}" class="img-fluid" alt="" style="width: 21%">
+                            <h1 class="col-md-9 col-12 my-auto">
+                                {{$mensagem}}
+                            </h1>
+                        </div>
                         @else
                         <div class="row text-center mb-4">
                             <img class="col-md-3 col-12 m-3" src="{{URL::asset('icons/undraw_not_found_-60-pq.svg')}}" class="img-fluid" alt="" style="width: 21%">
-                            <h1  class="col-md-auto col-12 my-auto">
+                            <h1 class="col-md-9 col-12 my-auto">
                                 Não foram encontrados carros vinculados ao seu usuário
                             </h1>
                         </div>
@@ -45,9 +46,16 @@ $paginas = collect([
                         <img class="rounded " src="{{URL('images/default.webp')}}" width="200px" height="200px" style="object-fit: cover;" alt="">
                     </div>
                     @endif
-                    <div class="card-body" style="height: 150px; /* overflow: auto; */">
+                    <div class="card-body" id="peca{{$x->id}}" style="height: 10rem; /* overflow: auto; */" style="transition: 1s all ease">
                         <div class="card-title">
-                            <h5 class="fw-bold col-auto text-truncate" data-bs-toggle="tooltip" data-bs-placement="right" title="{{$x->nm_peca}}">{{ $x->nm_peca }}</h5>
+                            <h5 class="fw-bold col-auto text-truncate mb-0" data-bs-toggle="tooltip" data-bs-placement="right" title="{{$x->nm_peca}}">{{ $x->nm_peca }}</h5> 
+                            <div class="d-flex gap-1 text-truncate" z-index="4" id="carrosPeca{{$x->id}}" onclick="exibirTodosCarrosPeca({{$x->id}})">
+                                @foreach($varCarros as $carro)
+                                    @if($carro->peca_id == $x->id)
+                                        <span class="badge rounded-pill bg-secondary">{{$carro->nm_carro.'-'.$carro->ano}}</span>
+                                    @endif
+                                @endforeach
+                            </div>
                         </div>
                         <dl>
                             <dd><span class="text-success">à vista</span>
@@ -80,13 +88,21 @@ $paginas = collect([
                         <img class="rounded img-fluid" src="{{URL('images/default.webp')}}" width="200px" height="200px" style="object-fit: cover;" alt="">
                     </div>
                     @endif
-                    <div class="card-body text-secondary" style="height: 150px/* ; overflow: auto; */">
+                    <div class="card-body" id="peca{{$x->id}}" style="height: 10rem; /* overflow: auto; */" style="transition: 1s all ease">
                         <div class="card-title">
-                            <h5 class="fw-bold col-auto text-truncate" data-bs-toggle="tooltip" data-bs-placement="right" title="{{$x->nm_peca}}">{{ $x->nm_peca }} </h5>
+                            <h5 class="fw-bold col-auto text-truncate mb-0" data-bs-toggle="tooltip" data-bs-placement="right" title="{{$x->nm_peca}}">{{ $x->nm_peca }}</h5> 
+                            <div class="d-flex gap-1 text-truncate" z-index="4" id="carrosPeca{{$x->id}}" onclick="exibirTodosCarrosPeca({{$x->id}})">
+                                @foreach($varCarro as $carro)
+                                    @if($carro->peca_id == $x->id)
+                                        <span class="badge rounded-pill bg-secondary">{{$carro->nm_carro.'-'.$carro->ano}}</span>
+                                    @endif
+                                @endforeach
+                            </div>
                         </div>
                         <dl>
                             <dd><span class="text-success">à vista</span>
-                                <p>R$ {{ number_format($x->vl_peca, 2, ',') }}</p></dd>
+                                <p>R$ {{ number_format($x->vl_peca, 2, ',') }}</p>
+                            </dd>
                             <dd>12x R$ {{ number_format(round($x->vl_peca / 12, 2), 2, ',') }} sem juros</dd>
                         </dl>
                     </div>

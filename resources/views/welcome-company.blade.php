@@ -33,16 +33,23 @@
                 <div class="item card rounded">
                     <!-- Cards para estoque disponível -->
                     @if($x->qt_estoque > 0)
-                    @if($x->foto)
-                    <div class="col-12 text-center">
-                        <img class="mx-auto img-zoom" loading="lazy" src="data:image/webp;base64, {{stream_get_contents($x->foto)}}" width="200px" height="200px" alt=""> 
-                    </div>
-                    @else
-                        <img class="rounded" src="{{URL('images/default.webp')}}" width="200px" height="200px" style="object-fit: cover;" alt="">
-                    @endif
-                    <div class="card-body" style="height: 150px; /* overflow: auto; */">
+                        @if($x->foto)
+                        <div class="col-12 text-center">
+                            <img class="mx-auto img-zoom" loading="lazy" src="data:image/webp;base64, {{stream_get_contents($x->foto)}}" width="200px" height="200px" alt=""> 
+                        </div>
+                        @else
+                            <img class="rounded" src="{{URL('images/default.webp')}}" width="200px" height="200px" style="object-fit: cover;" alt="">
+                        @endif
+                    <div class="card-body" id="peca{{$x->id}}" style="height: 10rem; /* overflow: auto; */" style="transition: 1s all ease">
                         <div class="card-title">
-                            <h5 class="fw-bold col-auto text-truncate" data-bs-toggle="tooltip" data-bs-placement="right" title="{{$x->nm_peca}}">{{ $x->nm_peca }}</h5>
+                            <h5 class="fw-bold col-auto text-truncate mb-0" data-bs-toggle="tooltip" data-bs-placement="right" title="{{$x->nm_peca}}">{{ $x->nm_peca }}</h5> 
+                            <div class="d-flex gap-1 text-truncate" z-index="4" id="carrosPeca{{$x->id}}" onclick="exibirTodosCarrosPeca({{$x->id}})">
+                                @forelse($x->carros()->get() as $carro)
+                                <span class="badge rounded-pill bg-secondary">{{$carro->nm_carro.'-'.$carro->ano}}</span>
+                                @empty
+                                <span class="badge rounded-pill bg-secondary">Compatibilidade universal</span>
+                                @endforelse
+                            </div>
                         </div>
                         <dl>
                             <dd><span class="text-success">à vista</span>
@@ -74,13 +81,21 @@
                     @else
                         <img class="rounded" src="{{URL('images/default.webp')}}"  width="200px" height="200px" style="object-fit: cover;" alt="">
                     @endif
-                    <div class="card-body text-secondary" style="height: 150px; overflow: auto;">
+                    <div class="card-body" id="peca{{$x->id}}" style="height: 10rem; overflow: auto;" style="transition: 1s all ease">
                         <div class="card-title">
-                            <h5 class="fw-bold col-auto text-truncate" data-bs-toggle="tooltip" data-bs-placement="right" title="{{$x->nm_peca}}">{{ $x->nm_peca }} </h5>
+                            <h5 class="fw-bold col-auto text-truncate mb-0" data-bs-toggle="tooltip" data-bs-placement="right" title="{{$x->nm_peca}}">{{ $x->nm_peca }}</h5> 
+                            <div class="d-flex gap-1 text-truncate" z-index="4" id="carrosPeca{{$x->id}}" onclick="exibirTodosCarrosPeca({{$x->id}})">
+                                @forelse($x->carros()->get() as $carro)
+                                <span class="badge rounded-pill bg-secondary">{{$carro->nm_carro.'-'.$carro->ano}}</span>
+                                @empty
+                                <span class="badge rounded-pill bg-secondary">Compatibilidade universal</span>
+                                @endforelse
+                            </div>
                         </div>
                         <dl>
                             <dd><span class="text-success">à vista</span>
-                                <p>R$ {{ number_format($x->vl_peca, 2, ',') }}</p></dd>
+                                <p>R$ {{ number_format($x->vl_peca, 2, ',') }}</p>
+                            </dd>
                             <dd>12x R$ {{ number_format(round($x->vl_peca / 12, 2), 2, ',') }} sem juros</dd>
                         </dl>
                     </div>
